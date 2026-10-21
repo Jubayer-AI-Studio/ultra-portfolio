@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { LivingAvatar } from './LivingAvatar';
 import { sound } from '../utils/sound';
-import { ArrowRight, Play, Film, ShieldCheck, MapPin } from 'lucide-react';
+import { ArrowRight, Play, Film, MapPin, Volume2 } from 'lucide-react';
 
 interface HeroSectionProps {
   onScrollTo: (sectionId: string) => void;
@@ -38,15 +38,32 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onScrollTo }) => {
           transition={{ duration: 0.8 }}
           className="lg:col-span-7 space-y-6"
         >
-          {/* Status Tag */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-900/80 border border-cyan-500/30 text-xs font-mono text-cyan-300 backdrop-blur-md shadow-sm shadow-cyan-900/20">
-            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-            <span className="flex items-center gap-1">
-              <MapPin className="w-3 h-3 text-cyan-400" />
-              <span>Dhaka, Bangladesh</span>
-            </span>
-            <span className="text-zinc-600">|</span>
-            <span className="text-zinc-400">Available for High-Impact Projects</span>
+          {/* Status & Audio Waveform Tag */}
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900/80 border border-cyan-500/30 text-xs font-mono text-cyan-300 backdrop-blur-md shadow-sm shadow-cyan-900/20">
+              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+              <span className="flex items-center gap-1">
+                <MapPin className="w-3 h-3 text-cyan-400" />
+                <span>Dhaka, Bangladesh</span>
+              </span>
+              <span className="text-zinc-600">|</span>
+              <span className="text-zinc-400">Available for High-Impact Projects</span>
+            </div>
+
+            {/* Visual Equalizer Pill */}
+            <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-zinc-950 border border-purple-500/30 text-[11px] font-mono text-purple-300">
+              <Volume2 className="w-3 h-3 text-purple-400" />
+              <div className="flex items-end gap-[2px] h-3">
+                {[8, 14, 6, 12, 10, 16, 8, 12].map((h, i) => (
+                  <span
+                    key={i}
+                    style={{ height: `${h}px` }}
+                    className="w-[2px] bg-purple-400 rounded-full animate-pulse"
+                  />
+                ))}
+              </div>
+              <span className="text-zinc-500 text-[10px]">60 FPS</span>
+            </div>
           </div>
 
           {/* Main Title & Brand Identity */}
@@ -81,7 +98,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onScrollTo }) => {
             <span className="text-purple-300 font-medium">ICON 2030</span> universe.
           </p>
 
-          {/* Action Portals / Buttons */}
+          {/* Action Portals with Magnetic Cursor tags */}
           <div className="flex flex-wrap items-center gap-3 pt-2">
             <button
               onClick={() => {
@@ -89,6 +106,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onScrollTo }) => {
                 onScrollTo('software');
               }}
               onMouseEnter={() => sound.playHover()}
+              data-cursor="CODE"
               className="px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-mono font-bold text-sm flex items-center gap-2 hover:opacity-95 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg shadow-cyan-500/25 cursor-pointer"
             >
               <span>Explore Code & SaaS</span>
@@ -101,6 +119,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onScrollTo }) => {
                 onScrollTo('arcade');
               }}
               onMouseEnter={() => sound.playHover()}
+              data-cursor="PLAY"
               className="px-5 py-3 rounded-xl bg-zinc-900 border border-purple-500/40 text-purple-300 font-mono text-sm flex items-center gap-2 hover:bg-purple-950/30 hover:border-purple-400 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg shadow-purple-950/30 cursor-pointer"
             >
               <Play className="w-4 h-4 text-purple-400" />
@@ -109,14 +128,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onScrollTo }) => {
 
             <button
               onClick={() => {
-                sound.playClick();
+                sound.playCinematicDrone();
                 onScrollTo('cinema');
               }}
               onMouseEnter={() => sound.playHover()}
-              className="px-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-300 font-mono text-sm flex items-center gap-2 hover:border-zinc-700 hover:text-white transition-all cursor-pointer"
+              data-cursor="CINEMA"
+              className="px-4 py-3 rounded-xl bg-zinc-900 border border-pink-500/40 text-pink-300 font-mono text-sm flex items-center gap-2 hover:bg-pink-950/30 hover:border-pink-400 transition-all cursor-pointer shadow-lg shadow-pink-950/30"
             >
               <Film className="w-4 h-4 text-pink-400" />
-              <span>AI Cinema</span>
+              <span>AI Cinema Studio</span>
             </button>
           </div>
 
@@ -152,15 +172,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onScrollTo }) => {
             avatarUrl={PORTFOLIO_DATA.profile.avatar}
             name={PORTFOLIO_DATA.profile.name}
           />
-          <div className="text-center mt-3">
-            <div className="font-mono text-xs text-zinc-400 flex items-center justify-center gap-1.5">
-              <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
-              <span>VERIFIED DEVELOPER ENTITY</span>
-            </div>
-            <div className="font-mono text-[11px] text-zinc-500 mt-0.5">
-              Interactive 3D Depth Active • Hover or Click
-            </div>
-          </div>
         </motion.div>
 
       </div>

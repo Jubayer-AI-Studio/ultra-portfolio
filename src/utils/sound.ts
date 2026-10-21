@@ -104,6 +104,37 @@ class SoundEngine {
     }
   }
 
+  public playCinematicDrone() {
+    if (this.isMuted) return;
+    this.initCtx();
+    if (!this.ctx) return;
+
+    try {
+      const now = this.ctx.currentTime;
+      // Sub-bass 55Hz (A1) + 110Hz (A2) + 165Hz (E3)
+      [55, 110, 164.81].forEach((freq, idx) => {
+        if (!this.ctx) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = idx === 0 ? 'sine' : 'triangle';
+        osc.frequency.setValueAtTime(freq, now);
+
+        gain.gain.setValueAtTime(0.001, now);
+        gain.gain.linearRampToValueAtTime(0.06 / (idx + 1), now + 0.15);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+
+        osc.start(now);
+        osc.stop(now + 1.2);
+      });
+    } catch {
+      // Audio failed silently
+    }
+  }
+
   public playSuccess() {
     if (this.isMuted) return;
     this.initCtx();
