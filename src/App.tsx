@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { CyberBackground } from './components/CyberBackground';
+import { ThreeCanvas } from './components/ThreeCanvas';
+import { FilmGrain } from './components/FilmGrain';
+import { CustomCursor } from './components/CustomCursor';
 import { HUDNavbar } from './components/HUDNavbar';
 import { HeroSection } from './components/HeroSection';
 import { SoftwareNexus } from './components/SoftwareNexus';
@@ -28,18 +30,24 @@ export function App() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#07080b] text-zinc-100 selection:bg-cyan-500 selection:text-black overflow-x-hidden">
-      {/* 1. Lusion-Inspired 3D Interactive Particle Matrix */}
-      <CyberBackground />
+    <div className="relative min-h-screen bg-[#06070a] text-zinc-100 selection:bg-cyan-400 selection:text-black overflow-x-hidden font-sans">
+      {/* 1. Three.js Interactive 3D WebGL Quantum Core */}
+      <ThreeCanvas />
 
-      {/* 2. Top HUD Navigation */}
+      {/* 2. Cinematic Film Grain Texture */}
+      <FilmGrain />
+
+      {/* 3. Fluid Magnetic Custom Cursor */}
+      <CustomCursor />
+
+      {/* 4. Top Cyber HUD Navigation */}
       <HUDNavbar
         activeSection={activeSection}
         onNavigate={handleNavigate}
         onOpenTerminal={() => setTerminalOpen(true)}
       />
 
-      {/* 3. Main Content Sections */}
+      {/* 5. Main Content Sectors */}
       <main className="relative z-10">
         <HeroSection
           onScrollTo={handleNavigate}
@@ -52,13 +60,13 @@ export function App() {
         <CareerOdyssey />
       </main>
 
-      {/* 4. Footer */}
+      {/* 6. Footer */}
       <Footer
         onScrollToTop={handleScrollToTop}
         onOpenTerminal={() => setTerminalOpen(true)}
       />
 
-      {/* 5. Interactive Cyber Terminal (CLI) Modal */}
+      {/* 7. Interactive Cyber CLI Terminal */}
       <CyberTerminal
         isOpen={terminalOpen}
         onClose={() => setTerminalOpen(false)}
