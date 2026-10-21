@@ -1,0 +1,25 @@
+{
+  "name": "Jubayer Ahmad // Full-Stack & AI Specialist",
+  "short_name": "JUBAYER",
+  "description": "Official interactive portfolio of Jubayer Ahmad - Full-Stack SaaS Architect (NOORHUB) & AI Film Director (ICON 2030).",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#EADECA",
+  "theme_color": "#EADECA",
+  "icons": [
+    {
+      "src": "/avatar.jpg",
+      "sizes": "192x192 512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "48x48",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
