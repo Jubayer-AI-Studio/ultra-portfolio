@@ -113,8 +113,9 @@ export const HUDNavbar: React.FC<HUDNavbarProps> = ({
               sound.playClick();
               onOpenTerminal();
             }}
+            aria-label="Open Interactive Cyber Terminal"
             title="Open Interactive Cyber Terminal"
-            className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-purple-950/40 border border-purple-500/30 text-purple-300 hover:bg-purple-900/40 text-xs font-mono transition-all shadow-sm shadow-purple-900/30 cursor-pointer"
+            className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-purple-950/40 border border-purple-500/30 text-purple-300 hover:bg-purple-900/40 text-xs font-mono transition-all shadow-sm shadow-purple-900/30 cursor-pointer min-h-[36px]"
           >
             <Terminal className="w-3.5 h-3.5 text-purple-400" />
             <span className="hidden lg:inline">CLI_v2.6</span>
@@ -123,8 +124,9 @@ export const HUDNavbar: React.FC<HUDNavbarProps> = ({
           {/* Sound Mute/Unmute Switch */}
           <button
             onClick={toggleSound}
+            aria-label={isMuted ? 'Unmute Sound' : 'Mute Sound'}
             title={isMuted ? 'Unmute Sound' : 'Mute Sound'}
-            className={`p-2 rounded-lg border transition-all cursor-pointer ${
+            className={`p-2 rounded-lg border transition-all cursor-pointer min-h-[36px] min-w-[36px] flex items-center justify-center ${
               isMuted
                 ? 'bg-zinc-900 border-zinc-800 text-zinc-500'
                 : 'bg-cyan-950/40 border-cyan-500/30 text-cyan-400 shadow-sm shadow-cyan-500/20'
@@ -139,8 +141,9 @@ export const HUDNavbar: React.FC<HUDNavbarProps> = ({
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => sound.playClick()}
+            aria-label="GitHub Repository Hub"
             title="GitHub Repository Hub (21+ Repos)"
-            className="p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-white hover:border-zinc-700 transition-colors hidden sm:flex"
+            className="p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-white hover:border-zinc-700 transition-colors hidden sm:flex items-center justify-center min-h-[36px] min-w-[36px]"
           >
             <GithubIcon className="w-4 h-4" />
           </a>
@@ -151,8 +154,9 @@ export const HUDNavbar: React.FC<HUDNavbarProps> = ({
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => sound.playClick()}
+            aria-label="AI Cinema YouTube Channel"
             title="AI Cinema YouTube Channel"
-            className="p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-red-400 hover:text-red-300 hover:border-red-900 transition-colors hidden sm:flex"
+            className="p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-red-400 hover:text-red-300 hover:border-red-900 transition-colors hidden sm:flex items-center justify-center min-h-[36px] min-w-[36px]"
           >
             <YoutubeIcon className="w-4 h-4" />
           </a>
@@ -160,7 +164,8 @@ export const HUDNavbar: React.FC<HUDNavbarProps> = ({
           {/* Mobile Hamburger Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 md:hidden cursor-pointer"
+            aria-label="Toggle Navigation Menu"
+            className="p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 md:hidden cursor-pointer min-h-[36px] min-w-[36px] flex items-center justify-center"
           >
             {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           </button>

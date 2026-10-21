@@ -140,6 +140,9 @@ export const LivingAvatar: React.FC<LivingAvatarProps> = ({ avatarUrl, name }) =
             <motion.img
               src={avatarUrl}
               alt={name}
+              width={320}
+              height={400}
+              loading="eager"
               style={{ translateZ }}
               className={`w-full h-full object-cover transition-all duration-500 ease-out ${
                 isHovered ? 'scale-105 contrast-115' : 'scale-100'

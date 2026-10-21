@@ -58,6 +58,7 @@ export const Footer: React.FC<FooterProps> = ({ onScrollToTop, onOpenTerminal })
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => sound.playClick()}
+                aria-label="GitHub Profile"
                 title="GitHub"
                 className="p-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white transition-colors"
               >
@@ -68,6 +69,7 @@ export const Footer: React.FC<FooterProps> = ({ onScrollToTop, onOpenTerminal })
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => sound.playClick()}
+                aria-label="YouTube Channel"
                 title="YouTube"
                 className="p-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-red-400 hover:text-red-300 transition-colors"
               >
@@ -78,6 +80,7 @@ export const Footer: React.FC<FooterProps> = ({ onScrollToTop, onOpenTerminal })
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => sound.playClick()}
+                aria-label="Instagram Profile"
                 title="Instagram"
                 className="p-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-pink-400 hover:text-pink-300 transition-colors"
               >
@@ -88,6 +91,7 @@ export const Footer: React.FC<FooterProps> = ({ onScrollToTop, onOpenTerminal })
                   sound.playClick();
                   onOpenTerminal();
                 }}
+                aria-label="Open Cyber CLI Terminal"
                 title="Cyber CLI Terminal"
                 className="p-2.5 rounded-xl bg-purple-950/40 hover:bg-purple-900/40 border border-purple-500/30 text-purple-300 transition-colors cursor-pointer"
               >
@@ -109,6 +113,7 @@ export const Footer: React.FC<FooterProps> = ({ onScrollToTop, onOpenTerminal })
               sound.playWarp();
               onScrollToTop();
             }}
+            aria-label="Scroll Back to Top"
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-zinc-800 transition-colors cursor-pointer"
           >
             <span>BACK TO TOP</span>
