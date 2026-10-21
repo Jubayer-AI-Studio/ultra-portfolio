@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { sound } from '../utils/sound';
+import { NoorHubModal } from './NoorHubModal';
 import {
   ExternalLink,
   Layers,
@@ -13,6 +14,7 @@ import {
   Play,
   CheckCircle2,
   Lock,
+  Sparkles,
 } from 'lucide-react';
 import { GithubIcon } from './Icons';
 
@@ -21,6 +23,7 @@ export const SoftwareNexus: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'overview' | 'architecture' | 'features'>('architecture');
   const [simulationStep, setSimulationStep] = useState<number>(-1);
   const [isSimulating, setIsSimulating] = useState<boolean>(false);
+  const [noorHubModalOpen, setNoorHubModalOpen] = useState<boolean>(false);
 
   const runSimulation = () => {
     if (isSimulating) return;
@@ -217,20 +220,35 @@ export const SoftwareNexus: React.FC = () => {
                 ))}
               </div>
 
-              {/* CTAs */}
-              <div className="flex items-center gap-3 pt-2">
+              {/* CTAs - TWO CLEAR OPTIONS: DIRECT LIVE SOFTWARE vs GITHUB */}
+              <div className="flex flex-wrap items-center gap-3 pt-2">
+                {/* OPTION 1: Direct Live Software Launcher */}
+                <button
+                  onClick={() => {
+                    sound.playWarp();
+                    setNoorHubModalOpen(true);
+                  }}
+                  data-cursor="LAUNCH SAAS"
+                  className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-400 via-teal-300 to-cyan-400 hover:from-cyan-300 hover:to-teal-200 text-black font-mono font-black text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-cyan-400/30 transition-all cursor-pointer hover:scale-[1.03] active:scale-[0.98]"
+                >
+                  <Sparkles className="w-4 h-4 text-black fill-black" />
+                  <span>🚀 সরাসরি নূরহাব সফটওয়্যারে প্রবেশ করুন</span>
+                  <ExternalLink className="w-4 h-4 text-black" />
+                </button>
+
+                {/* OPTION 2: Source Code on GitHub */}
                 {saas.githubUrl && (
                   <a
                     href={saas.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => sound.playClick()}
-                    data-cursor="VIEW SAAS"
-                    className="px-6 py-3 rounded-xl bg-cyan-400 text-black font-mono font-bold text-xs flex items-center gap-2 hover:bg-cyan-300 transition-all shadow-lg shadow-cyan-500/25 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+                    data-cursor="VIEW CODE"
+                    className="px-5 py-3.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-zinc-700 font-mono font-bold text-xs flex items-center gap-2 transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
                   >
-                    <GithubIcon className="w-4 h-4" />
-                    <span>View Repository on GitHub</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
+                    <GithubIcon className="w-4 h-4 text-cyan-400" />
+                    <span>গিটহাব সোর্স কোড (GitHub Repository)</span>
+                    <ArrowUpRight className="w-3.5 h-3.5 text-zinc-400" />
                   </a>
                 )}
               </div>
@@ -315,6 +333,44 @@ export const SoftwareNexus: React.FC = () => {
                 </div>
 
                 <div className="flex items-center gap-2">
+                  {/* Option 1: Direct Live Software / App */}
+                  {project.liveUrl ? (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => sound.playWarp()}
+                      data-cursor="LAUNCH"
+                      className="flex-1 py-2 px-3 rounded-lg bg-cyan-500/25 hover:bg-cyan-500/35 border border-cyan-500/50 text-cyan-300 text-xs font-mono font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" />
+                      <span>লাইভ অ্যাপ (Launch)</span>
+                    </a>
+                  ) : project.id === 'madrasa-mgmt' ? (
+                    <button
+                      onClick={() => {
+                        sound.playWarp();
+                        setNoorHubModalOpen(true);
+                      }}
+                      className="flex-1 py-2 px-3 rounded-lg bg-cyan-500/25 hover:bg-cyan-500/35 border border-cyan-500/50 text-cyan-300 text-xs font-mono font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" />
+                      <span>সফটওয়্যার চালান</span>
+                    </button>
+                  ) : (
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => sound.playWarp()}
+                      className="flex-1 py-2 px-3 rounded-lg bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-500/30 text-cyan-300 text-xs font-mono font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" />
+                      <span>সরাসরি দেখুন</span>
+                    </a>
+                  )}
+
+                  {/* Option 2: GitHub Repository */}
                   {project.githubUrl && (
                     <a
                       href={project.githubUrl}
@@ -325,20 +381,7 @@ export const SoftwareNexus: React.FC = () => {
                       className="flex-1 py-2 px-3 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white text-xs font-mono flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                     >
                       <GithubIcon className="w-3.5 h-3.5" />
-                      <span>Code</span>
-                    </a>
-                  )}
-                  {project.liveUrl && (
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => sound.playWarp()}
-                      data-cursor="LAUNCH"
-                      className="flex-1 py-2 px-3 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/40 text-cyan-300 text-xs font-mono flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
-                    >
-                      <ExternalLink className="w-3.5 h-3.5" />
-                      <span>Launch</span>
+                      <span>গিটহাব কোড</span>
                     </a>
                   )}
                 </div>
@@ -348,6 +391,12 @@ export const SoftwareNexus: React.FC = () => {
         </div>
 
       </div>
+
+      {/* Interactive Live NOORHUB Software Window Modal */}
+      <NoorHubModal
+        isOpen={noorHubModalOpen}
+        onClose={() => setNoorHubModalOpen(false)}
+      />
     </section>
   );
 };

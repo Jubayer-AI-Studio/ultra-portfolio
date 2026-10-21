@@ -2,9 +2,10 @@ import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence, useSpring } from 'framer-motion';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { sound } from '../utils/sound';
-import { ArrowUpRight, Play, Layers } from 'lucide-react';
+import { Play, Layers, ExternalLink, Film, Sparkles, ArrowUpRight } from 'lucide-react';
 import { GithubIcon } from './Icons';
 import { ArcadeModal } from './ArcadeModal';
+import { NoorHubModal } from './NoorHubModal';
 
 interface WorkItem {
   id: string;
@@ -24,6 +25,7 @@ export const SnellenbergWork: React.FC = () => {
   const [selectedFilter, setSelectedFilter] = useState<string>('all');
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [activeModalGame, setActiveModalGame] = useState<{ id: string; title: string; url?: string } | null>(null);
+  const [noorHubModalOpen, setNoorHubModalOpen] = useState(false);
 
   // Mouse Coordinates for Floating Snellenberg Preview
   const containerRef = useRef<HTMLDivElement>(null);
@@ -132,20 +134,21 @@ export const SnellenbergWork: React.FC = () => {
 
   const handleRowClick = (item: WorkItem) => {
     sound.playWarp();
-    if (item.category === 'game') {
+    if (item.category === 'saas' || item.id === 'noorhub') {
+      setNoorHubModalOpen(true);
+    } else if (item.category === 'game') {
       setActiveModalGame({
         id: item.id,
         title: item.title,
         url: item.liveUrl,
       });
-    } else if (item.category === 'saas') {
-      const el = document.getElementById('software');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
     } else if (item.category === 'film') {
       const el = document.getElementById('cinema');
       if (el) el.scrollIntoView({ behavior: 'smooth' });
     } else if (item.liveUrl) {
       window.open(item.liveUrl, '_blank');
+    } else if (item.githubUrl) {
+      window.open(item.githubUrl, '_blank');
     }
   };
 
@@ -236,7 +239,20 @@ export const SnellenbergWork: React.FC = () => {
                   </div>
 
                   <div className="flex items-center gap-2">
-                    {work.category === 'game' ? (
+                    {/* OPTION 1: Direct Live Software / Play / Watch */}
+                    {work.category === 'saas' ? (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          sound.playWarp();
+                          setNoorHubModalOpen(true);
+                        }}
+                        className="px-3.5 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white font-mono font-bold text-xs flex items-center gap-1.5 transition-transform hover:scale-105 active:scale-95 shadow-md shadow-cyan-600/30 cursor-pointer"
+                      >
+                        <Sparkles className="w-3.5 h-3.5" />
+                        <span>সফটওয়্যার চালান</span>
+                      </button>
+                    ) : work.category === 'game' ? (
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
@@ -247,17 +263,41 @@ export const SnellenbergWork: React.FC = () => {
                             url: work.liveUrl,
                           });
                         }}
-                        className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-mono font-bold text-xs flex items-center gap-1.5 transition-transform hover:scale-105 active:scale-95 shadow-md shadow-red-600/30 cursor-pointer"
+                        className="px-3.5 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-mono font-bold text-xs flex items-center gap-1.5 transition-transform hover:scale-105 active:scale-95 shadow-md shadow-red-600/30 cursor-pointer"
                       >
                         <Play className="w-3.5 h-3.5 fill-white" />
-                        <span>PLAY</span>
+                        <span>গেম খেলুন</span>
+                      </button>
+                    ) : work.category === 'film' ? (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          sound.playCinematicDrone();
+                          const el = document.getElementById('cinema');
+                          if (el) el.scrollIntoView({ behavior: 'smooth' });
+                        }}
+                        className="px-3.5 py-2 rounded-xl bg-rose-700 hover:bg-rose-800 text-white font-mono font-bold text-xs flex items-center gap-1.5 transition-transform hover:scale-105 active:scale-95 shadow-md shadow-rose-700/30 cursor-pointer"
+                      >
+                        <Film className="w-3.5 h-3.5" />
+                        <span>সিনেমা দেখুন</span>
                       </button>
                     ) : (
-                      <div className="w-10 h-10 rounded-full border border-stone-800 flex items-center justify-center text-stone-800 group-hover:text-amber-200 group-hover:bg-stone-900 group-hover:border-stone-900 transition-all duration-300 group-hover:rotate-45">
-                        <ArrowUpRight className="w-5 h-5" />
-                      </div>
+                      <a
+                        href={work.liveUrl || work.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          sound.playWarp();
+                        }}
+                        className="px-3.5 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-mono font-bold text-xs flex items-center gap-1.5 transition-transform hover:scale-105 active:scale-95 shadow-md shadow-emerald-700/30 cursor-pointer"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5" />
+                        <span>লাইভ অ্যাপ</span>
+                      </a>
                     )}
 
+                    {/* OPTION 2: Direct GitHub Repository Link */}
                     {work.githubUrl && (
                       <a
                         href={work.githubUrl}
@@ -268,9 +308,10 @@ export const SnellenbergWork: React.FC = () => {
                           sound.playClick();
                         }}
                         title="GitHub Repository"
-                        className="p-2.5 rounded-xl bg-[#dfcfb8] hover:bg-[#d5c4ad] text-stone-900 border border-[#c8b59b] transition-colors cursor-pointer"
+                        className="px-3 py-2 rounded-xl bg-stone-900 hover:bg-black text-amber-200 border border-stone-800 font-mono font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer shadow-sm"
                       >
-                        <GithubIcon className="w-4 h-4" />
+                        <GithubIcon className="w-3.5 h-3.5" />
+                        <span className="hidden sm:inline">গিটহাব</span>
                       </a>
                     )}
                   </div>
@@ -364,6 +405,12 @@ export const SnellenbergWork: React.FC = () => {
             externalUrl={activeModalGame.url}
           />
         )}
+
+        {/* Live NOORHUB Software Window Modal */}
+        <NoorHubModal
+          isOpen={noorHubModalOpen}
+          onClose={() => setNoorHubModalOpen(false)}
+        />
 
       </div>
     </section>

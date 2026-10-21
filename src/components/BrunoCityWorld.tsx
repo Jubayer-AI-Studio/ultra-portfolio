@@ -17,6 +17,8 @@ import {
   Compass,
 } from 'lucide-react';
 import { ArcadeModal } from './ArcadeModal';
+import { NoorHubModal } from './NoorHubModal';
+import { GithubIcon } from './Icons';
 
 interface BrunoCityWorldProps {
   isFullPage?: boolean;
@@ -96,8 +98,10 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
     desc: string;
     actionText: string;
     actionType: 'arcade' | 'saas' | 'cinema' | 'racing';
+    githubUrl?: string;
   } | null>(null);
 
+  const [noorHubModalOpen, setNoorHubModalOpen] = useState(false);
   const [arcadeModalGame, setArcadeModalGame] = useState<{ id: string; title: string } | null>(null);
   const [hornActive, setHornActive] = useState(false);
   const [soundMuted, setSoundMuted] = useState(false);
@@ -339,8 +343,9 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
         title: 'NOORHUB SAAS CAMPUS',
         tag: 'FLAGSHIP ENTERPRISE SAAS',
         desc: 'Complete Madrasa & Educational SaaS Platform (Next.js 15, Cloudflare Zero Trust, PostgreSQL & RBAC)',
-        actionText: 'Enter SaaS Campus',
+        actionText: 'Launch NOORHUB Software',
         actionType: 'saas' as const,
+        githubUrl: 'https://github.com/Jubayer-AI-Studio/NoorHub-Madrasa-Management-SaaS',
         x: -42,
         z: -35,
         color: 0x0284c7,
@@ -350,8 +355,9 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
         title: 'IRON STRIKE COLISEUM',
         tag: '2D ARCADE FIGHTER ARENA',
         desc: 'High-octane Martial Arts Combat with Special Move Gauges & Hitbox Combos',
-        actionText: 'Fight in Coliseum',
+        actionText: 'Play Iron Strike Game',
         actionType: 'arcade' as const,
+        githubUrl: 'https://github.com/Jubayer-AI-Studio/Iron-Strike-2D-Fighter',
         x: 42,
         z: -35,
         color: 0xf59e0b,
@@ -361,8 +367,9 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
         title: 'ICON 2030 CINEMA STUDIO',
         tag: 'AI CINEMA TRILOGY',
         desc: 'Cinematic Universe with 10s Face-Locked Continuity Architecture (Directed by JUBAYER AI Specialist)',
-        actionText: 'Watch in Cinema',
+        actionText: 'Watch ICON 2030 Cinema',
         actionType: 'cinema' as const,
+        githubUrl: 'https://github.com/Jubayer-AI-Studio',
         x: 42,
         z: 35,
         color: 0xe11d48,
@@ -374,6 +381,7 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
         desc: 'Explore 10+ Authentic Dhaka Routes with Realistic Damage Physics & Dynamic Weather',
         actionText: 'Launch Dhaka Racing',
         actionType: 'racing' as const,
+        githubUrl: 'https://github.com/Jubayer-AI-Studio/Dhaka-Open-World-Racing',
         x: -42,
         z: 35,
         color: 0x16a34a,
@@ -1267,10 +1275,7 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
       });
     } else if (actionType === 'saas') {
       if (onOpenSaaS) onOpenSaaS();
-      else {
-        const el = document.getElementById('software');
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-      }
+      setNoorHubModalOpen(true);
     } else if (actionType === 'cinema') {
       if (onOpenCinema) onOpenCinema();
       else {
@@ -1394,13 +1399,28 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
               </div>
             </div>
 
-            <button
-              onClick={() => handleCampusAction(activeZone.actionType)}
-              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-mono font-black text-xs flex items-center gap-2 shadow-lg shadow-red-500/30 transition-transform hover:scale-105 active:scale-95 cursor-pointer"
-            >
-              <span>{activeZone.actionText} [ENTER]</span>
-              <ExternalLink className="w-4 h-4" />
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => handleCampusAction(activeZone.actionType)}
+                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-mono font-black text-xs flex items-center gap-2 shadow-lg shadow-red-500/30 transition-transform hover:scale-105 active:scale-95 cursor-pointer whitespace-nowrap"
+              >
+                <span>{activeZone.actionText} [ENTER]</span>
+                <ExternalLink className="w-4 h-4" />
+              </button>
+
+              {activeZone.githubUrl && (
+                <a
+                  href={activeZone.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => sound.playClick()}
+                  className="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-black text-amber-200 border border-slate-700 font-mono font-bold text-xs flex items-center gap-1.5 transition-all shadow-md cursor-pointer whitespace-nowrap"
+                >
+                  <GithubIcon className="w-4 h-4" />
+                  <span>GitHub</span>
+                </a>
+              )}
+            </div>
           </div>
         </div>
       )}
@@ -1560,6 +1580,12 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
           externalUrl="https://ai.studio/apps/45effe9f-8244-49d3-a401-e4a0e09f9e90"
         />
       )}
+
+      {/* Embedded Live NOORHUB SaaS Modal if triggered from Campus */}
+      <NoorHubModal
+        isOpen={noorHubModalOpen}
+        onClose={() => setNoorHubModalOpen(false)}
+      />
     </div>
   );
 };
