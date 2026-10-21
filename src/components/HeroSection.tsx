@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { LivingAvatar } from './LivingAvatar';
+import { AnimatedDhakaClock } from './AnimatedDhakaClock';
 import { sound } from '../utils/sound';
 import { ArrowRight, Play, Film, MapPin, Volume2, Sparkles } from 'lucide-react';
 
@@ -30,7 +31,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onScrollTo, onOpenBrun
 
   return (
     <section id="hero" className="relative min-h-[90vh] pt-28 pb-16 px-4 sm:px-6 flex items-center justify-center">
-      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <div className="max-w-7xl mx-auto w-full space-y-10">
+        
+        {/* 1. BIG PROMINENT ANIMATED DHAKA CLOCK HUD */}
+        <AnimatedDhakaClock />
+
+        {/* 2. Main Hero Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         
         {/* Left Column: Text & CTAs (7 cols) */}
         <motion.div
@@ -184,6 +191,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onScrollTo, onOpenBrun
           />
         </motion.div>
 
+        </div>
       </div>
     </section>
   );

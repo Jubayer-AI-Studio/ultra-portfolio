@@ -13,6 +13,8 @@ import {
   Maximize2,
   Minimize2,
   ExternalLink,
+  Flame,
+  Compass,
 } from 'lucide-react';
 import { ArcadeModal } from './ArcadeModal';
 
@@ -36,6 +38,43 @@ interface PhysicsCrate {
   knocked: boolean;
 }
 
+interface PhysicsPin {
+  group: THREE.Group;
+  x: number;
+  y: number;
+  z: number;
+  vx: number;
+  vy: number;
+  vz: number;
+  rotX: number;
+  rotZ: number;
+  knocked: boolean;
+}
+
+interface PhysicsBrick {
+  mesh: THREE.Mesh;
+  x: number;
+  y: number;
+  z: number;
+  vx: number;
+  vy: number;
+  vz: number;
+  rotX: number;
+  rotY: number;
+  rotZ: number;
+  knocked: boolean;
+}
+
+interface SmokeParticle {
+  mesh: THREE.Mesh;
+  active: boolean;
+  life: number;
+  maxLife: number;
+  vx: number;
+  vy: number;
+  vz: number;
+}
+
 export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
   isFullPage = false,
   onClose,
@@ -45,6 +84,11 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
   const mountRef = useRef<HTMLDivElement | null>(null);
   const [speedKmh, setSpeedKmh] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(isFullPage);
+  const [cameraMode, setCameraMode] = useState<'iso' | 'chase' | 'top'>('iso');
+  const [nitroGauge, setNitroGauge] = useState(100);
+  const [isNitroActive, setIsNitroActive] = useState(false);
+  const [carCoords, setCarCoords] = useState({ x: 0, z: 25, angle: 0 });
+
   const [activeZone, setActiveZone] = useState<{
     id: string;
     title: string;
@@ -53,6 +97,7 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
     actionText: string;
     actionType: 'arcade' | 'saas' | 'cinema' | 'racing';
   } | null>(null);
+
   const [arcadeModalGame, setArcadeModalGame] = useState<{ id: string; title: string } | null>(null);
   const [hornActive, setHornActive] = useState(false);
   const [soundMuted, setSoundMuted] = useState(false);
@@ -64,16 +109,21 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
     left: boolean;
     right: boolean;
     handbrake: boolean;
+    nitro: boolean;
   }>({
     forward: false,
     backward: false,
     left: false,
     right: false,
     handbrake: false,
+    nitro: false,
   });
 
   const activeZoneRef = useRef(activeZone);
   activeZoneRef.current = activeZone;
+
+  const cameraModeRef = useRef(cameraMode);
+  cameraModeRef.current = cameraMode;
 
   useEffect(() => {
     const container = mountRef.current;
@@ -82,13 +132,13 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
     // 1. Scene, Camera, Renderer (Vibrant Sunny Daylight Environment)
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x93c5fd); // Clear sunny blue sky
-    scene.fog = new THREE.FogExp2(0x93c5fd, 0.009);
+    scene.fog = new THREE.FogExp2(0x93c5fd, 0.008);
 
     const camera = new THREE.PerspectiveCamera(
       45,
       container.clientWidth / container.clientHeight,
       0.1,
-      250
+      280
     );
 
     const renderer = new THREE.WebGLRenderer({
@@ -98,30 +148,30 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.shadowMap.type = THREE.PCFShadowMap;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.15;
     container.appendChild(renderer.domElement);
 
     // 2. Sunny Daylight Lighting (Crisp Shadows & Warm Sunlight)
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.4);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.45);
     scene.add(ambientLight);
 
-    const sunLight = new THREE.DirectionalLight(0xfffaed, 2.8);
-    sunLight.position.set(40, 60, 35);
+    const sunLight = new THREE.DirectionalLight(0xfffaed, 2.9);
+    sunLight.position.set(45, 65, 35);
     sunLight.castShadow = true;
     sunLight.shadow.mapSize.width = 2048;
     sunLight.shadow.mapSize.height = 2048;
     sunLight.shadow.camera.near = 0.5;
-    sunLight.shadow.camera.far = 180;
-    sunLight.shadow.camera.left = -60;
-    sunLight.shadow.camera.right = 60;
-    sunLight.shadow.camera.top = 60;
-    sunLight.shadow.camera.bottom = -60;
+    sunLight.shadow.camera.far = 190;
+    sunLight.shadow.camera.left = -70;
+    sunLight.shadow.camera.right = 70;
+    sunLight.shadow.camera.top = 70;
+    sunLight.shadow.camera.bottom = -70;
     sunLight.shadow.bias = -0.0003;
     scene.add(sunLight);
 
-    const skyFill = new THREE.HemisphereLight(0xbae6fd, 0x4ade80, 0.9);
+    const skyFill = new THREE.HemisphereLight(0xbae6fd, 0x4ade80, 0.95);
     scene.add(skyFill);
 
     // 3. Stylized City Landscape (Grass, Roads, River & Mountains)
@@ -139,7 +189,7 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
     ground.receiveShadow = true;
     scene.add(ground);
 
-    // River / Canal cutting through (Z = -2 to +2, width 14)
+    // River / Canal cutting through (Z = -3 to +3, width 14)
     const riverGeom = new THREE.PlaneGeometry(worldSize, 14);
     const riverMat = new THREE.MeshStandardMaterial({
       color: 0x0284c7, // Sparkling blue water
@@ -186,7 +236,7 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
       roughness: 0.75,
     });
 
-    // North-South Main Boulevard (X = 0, length = 200, width = 10)
+    // North-South Main Boulevard (X = 0, length = 220, width = 10)
     const roadNSGeom = new THREE.PlaneGeometry(10, worldSize);
     const roadNS = new THREE.Mesh(roadNSGeom, roadMat);
     roadNS.rotation.x = -Math.PI / 2;
@@ -194,7 +244,7 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
     roadNS.receiveShadow = true;
     scene.add(roadNS);
 
-    // East-West Main Avenue (Z = -30 and Z = 30)
+    // East-West Main Avenues (Z = -35 and Z = 35)
     const createRoadEW = (zPos: number) => {
       const roadEWGeom = new THREE.PlaneGeometry(worldSize, 10);
       const roadEW = new THREE.Mesh(roadEWGeom, roadMat);
@@ -247,7 +297,7 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
       mtnGroup.add(peak);
     };
 
-    // Place mountain range along edges
+    // Mountain perimeter
     for (let i = -80; i <= 80; i += 30) {
       createMountain(i, -95, 20 + (i % 7), 28 + (i % 9));
       createMountain(i, 95, 22 + (i % 5), 26 + (i % 8));
@@ -275,7 +325,6 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
       treeGroup.add(foliage);
     };
 
-    // Plant trees along Boulevard
     for (let z = -80; z <= 80; z += 12) {
       if (Math.abs(z) > 10) {
         createTree(-7.5, z);
@@ -337,10 +386,10 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
       cGroup.position.set(camp.x, 0, camp.z);
       scene.add(cGroup);
 
-      // Campus Ground Foundation / Concrete Plaza
-      const plazaGeom = new THREE.BoxGeometry(26, 0.4, 26);
+      // Campus Ground Foundation Plaza
+      const plazaGeom = new THREE.BoxGeometry(28, 0.4, 28);
       const plazaMat = new THREE.MeshStandardMaterial({
-        color: 0xe2e8f0, // Clean light stone plaza
+        color: 0xe2e8f0,
         roughness: 0.6,
       });
       const plaza = new THREE.Mesh(plazaGeom, plazaMat);
@@ -361,7 +410,7 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
       bldg.receiveShadow = true;
       cGroup.add(bldg);
 
-      // Glass Windows Grid (Glowing Emissive Windows)
+      // Glass Windows Grid (Glowing Windows)
       const winGeom = new THREE.PlaneGeometry(16, 9);
       const winMat = new THREE.MeshStandardMaterial({
         color: camp.color,
@@ -382,11 +431,11 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
       cGroup.add(gate);
 
       // Floating Hologram Diamond on Roof
-      const diamondGeom = new THREE.OctahedronGeometry(2, 0);
+      const diamondGeom = new THREE.OctahedronGeometry(2.2, 0);
       const diamondMat = new THREE.MeshStandardMaterial({
         color: camp.color,
         emissive: camp.color,
-        emissiveIntensity: 0.8,
+        emissiveIntensity: 0.85,
         metalness: 0.9,
       });
       const diamond = new THREE.Mesh(diamondGeom, diamondMat);
@@ -402,14 +451,16 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
         color: camp.color,
         side: THREE.DoubleSide,
         transparent: true,
-        opacity: 0.75,
+        opacity: 0.8,
       });
       const ring = new THREE.Mesh(ringGeom, ringMat);
       ring.position.set(0, 0.45, 7);
       cGroup.add(ring);
     });
 
-    // 7. Smashable Physics Wooden Crates Pyramid
+    // 7. BRUNO SIMON PHYSICS OBJECTS:
+
+    // 7A. Smashable Physics Wooden Crates Pyramid (Center Boulevard)
     const crates: PhysicsCrate[] = [];
     const crateMat = new THREE.MeshStandardMaterial({
       color: 0xb45309, // Amber wooden crate
@@ -417,7 +468,6 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
     });
     const crateGeom = new THREE.BoxGeometry(1.4, 1.4, 1.4);
 
-    // Build pyramid at (0, 0, -16)
     const pyramidRows = [
       [-2.1, -0.7, 0.7, 2.1], // Base row 4 crates
       [-1.4, 0, 1.4], // 2nd row 3 crates
@@ -430,7 +480,7 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
         const mesh = new THREE.Mesh(crateGeom, crateMat);
         const cx = xOffset;
         const cy = 0.7 + rowIdx * 1.4;
-        const cz = -18;
+        const cz = -22;
         mesh.position.set(cx, cy, cz);
         mesh.castShadow = true;
         scene.add(mesh);
@@ -450,34 +500,172 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
       });
     });
 
-    // 8. Stunt Jump Ramp (Launches car over the river / road!)
-    const rampGroup = new THREE.Group();
-    rampGroup.position.set(0, 0, 14);
-    scene.add(rampGroup);
+    // 7B. 10 BOWLING PINS FORMATION (Classic Triangle Alley at East Side: X=26, Z=-18)
+    const bowlingPins: PhysicsPin[] = [];
+    const pinBodyMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.3 });
+    const pinRedBandMat = new THREE.MeshStandardMaterial({ color: 0xef4444, roughness: 0.3 });
 
-    const rampGeom = new THREE.BoxGeometry(6, 1.6, 6);
-    rampGeom.rotateX(Math.PI / 10);
+    const pinRows = [
+      [{ x: 0, z: 0 }], // Row 1 (Head pin)
+      [{ x: -0.6, z: -1.0 }, { x: 0.6, z: -1.0 }], // Row 2
+      [{ x: -1.2, z: -2.0 }, { x: 0, z: -2.0 }, { x: 1.2, z: -2.0 }], // Row 3
+      [{ x: -1.8, z: -3.0 }, { x: -0.6, z: -3.0 }, { x: 0.6, z: -3.0 }, { x: 1.8, z: -3.0 }], // Row 4
+    ];
+
+    pinRows.forEach((row) => {
+      row.forEach((pos) => {
+        const pinGroup = new THREE.Group();
+        const px = 26 + pos.x;
+        const py = 0;
+        const pz = -18 + pos.z;
+        pinGroup.position.set(px, py, pz);
+
+        // Lower body cylinder
+        const bGeom = new THREE.CylinderGeometry(0.24, 0.32, 1.2, 16);
+        const bMesh = new THREE.Mesh(bGeom, pinBodyMat);
+        bMesh.position.y = 0.6;
+        bMesh.castShadow = true;
+        pinGroup.add(bMesh);
+
+        // Red band
+        const bandGeom = new THREE.CylinderGeometry(0.21, 0.23, 0.25, 16);
+        const bandMesh = new THREE.Mesh(bandGeom, pinRedBandMat);
+        bandMesh.position.y = 1.0;
+        pinGroup.add(bandMesh);
+
+        // Neck & Head sphere
+        const headGeom = new THREE.SphereGeometry(0.22, 16, 16);
+        const headMesh = new THREE.Mesh(headGeom, pinBodyMat);
+        headMesh.position.y = 1.35;
+        headMesh.castShadow = true;
+        pinGroup.add(headMesh);
+
+        scene.add(pinGroup);
+
+        bowlingPins.push({
+          group: pinGroup,
+          x: px,
+          y: py,
+          z: pz,
+          vx: 0,
+          vy: 0,
+          vz: 0,
+          rotX: 0,
+          rotZ: 0,
+          knocked: false,
+        });
+      });
+    });
+
+    // 7C. DESTRUCTIBLE BRICK WALL (West Side: X=-26, Z=-18)
+    const bricks: PhysicsBrick[] = [];
+    const brickColors = [0x0284c7, 0xf59e0b, 0xef4444, 0x10b981];
+    const brickGeom = new THREE.BoxGeometry(1.6, 0.8, 0.8);
+
+    for (let r = 0; r < 3; r++) {
+      for (let c = -2; c <= 2; c++) {
+        const bMat = new THREE.MeshStandardMaterial({
+          color: brickColors[(r + c + 4) % brickColors.length],
+          roughness: 0.5,
+        });
+        const bMesh = new THREE.Mesh(brickGeom, bMat);
+        const bx = -26 + c * 1.65;
+        const by = 0.4 + r * 0.82;
+        const bz = -18;
+        bMesh.position.set(bx, by, bz);
+        bMesh.castShadow = true;
+        scene.add(bMesh);
+
+        bricks.push({
+          mesh: bMesh,
+          x: bx,
+          y: by,
+          z: bz,
+          vx: 0,
+          vy: 0,
+          vz: 0,
+          rotX: 0,
+          rotY: 0,
+          rotZ: 0,
+          knocked: false,
+        });
+      }
+    }
+
+    // 7D. 3D BLOCK TEXT IN THE WORLD ("JUBAYER" on the grass)
+    const textGroup = new THREE.Group();
+    textGroup.position.set(0, 0, 38);
+    scene.add(textGroup);
+
+    const letterMat = new THREE.MeshStandardMaterial({
+      color: 0xffffff,
+      roughness: 0.3,
+      metalness: 0.2,
+    });
+    // Create blocky stylized letters for "J U B A Y E R"
+    const letterBlocks = [
+      { x: -9, w: 1.8, h: 1.8, d: 0.8 }, // J
+      { x: -6, w: 1.8, h: 1.8, d: 0.8 }, // U
+      { x: -3, w: 1.8, h: 1.8, d: 0.8 }, // B
+      { x: 0, w: 1.8, h: 1.8, d: 0.8 },  // A
+      { x: 3, w: 1.8, h: 1.8, d: 0.8 },  // Y
+      { x: 6, w: 1.8, h: 1.8, d: 0.8 },  // E
+      { x: 9, w: 1.8, h: 1.8, d: 0.8 },  // R
+    ];
+    letterBlocks.forEach((lb) => {
+      const bGeom = new THREE.BoxGeometry(lb.w, lb.h, lb.d);
+      const bMesh = new THREE.Mesh(bGeom, letterMat);
+      bMesh.position.set(lb.x, lb.h / 2, 0);
+      bMesh.castShadow = true;
+      textGroup.add(bMesh);
+    });
+
+    // 8. DUAL STUNT JUMP RAMPS:
+    // Ramp 1: South Ramp launching across the river (Z = 12)
+    const ramp1Group = new THREE.Group();
+    ramp1Group.position.set(0, 0, 12);
+    scene.add(ramp1Group);
+
+    const ramp1Geom = new THREE.BoxGeometry(6, 1.8, 6);
+    ramp1Geom.rotateX(Math.PI / 9);
     const rampMat = new THREE.MeshStandardMaterial({
       color: 0xf59e0b, // Yellow hazard ramp
       roughness: 0.4,
     });
-    const rampMesh = new THREE.Mesh(rampGeom, rampMat);
-    rampMesh.position.y = 0.8;
-    rampMesh.castShadow = true;
-    rampMesh.receiveShadow = true;
-    rampGroup.add(rampMesh);
+    const ramp1Mesh = new THREE.Mesh(ramp1Geom, rampMat);
+    ramp1Mesh.position.y = 0.9;
+    ramp1Mesh.castShadow = true;
+    ramp1Mesh.receiveShadow = true;
+    ramp1Group.add(ramp1Mesh);
+
+    // Ramp 2: North Mega Launch Ramp (Z = -12)
+    const ramp2Group = new THREE.Group();
+    ramp2Group.position.set(0, 0, -12);
+    scene.add(ramp2Group);
+
+    const ramp2Geom = new THREE.BoxGeometry(6, 1.8, 6);
+    ramp2Geom.rotateX(-Math.PI / 9);
+    const ramp2Mesh = new THREE.Mesh(ramp2Geom, rampMat);
+    ramp2Mesh.position.y = 0.9;
+    ramp2Mesh.castShadow = true;
+    ramp2Mesh.receiveShadow = true;
+    ramp2Group.add(ramp2Mesh);
 
     // 9. THE VIBRANT BEAUTIFUL CAR (Bruno Simon Style Ferrari Red Roadster)
     const carGroup = new THREE.Group();
     carGroup.position.set(0, 0, 25);
     scene.add(carGroup);
 
+    // Sub-group for body roll/pitch suspension physics
+    const carChassisWrapper = new THREE.Group();
+    carGroup.add(carChassisWrapper);
+
     // Sleek Glossy Red Sports Car Body
     const carBodyMat = new THREE.MeshPhysicalMaterial({
       color: 0xdc2626, // Vivid Ferrari Red
       metalness: 0.75,
       roughness: 0.15,
-      clearcoat: 0.6,
+      clearcoat: 0.7,
       clearcoatRoughness: 0.1,
     });
 
@@ -486,14 +674,14 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
     const carChassis = new THREE.Mesh(carChassisGeom, carBodyMat);
     carChassis.position.y = 0.65;
     carChassis.castShadow = true;
-    carGroup.add(carChassis);
+    carChassisWrapper.add(carChassis);
 
     // White Racing Stripe down center
     const stripeGeom = new THREE.BoxGeometry(0.5, 0.72, 4.22);
     const stripeMat = new THREE.MeshStandardMaterial({ color: 0xffffff });
     const stripe = new THREE.Mesh(stripeGeom, stripeMat);
     stripe.position.y = 0.65;
-    carGroup.add(stripe);
+    carChassisWrapper.add(stripe);
 
     // Cabin / Tinted Cockpit Glass
     const cockpitGeom = new THREE.BoxGeometry(1.7, 0.65, 2.0);
@@ -505,45 +693,83 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
     const cockpit = new THREE.Mesh(cockpitGeom, cockpitMat);
     cockpit.position.set(0, 1.2, -0.2);
     cockpit.castShadow = true;
-    carGroup.add(cockpit);
+    carChassisWrapper.add(cockpit);
 
     // Rear High-Downforce Spoiler
     const spoilerWingGeom = new THREE.BoxGeometry(2.1, 0.1, 0.6);
     const spoilerWing = new THREE.Mesh(spoilerWingGeom, carBodyMat);
     spoilerWing.position.set(0, 1.35, 1.8);
     spoilerWing.castShadow = true;
-    carGroup.add(spoilerWing);
+    carChassisWrapper.add(spoilerWing);
 
-    // Chrome Headlights (with actual SpotLight Beams)
-    const hlLensMat = new THREE.MeshBasicMaterial({ color: 0xfef08a }); // Warm yellow headlight
+    // Spoiler Struts
+    const strutGeom = new THREE.BoxGeometry(0.1, 0.4, 0.2);
+    const strutMat = new THREE.MeshStandardMaterial({ color: 0x1e293b });
+    const sL = new THREE.Mesh(strutGeom, strutMat);
+    sL.position.set(-0.7, 1.15, 1.8);
+    carChassisWrapper.add(sL);
+    const sR = new THREE.Mesh(strutGeom, strutMat);
+    sR.position.set(0.7, 1.15, 1.8);
+    carChassisWrapper.add(sR);
+
+    // Chrome Headlights with SpotLight Beams
+    const hlLensMat = new THREE.MeshBasicMaterial({ color: 0xfef08a });
     const hlGeom = new THREE.BoxGeometry(0.4, 0.2, 0.1);
     const hlL = new THREE.Mesh(hlGeom, hlLensMat);
     hlL.position.set(-0.75, 0.65, -2.12);
-    carGroup.add(hlL);
+    carChassisWrapper.add(hlL);
     const hlR = new THREE.Mesh(hlGeom, hlLensMat);
     hlR.position.set(0.75, 0.65, -2.12);
-    carGroup.add(hlR);
+    carChassisWrapper.add(hlR);
 
     // Forward SpotLight Shining on ground
-    const carHeadlight = new THREE.SpotLight(0xfffbeb, 6, 35, Math.PI / 4, 0.3, 1);
+    const carHeadlight = new THREE.SpotLight(0xfffbeb, 6, 38, Math.PI / 4, 0.3, 1);
     carHeadlight.position.set(0, 0.8, -2.0);
     const lightTarget = new THREE.Object3D();
     lightTarget.position.set(0, 0, -18);
-    carGroup.add(lightTarget);
+    carChassisWrapper.add(lightTarget);
     carHeadlight.target = lightTarget;
-    carGroup.add(carHeadlight);
+    carChassisWrapper.add(carHeadlight);
 
     // Red Tail Lights
     const tailMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
     const tailGeom = new THREE.BoxGeometry(0.4, 0.15, 0.1);
     const tlL = new THREE.Mesh(tailGeom, tailMat);
     tlL.position.set(-0.75, 0.7, 2.12);
-    carGroup.add(tlL);
+    carChassisWrapper.add(tlL);
     const tlR = new THREE.Mesh(tailGeom, tailMat);
     tlR.position.set(0.75, 0.7, 2.12);
-    carGroup.add(tlR);
+    carChassisWrapper.add(tlR);
 
-    // 4 Wheels: Rubber Tires with Silver 5-spoke Alloy Rims
+    // Dual Nitro Exhaust Pipes & Animated Flames
+    const exhaustGeom = new THREE.CylinderGeometry(0.12, 0.12, 0.3, 12);
+    exhaustGeom.rotateX(Math.PI / 2);
+    const exhaustMat = new THREE.MeshStandardMaterial({ color: 0x475569, metalness: 0.9 });
+    const exL = new THREE.Mesh(exhaustGeom, exhaustMat);
+    exL.position.set(-0.5, 0.45, 2.15);
+    carChassisWrapper.add(exL);
+    const exR = new THREE.Mesh(exhaustGeom, exhaustMat);
+    exR.position.set(0.5, 0.45, 2.15);
+    carChassisWrapper.add(exR);
+
+    // Nitro Flame Cones (Hidden by default, scale up on Nitro)
+    const flameMat = new THREE.MeshBasicMaterial({
+      color: 0x00f0ff,
+      transparent: true,
+      opacity: 0.85,
+    });
+    const flameGeom = new THREE.ConeGeometry(0.2, 0.9, 12);
+    flameGeom.rotateX(-Math.PI / 2);
+    const flameL = new THREE.Mesh(flameGeom, flameMat);
+    flameL.position.set(-0.5, 0.45, 2.65);
+    flameL.scale.set(0.01, 0.01, 0.01);
+    carChassisWrapper.add(flameL);
+    const flameR = new THREE.Mesh(flameGeom, flameMat);
+    flameR.position.set(0.5, 0.45, 2.65);
+    flameR.scale.set(0.01, 0.01, 0.01);
+    carChassisWrapper.add(flameR);
+
+    // 4 Wheels: Rubber Tires with Alloy Rims
     const tireGeom = new THREE.CylinderGeometry(0.46, 0.46, 0.38, 24);
     tireGeom.rotateZ(Math.PI / 2);
     const tireMat = new THREE.MeshStandardMaterial({
@@ -575,7 +801,44 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
     const backLWheel = createWheelAssembly(-1.2, 0.46, 1.3);
     const backRWheel = createWheelAssembly(1.2, 0.46, 1.3);
 
-    // 10. Car Physics State
+    // 10. Smoke Particles Pool (Tire smoke on drift / acceleration)
+    const smokePool: SmokeParticle[] = [];
+    const smokeMat = new THREE.MeshBasicMaterial({
+      color: 0xffffff,
+      transparent: true,
+      opacity: 0.45,
+    });
+    const smokeGeom = new THREE.SphereGeometry(0.25, 8, 8);
+
+    for (let i = 0; i < 30; i++) {
+      const sMesh = new THREE.Mesh(smokeGeom, smokeMat);
+      sMesh.visible = false;
+      scene.add(sMesh);
+      smokePool.push({
+        mesh: sMesh,
+        active: false,
+        life: 0,
+        maxLife: 25,
+        vx: 0,
+        vy: 0,
+        vz: 0,
+      });
+    }
+
+    const spawnSmoke = (x: number, y: number, z: number) => {
+      const p = smokePool.find((sp) => !sp.active);
+      if (!p) return;
+      p.active = true;
+      p.life = p.maxLife;
+      p.mesh.position.set(x, y, z);
+      p.mesh.scale.set(0.5, 0.5, 0.5);
+      p.mesh.visible = true;
+      p.vx = (Math.random() - 0.5) * 0.05;
+      p.vy = 0.03 + Math.random() * 0.04;
+      p.vz = (Math.random() - 0.5) * 0.05;
+    };
+
+    // 11. Car Physics State
     let carX = 0;
     let carY = 0;
     let carZ = 25;
@@ -584,13 +847,15 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
     let carSpeed = 0;
     let steerAngle = 0;
     let inAir = false;
+    let nitroFuel = 100;
 
-    const maxSpeed = 0.58;
+    const baseMaxSpeed = 0.58;
+    const nitroMaxSpeed = 0.92;
     const accel = 0.018;
     const friction = 0.965;
-    const turnSpeed = 0.046;
+    const turnSpeed = 0.048;
 
-    // 11. Input Listeners
+    // 12. Input Listeners
     const handleKeyDown = (e: KeyboardEvent) => {
       const k = e.key.toLowerCase();
       if (k === 'w' || k === 'arrowup') keysRef.current.forward = true;
@@ -600,6 +865,16 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
       if (k === ' ') {
         e.preventDefault();
         keysRef.current.handbrake = true;
+        sound.playDriftScreech();
+      }
+      if (k === 'shift') {
+        e.preventDefault();
+        keysRef.current.nitro = true;
+        sound.playNitroBoost();
+      }
+      if (k === 'c') {
+        setCameraMode((prev) => (prev === 'iso' ? 'chase' : prev === 'chase' ? 'top' : 'iso'));
+        sound.playClick();
       }
       if (k === 'h') {
         sound.playCarHorn();
@@ -629,12 +904,13 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
       if (k === 'a' || k === 'arrowleft') keysRef.current.left = false;
       if (k === 'd' || k === 'arrowright') keysRef.current.right = false;
       if (k === ' ') keysRef.current.handbrake = false;
+      if (k === 'shift') keysRef.current.nitro = false;
     };
 
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
 
-    // 12. Animation Loop
+    // 13. Animation Loop
     let animId: number;
     let frame = 0;
 
@@ -642,22 +918,49 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
       frame++;
       const keys = keysRef.current;
 
+      // Handle Nitro Boost
+      const isBoosting = keys.nitro && nitroFuel > 0 && keys.forward;
+      setIsNitroActive(isBoosting);
+
+      if (isBoosting) {
+        nitroFuel = Math.max(0, nitroFuel - 0.7);
+        flameL.scale.set(1.2, 1.2, 1.2);
+        flameR.scale.set(1.2, 1.2, 1.2);
+      } else {
+        nitroFuel = Math.min(100, nitroFuel + 0.15);
+        flameL.scale.set(0.01, 0.01, 0.01);
+        flameR.scale.set(0.01, 0.01, 0.01);
+      }
+      setNitroGauge(Math.round(nitroFuel));
+
+      const curMaxSpeed = isBoosting ? nitroMaxSpeed : baseMaxSpeed;
+      const curAccel = isBoosting ? accel * 2.2 : accel;
+
       // Acceleration & Sound
       if (keys.forward) {
-        carSpeed = Math.min(maxSpeed, carSpeed + accel);
+        carSpeed = Math.min(curMaxSpeed, carSpeed + curAccel);
         if (frame % 14 === 0) sound.playEngineRev();
+        // Emit smoke occasionally
+        if (frame % 5 === 0) {
+          spawnSmoke(carX + Math.sin(carAngle) * 1.5, carY + 0.3, carZ + Math.cos(carAngle) * 1.5);
+        }
       } else if (keys.backward) {
-        carSpeed = Math.max(-maxSpeed * 0.45, carSpeed - accel);
+        carSpeed = Math.max(-curMaxSpeed * 0.45, carSpeed - accel);
       } else {
         carSpeed *= friction;
       }
 
-      // Handbrake
-      if (keys.handbrake) carSpeed *= 0.88;
+      // Handbrake / Drift
+      if (keys.handbrake) {
+        carSpeed *= 0.88;
+        if (Math.abs(carSpeed) > 0.15 && frame % 4 === 0) {
+          spawnSmoke(carX, carY + 0.3, carZ);
+        }
+      }
 
       // Steering
       const steerTarget = (keys.left ? 1 : 0) - (keys.right ? 1 : 0);
-      steerAngle += (steerTarget * 0.45 - steerAngle) * 0.2;
+      steerAngle += (steerTarget * 0.48 - steerAngle) * 0.22;
 
       // Turning based on speed
       if (Math.abs(carSpeed) > 0.005) {
@@ -669,7 +972,7 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
       carX -= Math.sin(carAngle) * carSpeed;
       carZ -= Math.cos(carAngle) * carSpeed;
 
-      // Bounds check
+      // World Boundaries
       const bound = worldSize / 2 - 8;
       if (carX > bound) {
         carX = bound;
@@ -692,16 +995,29 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
         sound.playImpact();
       }
 
-      // Stunt Jump Ramp (X = 0, Z = 14)
+      // Stunt Jump Ramp 1 (South River Jump: X = 0, Z = 12)
       if (
         Math.abs(carX - 0) < 3.2 &&
-        carZ > 12 &&
-        carZ < 17 &&
-        carSpeed > 0.25 &&
+        carZ > 10 &&
+        carZ < 15 &&
+        carSpeed > 0.22 &&
         !inAir
       ) {
         inAir = true;
-        carVelocityY = 0.38;
+        carVelocityY = isBoosting ? 0.48 : 0.38;
+        sound.playWarp();
+      }
+
+      // Stunt Jump Ramp 2 (North Mega Jump: X = 0, Z = -12)
+      if (
+        Math.abs(carX - 0) < 3.2 &&
+        carZ < -10 &&
+        carZ > -15 &&
+        carSpeed < -0.22 &&
+        !inAir
+      ) {
+        inAir = true;
+        carVelocityY = isBoosting ? 0.48 : 0.38;
         sound.playWarp();
       }
 
@@ -717,13 +1033,20 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
         }
       }
 
-      // Apply to Car Group
+      // Apply coordinates to car group
       carGroup.position.set(carX, carY, carZ);
       carGroup.rotation.y = carAngle;
+
+      // Realistic Dynamic Suspension: Body roll and pitch
       if (inAir) {
-        carGroup.rotation.x = -carVelocityY * 1.4;
+        carChassisWrapper.rotation.x = -carVelocityY * 1.5;
+        carChassisWrapper.rotation.z = 0;
       } else {
-        carGroup.rotation.x = 0;
+        // Roll into turns, pitch on acceleration/braking
+        const rollTarget = -steerAngle * Math.min(1, Math.abs(carSpeed) * 2) * 0.16;
+        const pitchTarget = keys.forward ? 0.05 : keys.backward ? -0.06 : 0;
+        carChassisWrapper.rotation.z += (rollTarget - carChassisWrapper.rotation.z) * 0.2;
+        carChassisWrapper.rotation.x += (pitchTarget - carChassisWrapper.rotation.x) * 0.2;
       }
 
       // Wheel rotation
@@ -737,14 +1060,49 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
       frontLWheel.rotation.y = steerAngle * 0.75;
       frontRWheel.rotation.y = steerAngle * 0.75;
 
-      // Camera Smooth Follow (Isometric 3rd Person View)
-      const targetCamX = carX + Math.sin(carAngle) * 18;
-      const targetCamY = carY + 16;
-      const targetCamZ = carZ + Math.cos(carAngle) * 18;
+      // Update Smoke Particles
+      smokePool.forEach((p) => {
+        if (!p.active) return;
+        p.life -= 1;
+        if (p.life <= 0) {
+          p.active = false;
+          p.mesh.visible = false;
+        } else {
+          p.mesh.position.x += p.vx;
+          p.mesh.position.y += p.vy;
+          p.mesh.position.z += p.vz;
+          const progress = 1 - p.life / p.maxLife;
+          const s = 0.5 + progress * 1.8;
+          p.mesh.scale.set(s, s, s);
+        }
+      });
 
-      camera.position.x += (targetCamX - camera.position.x) * 0.08;
-      camera.position.y += (targetCamY - camera.position.y) * 0.08;
-      camera.position.z += (targetCamZ - camera.position.z) * 0.08;
+      // Camera Follow based on selected Camera Mode
+      const curCamMode = cameraModeRef.current;
+      let targetCamX = carX;
+      let targetCamY = carY + 16;
+      let targetCamZ = carZ;
+
+      if (curCamMode === 'iso') {
+        // Isometric Drone View (Bruno Simon signature angle)
+        targetCamX = carX + Math.sin(carAngle) * 19;
+        targetCamY = carY + 16;
+        targetCamZ = carZ + Math.cos(carAngle) * 19;
+      } else if (curCamMode === 'chase') {
+        // Dynamic 3rd Person Racing Chase Cam
+        targetCamX = carX + Math.sin(carAngle) * 12;
+        targetCamY = carY + 5.5;
+        targetCamZ = carZ + Math.cos(carAngle) * 12;
+      } else {
+        // Top-Down Helicopter Overview
+        targetCamX = carX;
+        targetCamY = carY + 36;
+        targetCamZ = carZ + 0.1;
+      }
+
+      camera.position.x += (targetCamX - camera.position.x) * 0.085;
+      camera.position.y += (targetCamY - camera.position.y) * 0.085;
+      camera.position.z += (targetCamZ - camera.position.z) * 0.085;
       camera.lookAt(carX, carY + 1.2, carZ);
 
       // Check Smash against Wooden Crates Pyramid
@@ -755,9 +1113,9 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
 
         if (dist < 2.0 && !crate.knocked && Math.abs(carSpeed) > 0.12) {
           crate.knocked = true;
-          crate.vx = -Math.sin(carAngle) * (Math.abs(carSpeed) * 0.9 + 0.15);
-          crate.vz = -Math.cos(carAngle) * (Math.abs(carSpeed) * 0.9 + 0.15);
-          crate.vy = 0.22;
+          crate.vx = -Math.sin(carAngle) * (Math.abs(carSpeed) * 0.95 + 0.18);
+          crate.vz = -Math.cos(carAngle) * (Math.abs(carSpeed) * 0.95 + 0.18);
+          crate.vy = 0.25;
           sound.playImpact();
         }
 
@@ -765,7 +1123,7 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
           crate.x += crate.vx;
           crate.z += crate.vz;
           crate.y += crate.vy;
-          crate.vy -= 0.015; // gravity on crate
+          crate.vy -= 0.015;
           if (crate.y <= 0.7) {
             crate.y = 0.7;
             crate.vy = 0;
@@ -775,6 +1133,72 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
           crate.rotX += 0.06;
           crate.mesh.position.set(crate.x, crate.y, crate.z);
           crate.mesh.rotation.x = crate.rotX;
+        }
+      });
+
+      // Check Smash against 10 Bowling Pins
+      bowlingPins.forEach((pin) => {
+        const dx = carX - pin.x;
+        const dz = carZ - pin.z;
+        const dist = Math.hypot(dx, dz);
+
+        if (dist < 1.6 && !pin.knocked && Math.abs(carSpeed) > 0.1) {
+          pin.knocked = true;
+          pin.vx = -Math.sin(carAngle) * (Math.abs(carSpeed) * 1.1 + 0.2);
+          pin.vz = -Math.cos(carAngle) * (Math.abs(carSpeed) * 1.1 + 0.2);
+          pin.vy = 0.28;
+          sound.playImpact();
+        }
+
+        if (pin.knocked) {
+          pin.x += pin.vx;
+          pin.z += pin.vz;
+          pin.y += pin.vy;
+          pin.vy -= 0.016;
+          if (pin.y <= 0) {
+            pin.y = 0;
+            pin.vy = 0;
+          }
+          pin.vx *= 0.92;
+          pin.vz *= 0.92;
+          pin.rotX += 0.08;
+          pin.rotZ += 0.06;
+          pin.group.position.set(pin.x, pin.y, pin.z);
+          pin.group.rotation.x = pin.rotX;
+          pin.group.rotation.z = pin.rotZ;
+        }
+      });
+
+      // Check Smash against Brick Wall
+      bricks.forEach((brick) => {
+        const dx = carX - brick.x;
+        const dz = carZ - brick.z;
+        const dist = Math.hypot(dx, dz);
+
+        if (dist < 1.8 && !brick.knocked && Math.abs(carSpeed) > 0.12) {
+          brick.knocked = true;
+          brick.vx = -Math.sin(carAngle) * (Math.abs(carSpeed) * 1.2 + 0.15) + (Math.random() - 0.5) * 0.2;
+          brick.vz = -Math.cos(carAngle) * (Math.abs(carSpeed) * 1.2 + 0.15);
+          brick.vy = 0.22 + Math.random() * 0.15;
+          sound.playImpact();
+        }
+
+        if (brick.knocked) {
+          brick.x += brick.vx;
+          brick.z += brick.vz;
+          brick.y += brick.vy;
+          brick.vy -= 0.015;
+          if (brick.y <= 0.4) {
+            brick.y = 0.4;
+            brick.vy = 0;
+          }
+          brick.vx *= 0.94;
+          brick.vz *= 0.94;
+          brick.rotX += 0.05;
+          brick.rotY += 0.04;
+          brick.mesh.position.set(brick.x, brick.y, brick.z);
+          brick.mesh.rotation.x = brick.rotX;
+          brick.mesh.rotation.y = brick.rotY;
         }
       });
 
@@ -790,11 +1214,10 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
       // Proximity Detection to the 4 Campuses
       let foundCampus: (typeof campuses)[0] | null = null;
       for (const c of campuses) {
-        // Distance from car to campus gate entrance
         const gateX = c.x;
         const gateZ = c.z + 7;
         const dist = Math.hypot(carX - gateX, carZ - gateZ);
-        if (dist < 10) {
+        if (dist < 11) {
           foundCampus = c;
           break;
         }
@@ -807,6 +1230,7 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
       }
 
       setSpeedKmh(Math.round(Math.abs(carSpeed) * 190));
+      setCarCoords({ x: carX, z: carZ, angle: carAngle });
 
       renderer.render(scene, camera);
       animId = requestAnimationFrame(animate);
@@ -869,7 +1293,7 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
       className={`relative select-none overflow-hidden transition-all duration-500 ${
         isFullscreen
           ? 'fixed inset-0 z-50 bg-[#93c5fd]'
-          : 'w-full h-[520px] sm:h-[620px] rounded-3xl border-2 border-white/20 shadow-[0_20px_60px_rgba(0,0,0,0.3)] my-8'
+          : 'w-full h-[540px] sm:h-[650px] rounded-3xl border-2 border-white/40 shadow-[0_25px_70px_rgba(0,0,0,0.3)] my-8'
       }`}
     >
       {/* 3D Canvas Viewport */}
@@ -877,18 +1301,32 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
 
       {/* Top HUD Bar */}
       <div className="absolute top-4 inset-x-4 sm:inset-x-6 flex items-center justify-between pointer-events-none z-20">
-        <div className="flex items-center gap-3 bg-white/90 border border-slate-200/80 px-4 py-2 rounded-2xl backdrop-blur-md shadow-lg pointer-events-auto">
-          <span className="w-3 h-3 rounded-full bg-red-500 animate-ping" />
-          <span className="font-mono text-xs font-bold text-slate-900 tracking-wider">
+        <div className="flex items-center gap-3 bg-white/95 border border-slate-200/90 px-4 py-2 rounded-2xl backdrop-blur-md shadow-lg pointer-events-auto">
+          <span className="w-3 h-3 rounded-full bg-red-600 animate-ping" />
+          <span className="font-mono text-xs font-black text-slate-900 tracking-wider">
             BRUNO SIMON 3D CITY // JUBAYER AHMAD
           </span>
           <span className="text-slate-400 hidden sm:inline">|</span>
           <span className="text-emerald-700 font-mono text-xs font-bold hidden sm:inline">
-            4 TECH FACTORY CAMPUSES
+            4 TECH FACTORIES • PINS • BRICKS • RAMPS
           </span>
         </div>
 
         <div className="flex items-center gap-2 pointer-events-auto">
+          {/* Camera Mode Toggle */}
+          <button
+            onClick={() => {
+              sound.playClick();
+              setCameraMode(cameraMode === 'iso' ? 'chase' : cameraMode === 'chase' ? 'top' : 'iso');
+            }}
+            className="px-3 py-1.5 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 text-slate-800 font-mono text-xs font-bold flex items-center gap-1.5 transition-all shadow-md cursor-pointer"
+            title="Switch Camera View [C]"
+          >
+            <Compass className="w-3.5 h-3.5 text-amber-600" />
+            <span className="uppercase">CAM: {cameraMode}</span>
+          </button>
+
+          {/* Horn Button */}
           <button
             onClick={() => {
               sound.playCarHorn();
@@ -904,6 +1342,7 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
             <span>HORN [H]</span>
           </button>
 
+          {/* Audio Mute Toggle */}
           <button
             onClick={toggleSound}
             className="p-2 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 transition-colors shadow-md cursor-pointer"
@@ -911,6 +1350,7 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
             {soundMuted ? <VolumeX className="w-4 h-4 text-slate-400" /> : <Volume2 className="w-4 h-4 text-emerald-600" />}
           </button>
 
+          {/* Fullscreen Toggle */}
           <button
             onClick={() => setIsFullscreen(!isFullscreen)}
             className="p-2 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 transition-colors shadow-md cursor-pointer"
@@ -965,51 +1405,94 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
         </div>
       )}
 
-      {/* Bottom HUD: Speedometer & Controls Guide */}
+      {/* Real-Time Radar Mini-Map (Bottom-Right) */}
+      <div className="absolute top-20 right-4 sm:right-6 pointer-events-auto z-20 hidden md:block">
+        <div className="p-2.5 rounded-2xl bg-white/90 border border-slate-200/90 shadow-lg backdrop-blur-md">
+          <div className="text-[10px] font-mono font-bold text-slate-700 mb-1 flex items-center justify-between">
+            <span>CITY RADAR</span>
+            <span className="text-emerald-600">LIVE</span>
+          </div>
+          <svg className="w-24 h-24 bg-slate-900 rounded-xl" viewBox="-110 -110 220 220">
+            {/* River */}
+            <rect x="-110" y="-7" width="220" height="14" fill="#0284c7" opacity="0.6" />
+            {/* Roads */}
+            <rect x="-5" y="-110" width="10" height="220" fill="#475569" />
+            <rect x="-110" y="-40" width="220" height="10" fill="#475569" />
+            <rect x="-110" y="30" width="220" height="10" fill="#475569" />
+            {/* 4 Campuses */}
+            <circle cx="-42" cy="-35" r="8" fill="#0284c7" />
+            <circle cx="42" cy="-35" r="8" fill="#f59e0b" />
+            <circle cx="42" cy="35" r="8" fill="#e11d48" />
+            <circle cx="-42" cy="35" r="8" fill="#16a34a" />
+            {/* Player Car Marker & Heading Arrow */}
+            <g transform={`translate(${carCoords.x}, ${carCoords.z}) rotate(${(-carCoords.angle * 180) / Math.PI})`}>
+              <polygon points="0,-8 5,6 -5,6" fill="#ef4444" stroke="#ffffff" strokeWidth="1.5" />
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      {/* Bottom HUD: Speedometer, Nitro Gauge & Controls */}
       <div className="absolute bottom-5 inset-x-4 sm:inset-x-6 flex flex-col sm:flex-row items-end sm:items-center justify-between gap-4 pointer-events-none z-20">
         
-        {/* Speedometer Gauge */}
-        <div className="bg-white/95 border border-slate-200/80 px-5 py-3 rounded-2xl backdrop-blur-md shadow-lg flex items-center gap-4 pointer-events-auto">
+        {/* Speedometer & Nitro Boost Gauge */}
+        <div className="bg-white/95 border border-slate-200/90 px-5 py-3 rounded-2xl backdrop-blur-md shadow-lg flex items-center gap-4 pointer-events-auto">
           <div className="font-mono">
-            <div className="text-3xl sm:text-4xl font-black text-red-600 tracking-tight">
-              {speedKmh}
+            <div className="text-3xl sm:text-4xl font-black text-red-600 tracking-tight flex items-baseline gap-1">
+              <span>{speedKmh}</span>
+              <span className="text-xs text-slate-500 font-bold">KM/H</span>
             </div>
             <div className="text-[10px] text-slate-500 uppercase tracking-widest font-bold">
-              KM / HOUR
+              FERRARI RED
             </div>
           </div>
 
-          <div className="h-8 w-[1px] bg-slate-200" />
+          <div className="h-10 w-[1px] bg-slate-200" />
 
-          <div className="font-mono text-xs space-y-0.5">
-            <div className="text-slate-900 font-bold flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-red-600 animate-pulse" />
-              <span>FERRARI RED ROADSTER</span>
+          {/* Nitro Gauge */}
+          <div className="space-y-1 font-mono">
+            <div className="flex items-center justify-between text-[10px] font-bold text-slate-700">
+              <span className="flex items-center gap-1 text-cyan-700">
+                <Flame className={`w-3.5 h-3.5 ${isNitroActive ? 'text-cyan-500 animate-bounce' : ''}`} />
+                <span>NITRO [SHIFT]</span>
+              </span>
+              <span>{nitroGauge}%</span>
             </div>
-            <div className="text-[11px] text-emerald-600 font-semibold">BRUNO SIMON PHYSICS</div>
+            <div className="w-24 sm:w-28 h-2 bg-slate-200 rounded-full overflow-hidden">
+              <div
+                style={{ width: `${nitroGauge}%` }}
+                className={`h-full transition-all duration-150 ${
+                  isNitroActive
+                    ? 'bg-gradient-to-r from-cyan-400 to-blue-600 animate-pulse'
+                    : 'bg-cyan-500'
+                }`}
+              />
+            </div>
           </div>
         </div>
 
         {/* Desktop Keyboard Controls Legend */}
-        <div className="hidden md:flex items-center gap-2 bg-white/95 border border-slate-200/80 px-4 py-2.5 rounded-2xl backdrop-blur-md font-mono text-xs text-slate-700 shadow-lg pointer-events-auto">
-          <span className="font-bold text-slate-900">DRIVE:</span>
-          <span className="text-red-600 font-bold">[W / ↑]</span> Gas •
-          <span className="text-red-600 font-bold">[S / ↓]</span> Reverse •
+        <div className="hidden md:flex items-center gap-2 bg-white/95 border border-slate-200/90 px-4 py-2.5 rounded-2xl backdrop-blur-md font-mono text-xs text-slate-700 shadow-lg pointer-events-auto">
+          <span className="font-bold text-slate-900">KEYS:</span>
+          <span className="text-red-600 font-bold">[W / ↑]</span> Drive •
           <span className="text-red-600 font-bold">[A / D]</span> Steer •
-          <span className="text-red-600 font-bold">[SPACE]</span> Drift •
-          <span className="text-red-600 font-bold">[H]</span> Horn •
-          <span className="text-red-600 font-bold">[R]</span> Reset
+          <span className="text-cyan-600 font-bold">[SHIFT]</span> Nitro •
+          <span className="text-amber-600 font-bold">[SPACE]</span> Drift •
+          <span className="text-stone-800 font-bold">[C]</span> Cam •
+          <span className="text-stone-800 font-bold">[H]</span> Horn •
+          <span className="text-stone-800 font-bold">[R]</span> Reset
         </div>
 
         {/* Mobile Touch Controls */}
-        <div className="flex md:hidden items-center gap-3 pointer-events-auto">
-          <div className="flex items-center gap-1.5">
+        <div className="flex md:hidden items-center gap-2 pointer-events-auto">
+          {/* Steer Buttons */}
+          <div className="flex items-center gap-1">
             <button
               onTouchStart={() => (keysRef.current.left = true)}
               onTouchEnd={() => (keysRef.current.left = false)}
               onMouseDown={() => (keysRef.current.left = true)}
               onMouseUp={() => (keysRef.current.left = false)}
-              className="w-12 h-12 rounded-xl bg-white border border-slate-200 text-slate-800 shadow-md flex items-center justify-center active:scale-95 font-bold"
+              className="w-11 h-11 rounded-xl bg-white border border-slate-200 text-slate-800 shadow-md flex items-center justify-center active:scale-95 font-bold"
             >
               <ArrowLeft className="w-5 h-5" />
             </button>
@@ -1018,19 +1501,38 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
               onTouchEnd={() => (keysRef.current.right = false)}
               onMouseDown={() => (keysRef.current.right = true)}
               onMouseUp={() => (keysRef.current.right = false)}
-              className="w-12 h-12 rounded-xl bg-white border border-slate-200 text-slate-800 shadow-md flex items-center justify-center active:scale-95 font-bold"
+              className="w-11 h-11 rounded-xl bg-white border border-slate-200 text-slate-800 shadow-md flex items-center justify-center active:scale-95 font-bold"
             >
               <ArrowRight className="w-5 h-5" />
             </button>
           </div>
 
-          <div className="flex items-center gap-1.5">
+          {/* Nitro Touch Button */}
+          <button
+            onTouchStart={() => {
+              keysRef.current.nitro = true;
+              sound.playNitroBoost();
+            }}
+            onTouchEnd={() => (keysRef.current.nitro = false)}
+            onMouseDown={() => {
+              keysRef.current.nitro = true;
+              sound.playNitroBoost();
+            }}
+            onMouseUp={() => (keysRef.current.nitro = false)}
+            className="w-11 h-11 rounded-xl bg-cyan-500 text-white shadow-md flex items-center justify-center active:scale-95 font-bold"
+            title="Nitro Boost"
+          >
+            <Flame className="w-5 h-5" />
+          </button>
+
+          {/* Gas & Reverse Buttons */}
+          <div className="flex items-center gap-1">
             <button
               onTouchStart={() => (keysRef.current.backward = true)}
               onTouchEnd={() => (keysRef.current.backward = false)}
               onMouseDown={() => (keysRef.current.backward = true)}
               onMouseUp={() => (keysRef.current.backward = false)}
-              className="w-12 h-12 rounded-xl bg-white border border-slate-200 text-slate-800 shadow-md flex items-center justify-center active:scale-95 font-bold"
+              className="w-11 h-11 rounded-xl bg-white border border-slate-200 text-slate-800 shadow-md flex items-center justify-center active:scale-95 font-bold"
             >
               <ArrowDown className="w-5 h-5" />
             </button>
@@ -1039,7 +1541,7 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
               onTouchEnd={() => (keysRef.current.forward = false)}
               onMouseDown={() => (keysRef.current.forward = true)}
               onMouseUp={() => (keysRef.current.forward = false)}
-              className="w-12 h-12 rounded-xl bg-red-600 text-white shadow-lg shadow-red-500/40 flex items-center justify-center active:scale-95 font-bold"
+              className="w-11 h-11 rounded-xl bg-red-600 text-white shadow-lg shadow-red-500/40 flex items-center justify-center active:scale-95 font-bold"
             >
               <ArrowUp className="w-5 h-5" />
             </button>
