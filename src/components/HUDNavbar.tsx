@@ -47,10 +47,11 @@ export const HUDNavbar: React.FC<HUDNavbarProps> = ({
   };
 
   const navLinks = [
-    { id: 'software', label: 'Software & SaaS' },
-    { id: 'arcade', label: 'Arcade Games' },
+    { id: 'works-snellenberg', label: 'Works' },
+    { id: 'software', label: 'NOORHUB SaaS' },
+    { id: 'arcade', label: 'Playable Arcade' },
     { id: 'cinema', label: 'AI Cinema' },
-    { id: 'credentials', label: 'Timeline' },
+    { id: 'contact', label: 'Contact' },
   ];
 
   const handleNavClick = (id: string) => {
