@@ -13,10 +13,12 @@ import { DigitalPublishing } from './components/DigitalPublishing';
 import { CareerOdyssey } from './components/CareerOdyssey';
 import { DennisFooter } from './components/DennisFooter';
 import { CyberTerminal } from './components/CyberTerminal';
+import { BrunoWorld } from './components/BrunoWorld';
 
 export function App() {
   const [activeSection, setActiveSection] = useState('hero');
   const [terminalOpen, setTerminalOpen] = useState(false);
+  const [brunoWorldOpen, setBrunoWorldOpen] = useState(false);
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -64,6 +66,7 @@ export function App() {
         activeSection={activeSection}
         onNavigate={handleNavigate}
         onOpenTerminal={() => setTerminalOpen(true)}
+        onOpenBrunoWorld={() => setBrunoWorldOpen(true)}
       />
 
       {/* 4. Main Content Journey */}
@@ -71,6 +74,7 @@ export function App() {
         <HeroSection
           onScrollTo={handleNavigate}
           onOpenTerminal={() => setTerminalOpen(true)}
+          onOpenBrunoWorld={() => setBrunoWorldOpen(true)}
         />
 
         {/* Dennis Snellenberg Infinite Marquee Ticker */}
@@ -105,6 +109,12 @@ export function App() {
       <CyberTerminal
         isOpen={terminalOpen}
         onClose={() => setTerminalOpen(false)}
+      />
+
+      {/* 7. Bruno Simon 3D Interactive Car World */}
+      <BrunoWorld
+        isOpen={brunoWorldOpen}
+        onClose={() => setBrunoWorldOpen(false)}
       />
     </div>
   );

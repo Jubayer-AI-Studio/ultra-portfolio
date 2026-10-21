@@ -8,12 +8,14 @@ interface HUDNavbarProps {
   activeSection: string;
   onNavigate: (sectionId: string) => void;
   onOpenTerminal: () => void;
+  onOpenBrunoWorld?: () => void;
 }
 
 export const HUDNavbar: React.FC<HUDNavbarProps> = ({
   activeSection,
   onNavigate,
   onOpenTerminal,
+  onOpenBrunoWorld,
 }) => {
   const [timeStr, setTimeStr] = useState('');
   const [isMuted, setIsMuted] = useState(false);
@@ -108,6 +110,22 @@ export const HUDNavbar: React.FC<HUDNavbarProps> = ({
 
         {/* Action Controls & Socials */}
         <div className="flex items-center gap-2">
+          {/* Bruno Simon 3D Car World Launcher */}
+          {onOpenBrunoWorld && (
+            <button
+              onClick={() => {
+                sound.playWarp();
+                onOpenBrunoWorld();
+              }}
+              aria-label="Drive 3D Car World (Bruno Simon Mode)"
+              title="Drive 3D Car World (Bruno Simon Mode)"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500/25 to-orange-500/25 border border-amber-400/60 text-amber-300 hover:bg-amber-500/35 text-xs font-mono font-bold transition-all shadow-md shadow-amber-950/40 cursor-pointer min-h-[36px]"
+            >
+              <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
+              <span>🚗 3D CAR WORLD</span>
+            </button>
+          )}
+
           {/* CLI Terminal Launcher Button */}
           <button
             onClick={() => {

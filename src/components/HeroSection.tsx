@@ -3,14 +3,15 @@ import { motion } from 'framer-motion';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { LivingAvatar } from './LivingAvatar';
 import { sound } from '../utils/sound';
-import { ArrowRight, Play, Film, MapPin, Volume2 } from 'lucide-react';
+import { ArrowRight, Play, Film, MapPin, Volume2, Sparkles } from 'lucide-react';
 
 interface HeroSectionProps {
   onScrollTo: (sectionId: string) => void;
   onOpenTerminal?: () => void;
+  onOpenBrunoWorld?: () => void;
 }
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ onScrollTo }) => {
+export const HeroSection: React.FC<HeroSectionProps> = ({ onScrollTo, onOpenBrunoWorld }) => {
   const roles = [
     'Full-Stack Software Developer',
     'SaaS Architect (NOORHUB)',
@@ -103,12 +104,24 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onScrollTo }) => {
             <button
               onClick={() => {
                 sound.playWarp();
-                onScrollTo('software');
+                if (onOpenBrunoWorld) onOpenBrunoWorld();
+              }}
+              onMouseEnter={() => sound.playHover()}
+              className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-amber-400 via-orange-500 to-amber-500 text-black font-mono font-black text-xs sm:text-sm flex items-center gap-2 hover:shadow-[0_0_35px_rgba(245,158,11,0.5)] hover:scale-[1.03] active:scale-[0.98] transition-all cursor-pointer"
+            >
+              <span>🚗 Drive 3D Car (Bruno Simon Mode)</span>
+              <Sparkles className="w-4 h-4 fill-black" />
+            </button>
+
+            <button
+              onClick={() => {
+                sound.playWarp();
+                onScrollTo('works-snellenberg');
               }}
               onMouseEnter={() => sound.playHover()}
               className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-400 to-cyan-500 text-black font-mono font-bold text-xs sm:text-sm flex items-center gap-2 hover:shadow-[0_0_30px_rgba(0,240,255,0.4)] hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
             >
-              <span>Explore Code & SaaS</span>
+              <span>Explore Works</span>
               <ArrowRight className="w-4 h-4" />
             </button>
 
