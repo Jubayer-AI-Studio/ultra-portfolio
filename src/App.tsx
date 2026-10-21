@@ -4,6 +4,7 @@ import { ThreeCanvas } from './components/ThreeCanvas';
 import { FilmGrain } from './components/FilmGrain';
 import { HUDNavbar } from './components/HUDNavbar';
 import { HeroSection } from './components/HeroSection';
+import { BrunoCityWorld } from './components/BrunoCityWorld';
 import { InfiniteMarquee } from './components/InfiniteMarquee';
 import { SnellenbergWork } from './components/SnellenbergWork';
 import { SoftwareNexus } from './components/SoftwareNexus';
@@ -19,6 +20,7 @@ export function App() {
   const [activeSection, setActiveSection] = useState('hero');
   const [terminalOpen, setTerminalOpen] = useState(false);
   const [brunoWorldOpen, setBrunoWorldOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false); // Default to clean, bright, colorful Bruno Simon Daylight Studio Mode
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -53,10 +55,20 @@ export function App() {
     setActiveSection('hero');
   };
 
+  const toggleTheme = () => {
+    setIsDarkMode((prev) => !prev);
+  };
+
   return (
-    <div className="relative min-h-screen bg-[#07080b] text-zinc-100 selection:bg-cyan-400 selection:text-black overflow-x-hidden font-sans">
-      {/* 1. Three.js Interactive 3D WebGL Quantum Core (Lusion Caliber with pointerEvents none) */}
-      <ThreeCanvas />
+    <div
+      className={`relative min-h-screen transition-colors duration-500 overflow-x-hidden font-sans ${
+        isDarkMode
+          ? 'bg-[#0b1120] text-zinc-100 selection:bg-red-500 selection:text-white'
+          : 'bg-[#f8fafc] text-slate-900 selection:bg-red-600 selection:text-white'
+      }`}
+    >
+      {/* 1. Three.js Background Ambient Layer (Only in Dark Mode or subtle opacity) */}
+      {isDarkMode && <ThreeCanvas />}
 
       {/* 2. Cinematic Film Grain Texture */}
       <FilmGrain />
@@ -67,6 +79,8 @@ export function App() {
         onNavigate={handleNavigate}
         onOpenTerminal={() => setTerminalOpen(true)}
         onOpenBrunoWorld={() => setBrunoWorldOpen(true)}
+        isDark={isDarkMode}
+        onToggleTheme={toggleTheme}
       />
 
       {/* 4. Main Content Journey */}
@@ -76,6 +90,38 @@ export function App() {
           onOpenTerminal={() => setTerminalOpen(true)}
           onOpenBrunoWorld={() => setBrunoWorldOpen(true)}
         />
+
+        {/* 4.1 BIG & PROMINENT BRUNO SIMON 3D CITY WORLD (Front-and-Center) */}
+        <section id="city-world" className="relative py-8 px-4 sm:px-6 max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-4">
+            <div className="space-y-2">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-700 font-mono text-xs font-bold shadow-sm">
+                <span className="w-2.5 h-2.5 rounded-full bg-red-600 animate-ping" />
+                <span>BRUNO SIMON 3D INTERACTIVE CITY WORLD</span>
+              </div>
+              <h2
+                className={`text-3xl sm:text-5xl font-black tracking-tight font-sans ${
+                  isDarkMode ? 'text-white' : 'text-slate-900'
+                }`}
+              >
+                Drive the Ferrari Red Roadster to Explore Campuses
+              </h2>
+              <p
+                className={`text-sm sm:text-base max-w-2xl font-sans ${
+                  isDarkMode ? 'text-zinc-400' : 'text-slate-600'
+                }`}
+              >
+                Drive across the sunny 3D city! Cross the wooden river bridge, crash through the wooden crate pyramid, jump the stunt ramp, and enter any of the 4 Tech Factory Campuses to inspect live projects.
+              </p>
+            </div>
+          </div>
+
+          {/* Embedded 3D Interactive City Game */}
+          <BrunoCityWorld
+            onOpenSaaS={() => handleNavigate('software')}
+            onOpenCinema={() => handleNavigate('cinema')}
+          />
+        </section>
 
         {/* Dennis Snellenberg Infinite Marquee Ticker */}
         <InfiniteMarquee />
@@ -111,7 +157,7 @@ export function App() {
         onClose={() => setTerminalOpen(false)}
       />
 
-      {/* 7. Bruno Simon 3D Interactive Car World */}
+      {/* 7. Bruno Simon Full-Screen 3D Interactive Car World Modal */}
       <BrunoWorld
         isOpen={brunoWorldOpen}
         onClose={() => setBrunoWorldOpen(false)}

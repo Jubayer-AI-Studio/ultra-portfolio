@@ -3,16 +3,14 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    color-scheme: dark;
-    background-color: #06070a;
   }
 
   body {
     margin: 0;
     padding: 0;
-    background-color: #06070a;
-    color: #f4f4f5;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
+    transition: background-color 0.4s ease, color 0.4s ease;
   }
 
   /* Ensure native cursor is always visible and responsive */
@@ -23,19 +21,19 @@
     cursor: pointer;
   }
 
-  /* Custom subtle dark scrollbar */
+  /* Custom subtle scrollbar */
   ::-webkit-scrollbar {
     width: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #06070a;
+    background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: #1e2230;
+    background: #94a3b8;
     border-radius: 9999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #00f0ff;
+    background: #dc2626;
   }
 }
 

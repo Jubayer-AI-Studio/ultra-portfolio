@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { sound } from '../utils/sound';
-import { Volume2, VolumeX, Menu, X, Terminal, Cpu } from 'lucide-react';
+import { Volume2, VolumeX, Menu, X, Terminal, Cpu, Sun, Moon } from 'lucide-react';
 import { GithubIcon, YoutubeIcon } from './Icons';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 
@@ -9,6 +9,8 @@ interface HUDNavbarProps {
   onNavigate: (sectionId: string) => void;
   onOpenTerminal: () => void;
   onOpenBrunoWorld?: () => void;
+  isDark?: boolean;
+  onToggleTheme?: () => void;
 }
 
 export const HUDNavbar: React.FC<HUDNavbarProps> = ({
@@ -16,6 +18,8 @@ export const HUDNavbar: React.FC<HUDNavbarProps> = ({
   onNavigate,
   onOpenTerminal,
   onOpenBrunoWorld,
+  isDark = false,
+  onToggleTheme,
 }) => {
   const [timeStr, setTimeStr] = useState('');
   const [isMuted, setIsMuted] = useState(false);
@@ -49,6 +53,7 @@ export const HUDNavbar: React.FC<HUDNavbarProps> = ({
   };
 
   const navLinks = [
+    { id: 'city-world', label: '🚗 3D City World' },
     { id: 'works-snellenberg', label: 'Works' },
     { id: 'software', label: 'NOORHUB SaaS' },
     { id: 'arcade', label: 'Playable Arcade' },
@@ -153,6 +158,21 @@ export const HUDNavbar: React.FC<HUDNavbarProps> = ({
           >
             {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
           </button>
+
+          {/* Theme Daylight/Midnight Switcher */}
+          {onToggleTheme && (
+            <button
+              onClick={() => {
+                sound.playClick();
+                onToggleTheme();
+              }}
+              aria-label={isDark ? 'Switch to Daylight Studio Mode' : 'Switch to Midnight Mode'}
+              title={isDark ? 'Switch to Daylight Studio Mode' : 'Switch to Midnight Mode'}
+              className="p-2 rounded-lg border transition-all cursor-pointer min-h-[36px] min-w-[36px] flex items-center justify-center bg-white/10 hover:bg-white/20 border-white/15"
+            >
+              {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-300" />}
+            </button>
+          )}
 
           {/* GitHub Direct Link */}
           <a
