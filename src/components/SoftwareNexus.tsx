@@ -10,15 +10,46 @@ import {
   Server,
   Database,
   ArrowUpRight,
+  Play,
+  CheckCircle2,
+  Lock,
 } from 'lucide-react';
 import { GithubIcon } from './Icons';
 
 export const SoftwareNexus: React.FC = () => {
   const saas = PORTFOLIO_DATA.featuredSaaS;
-  const [activeTab, setActiveTab] = useState<'overview' | 'architecture' | 'features'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'architecture' | 'features'>('architecture');
+  const [simulationStep, setSimulationStep] = useState<number>(-1);
+  const [isSimulating, setIsSimulating] = useState<boolean>(false);
+
+  const runSimulation = () => {
+    if (isSimulating) return;
+    setIsSimulating(true);
+    sound.playWarp();
+    setSimulationStep(0);
+
+    const steps = [1, 2, 3, 4];
+    steps.forEach((step, idx) => {
+      setTimeout(() => {
+        sound.playClick();
+        setSimulationStep(step);
+        if (step === 4) {
+          sound.playSuccess();
+          setIsSimulating(false);
+        }
+      }, (idx + 1) * 600);
+    });
+  };
+
+  const simulationNodes = [
+    { label: 'Client (Student/Parent)', icon: Cpu, desc: 'HTTPS Request' },
+    { label: 'Cloudflare Zero Trust Tunnel', icon: Server, desc: 'Encrypted Daemon Route' },
+    { label: 'Next.js 15 App Router & RBAC', icon: Lock, desc: 'Token & Role Verification' },
+    { label: 'PostgreSQL DB & Invoicing', icon: Database, desc: 'Automated Ledger Entry' },
+  ];
 
   return (
-    <section id="software" className="relative py-24 px-4 sm:px-6">
+    <section id="software" className="relative py-28 px-4 sm:px-6">
       <div className="max-w-7xl mx-auto space-y-12">
         
         {/* Section Header */}
@@ -27,7 +58,7 @@ export const SoftwareNexus: React.FC = () => {
             <Layers className="w-4 h-4" />
             <span>SECTOR 01 // SOFTWARE & SAAS ARCHITECTURE</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-white tracking-tight">
             Production Software & Full-Stack Systems
           </h2>
           <p className="text-zinc-400 max-w-2xl text-sm sm:text-base">
@@ -35,8 +66,8 @@ export const SoftwareNexus: React.FC = () => {
           </p>
         </div>
 
-        {/* 1. Flagship Spotlight: NOORHUB SaaS Card */}
-        <div className="relative p-6 sm:p-10 rounded-3xl bg-gradient-to-br from-zinc-950 via-zinc-900 to-black border border-cyan-500/30 shadow-[0_0_50px_rgba(0,240,255,0.08)] overflow-hidden">
+        {/* 1. Flagship Spotlight: NOORHUB SaaS Card with Live Pipeline Simulation */}
+        <div className="relative p-6 sm:p-10 rounded-3xl bg-gradient-to-br from-zinc-950 via-zinc-900 to-black border border-cyan-500/40 shadow-[0_0_60px_rgba(0,240,255,0.12)] overflow-hidden">
           {/* Decorative Cyber Background Grid */}
           <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -45,16 +76,20 @@ export const SoftwareNexus: React.FC = () => {
             {/* Left Info: 7 cols */}
             <div className="lg:col-span-7 space-y-6">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 text-xs font-mono font-semibold">
+                <span className="px-3.5 py-1 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 text-xs font-mono font-bold tracking-wider">
                   FLAGSHIP SAAS
                 </span>
                 <span className="px-3 py-1 rounded-full bg-zinc-800 text-zinc-300 text-xs font-mono">
                   Full-Stack Architecture
                 </span>
+                <span className="px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 text-xs font-mono flex items-center gap-1">
+                  <CheckCircle2 className="w-3 h-3" />
+                  <span>Production Ready</span>
+                </span>
               </div>
 
               <div>
-                <h3 className="text-3xl sm:text-4xl font-black text-white font-sans tracking-tight">
+                <h3 className="text-3xl sm:text-4xl md:text-5xl font-black text-white font-sans tracking-tight">
                   {saas.title}
                 </h3>
                 <div className="font-mono text-cyan-400 text-sm mt-1">
@@ -68,7 +103,7 @@ export const SoftwareNexus: React.FC = () => {
 
               {/* Interactive Tabs */}
               <div className="flex items-center gap-2 border-b border-zinc-800 pb-2">
-                {(['overview', 'features', 'architecture'] as const).map((tab) => (
+                {(['architecture', 'features', 'overview'] as const).map((tab) => (
                   <button
                     key={tab}
                     onClick={() => {
@@ -77,7 +112,7 @@ export const SoftwareNexus: React.FC = () => {
                     }}
                     className={`px-3 py-1.5 rounded-lg text-xs font-mono uppercase transition-all cursor-pointer ${
                       activeTab === tab
-                        ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40'
+                        ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-bold'
                         : 'text-zinc-400 hover:text-white'
                     }`}
                   >
@@ -88,6 +123,55 @@ export const SoftwareNexus: React.FC = () => {
 
               {/* Tab Contents */}
               <div className="min-h-24">
+                {activeTab === 'architecture' && (
+                  <div className="space-y-4">
+                    {/* Live Pipeline Simulation Flowchart */}
+                    <div className="p-4 rounded-2xl bg-black/80 border border-cyan-900/50 space-y-3">
+                      <div className="flex items-center justify-between text-xs font-mono">
+                        <span className="text-cyan-300 font-bold">// INTERACTIVE SYSTEM TOPOLOGY</span>
+                        <button
+                          onClick={runSimulation}
+                          disabled={isSimulating}
+                          className="px-3 py-1 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-black font-bold flex items-center gap-1 transition-all disabled:opacity-50 cursor-pointer shadow-sm shadow-cyan-400/20"
+                        >
+                          <Play className="w-3 h-3 fill-black" />
+                          <span>{isSimulating ? 'Processing...' : 'Simulate Data Flow'}</span>
+                        </button>
+                      </div>
+
+                      {/* 4 Interactive Nodes */}
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 font-mono text-[11px]">
+                        {simulationNodes.map((node, idx) => {
+                          const isReached = simulationStep >= idx + 1;
+                          const isCurrent = simulationStep === idx + 1;
+                          const IconComp = node.icon;
+                          return (
+                            <div
+                              key={idx}
+                              className={`p-2.5 rounded-xl border transition-all duration-300 ${
+                                isCurrent
+                                  ? 'bg-cyan-500/25 border-cyan-400 shadow-[0_0_15px_rgba(0,240,255,0.4)] scale-105'
+                                  : isReached
+                                  ? 'bg-emerald-950/40 border-emerald-500/40 text-emerald-300'
+                                  : 'bg-zinc-900/60 border-zinc-800 text-zinc-400'
+                              }`}
+                            >
+                              <div className="flex items-center gap-1.5 mb-1">
+                                <IconComp className="w-3.5 h-3.5" />
+                                <span className="font-bold">0{idx + 1}</span>
+                              </div>
+                              <div className="text-[10px] leading-tight font-medium text-zinc-200">
+                                {node.label}
+                              </div>
+                              <div className="text-[9px] text-zinc-500 mt-1">{node.desc}</div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 {activeTab === 'overview' && (
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono text-zinc-300">
                     <div className="p-3 rounded-xl bg-zinc-900/60 border border-white/5 flex items-center gap-2.5">
@@ -119,16 +203,6 @@ export const SoftwareNexus: React.FC = () => {
                     ))}
                   </ul>
                 )}
-
-                {activeTab === 'architecture' && (
-                  <div className="p-4 rounded-xl bg-black/60 border border-zinc-800 font-mono text-xs text-zinc-300 space-y-1">
-                    <div className="text-cyan-400 font-bold">// SYSTEM TOPOLOGY</div>
-                    <div>CLIENT LAYER: Next.js (App Router) + Tailwind CSS</div>
-                    <div>DATA LAYER: Relational Models, Student/Teacher Records</div>
-                    <div>AUTH LAYER: Multi-Role Permissions (Admin / Staff / Guardian)</div>
-                    <div>TUNNEL: Cloudflare Daemon (Secure Local-to-Cloud Route)</div>
-                  </div>
-                )}
               </div>
 
               {/* Tags */}
@@ -151,7 +225,8 @@ export const SoftwareNexus: React.FC = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => sound.playClick()}
-                    className="px-5 py-2.5 rounded-xl bg-cyan-400 text-black font-mono font-bold text-xs flex items-center gap-2 hover:bg-cyan-300 transition-colors shadow-md shadow-cyan-500/20 cursor-pointer"
+                    data-cursor="VIEW SAAS"
+                    className="px-6 py-3 rounded-xl bg-cyan-400 text-black font-mono font-bold text-xs flex items-center gap-2 hover:bg-cyan-300 transition-all shadow-lg shadow-cyan-500/25 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
                   >
                     <GithubIcon className="w-4 h-4" />
                     <span>View Repository on GitHub</span>
@@ -163,7 +238,7 @@ export const SoftwareNexus: React.FC = () => {
 
             {/* Right Architectural Graphic: 5 cols */}
             <div className="lg:col-span-5 w-full">
-              <div className="p-5 rounded-2xl bg-black/80 border border-zinc-800 space-y-4 font-mono text-xs">
+              <div className="p-5 rounded-2xl bg-black/90 border border-zinc-800 space-y-4 font-mono text-xs shadow-2xl">
                 <div className="flex items-center justify-between pb-3 border-b border-zinc-800 text-zinc-400">
                   <div className="flex items-center gap-2">
                     <span className="w-3 h-3 rounded-full bg-red-500/80 inline-block" />
@@ -171,7 +246,10 @@ export const SoftwareNexus: React.FC = () => {
                     <span className="w-3 h-3 rounded-full bg-green-500/80 inline-block" />
                     <span className="text-zinc-500 ml-2">noorhub.config.ts</span>
                   </div>
-                  <span className="text-emerald-400">ACTIVE</span>
+                  <span className="text-emerald-400 flex items-center gap-1 font-bold">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping inline-block" />
+                    SYSTEM ONLINE
+                  </span>
                 </div>
 
                 <div className="space-y-2 text-zinc-300 font-mono text-[11px] leading-relaxed overflow-x-auto">
@@ -201,11 +279,11 @@ export const SoftwareNexus: React.FC = () => {
             <motion.div
               key={project.id}
               whileHover={{ y: -4 }}
-              className="p-6 rounded-2xl bg-zinc-950/70 border border-white/10 hover:border-cyan-500/40 flex flex-col justify-between space-y-4 transition-all duration-300 shadow-lg shadow-black/50 group"
+              className="p-6 rounded-2xl bg-zinc-950/80 border border-white/10 hover:border-cyan-500/40 flex flex-col justify-between space-y-4 transition-all duration-300 shadow-xl shadow-black/60 group"
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono text-cyan-400 uppercase tracking-wider">
+                  <span className="text-xs font-mono text-cyan-400 uppercase tracking-wider font-semibold">
                     {project.category}
                   </span>
                   {project.badge && (
@@ -243,6 +321,7 @@ export const SoftwareNexus: React.FC = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => sound.playClick()}
+                      data-cursor="SOURCE"
                       className="flex-1 py-2 px-3 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white text-xs font-mono flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                     >
                       <GithubIcon className="w-3.5 h-3.5" />
@@ -255,6 +334,7 @@ export const SoftwareNexus: React.FC = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => sound.playWarp()}
+                      data-cursor="LAUNCH"
                       className="flex-1 py-2 px-3 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/40 text-cyan-300 text-xs font-mono flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                     >
                       <ExternalLink className="w-3.5 h-3.5" />
