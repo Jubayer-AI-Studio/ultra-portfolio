@@ -15,6 +15,7 @@ import {
   ExternalLink,
   Flame,
   Compass,
+  RotateCcw,
 } from 'lucide-react';
 import { ArcadeModal } from './ArcadeModal';
 import { NoorHubModal } from './NoorHubModal';
@@ -1304,31 +1305,40 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
       {/* 3D Canvas Viewport */}
       <div ref={mountRef} className="w-full h-full block" />
 
-      {/* Top HUD Bar */}
-      <div className="absolute top-4 inset-x-4 sm:inset-x-6 flex items-center justify-between pointer-events-none z-20">
-        <div className="flex items-center gap-3 bg-white/95 border border-slate-200/90 px-4 py-2 rounded-2xl backdrop-blur-md shadow-lg pointer-events-auto">
-          <span className="w-3 h-3 rounded-full bg-red-600 animate-ping" />
-          <span className="font-mono text-xs font-black text-slate-900 tracking-wider">
-            BRUNO SIMON 3D CITY // JUBAYER AHMAD
-          </span>
-          <span className="text-slate-400 hidden sm:inline">|</span>
-          <span className="text-emerald-700 font-mono text-xs font-bold hidden sm:inline">
-            4 TECH FACTORIES • PINS • BRICKS • RAMPS
+      {/* Top HUD Bar (Ultra-Compact on Mobile) */}
+      <div className="absolute top-2.5 sm:top-4 inset-x-2 sm:inset-x-6 flex items-center justify-between pointer-events-none z-20">
+        <div className="flex items-center gap-1.5 sm:gap-2.5 bg-white/95 border border-slate-200/90 px-2.5 py-1 sm:px-4 sm:py-2 rounded-xl sm:rounded-2xl backdrop-blur-md shadow-md pointer-events-auto shrink-0">
+          <span className="w-2.5 h-2.5 rounded-full bg-red-600 animate-ping shrink-0" />
+          <span className="font-mono text-[11px] sm:text-xs font-black text-slate-900 tracking-wider whitespace-nowrap">
+            <span className="hidden sm:inline">BRUNO SIMON 3D CITY // </span>JUBAYER
           </span>
         </div>
 
-        <div className="flex items-center gap-2 pointer-events-auto">
+        <div className="flex items-center gap-1 sm:gap-2 pointer-events-auto shrink-0">
+          {/* Reset Car Position */}
+          <button
+            onClick={() => {
+              window.dispatchEvent(new KeyboardEvent('keydown', { key: 'r' }));
+              sound.playWarp();
+            }}
+            className="p-1.5 sm:px-3 sm:py-1.5 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 text-slate-800 font-mono text-xs font-bold flex items-center gap-1 transition-all shadow-md cursor-pointer"
+            title="Reset Car [R]"
+          >
+            <RotateCcw className="w-3.5 h-3.5 text-stone-700" />
+            <span className="hidden md:inline">RESET</span>
+          </button>
+
           {/* Camera Mode Toggle */}
           <button
             onClick={() => {
               sound.playClick();
               setCameraMode(cameraMode === 'iso' ? 'chase' : cameraMode === 'chase' ? 'top' : 'iso');
             }}
-            className="px-3 py-1.5 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 text-slate-800 font-mono text-xs font-bold flex items-center gap-1.5 transition-all shadow-md cursor-pointer"
+            className="p-1.5 sm:px-3 sm:py-1.5 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 text-slate-800 font-mono text-xs font-bold flex items-center gap-1 transition-all shadow-md cursor-pointer"
             title="Switch Camera View [C]"
           >
             <Compass className="w-3.5 h-3.5 text-amber-600" />
-            <span className="uppercase">CAM: {cameraMode}</span>
+            <span className="hidden md:inline uppercase">CAM: {cameraMode}</span>
           </button>
 
           {/* Horn Button */}
@@ -1338,30 +1348,33 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
               setHornActive(true);
               setTimeout(() => setHornActive(false), 300);
             }}
-            className={`px-3 py-1.5 rounded-xl border font-mono text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer shadow-md ${
+            className={`p-1.5 sm:px-3 sm:py-1.5 rounded-xl border font-mono text-xs font-bold flex items-center gap-1 transition-all cursor-pointer shadow-md ${
               hornActive
                 ? 'bg-amber-400 text-black border-amber-500 scale-105'
                 : 'bg-white hover:bg-slate-100 text-slate-800 border-slate-200'
             }`}
+            title="Horn [H]"
           >
-            <span>HORN [H]</span>
+            <span className="text-xs">📢</span>
+            <span className="hidden md:inline">HORN</span>
           </button>
 
           {/* Audio Mute Toggle */}
           <button
             onClick={toggleSound}
-            className="p-2 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 transition-colors shadow-md cursor-pointer"
+            className="p-1.5 sm:p-2 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 transition-colors shadow-md cursor-pointer"
+            title="Mute Sound"
           >
-            {soundMuted ? <VolumeX className="w-4 h-4 text-slate-400" /> : <Volume2 className="w-4 h-4 text-emerald-600" />}
+            {soundMuted ? <VolumeX className="w-3.5 h-3.5 text-slate-400" /> : <Volume2 className="w-3.5 h-3.5 text-emerald-600" />}
           </button>
 
           {/* Fullscreen Toggle */}
           <button
             onClick={() => setIsFullscreen(!isFullscreen)}
-            className="p-2 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 transition-colors shadow-md cursor-pointer"
+            className="p-1.5 sm:p-2 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 transition-colors shadow-md cursor-pointer"
             title={isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
           >
-            {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+            {isFullscreen ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
           </button>
 
           {isFullPage && onClose && (
@@ -1370,42 +1383,52 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
                 sound.playClick();
                 onClose();
               }}
-              className="px-3.5 py-1.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-mono text-xs font-bold flex items-center gap-1 transition-colors shadow-md cursor-pointer"
+              className="px-2.5 sm:px-3.5 py-1.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-mono text-xs font-bold flex items-center gap-1 transition-colors shadow-md cursor-pointer"
             >
-              <X className="w-4 h-4" />
-              <span>EXIT</span>
+              <X className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">EXIT</span>
             </button>
           )}
         </div>
       </div>
 
-      {/* Approaching Project Campus Notification Banner */}
+      {/* Floating Speedometer & Nitro Mini-Badge for Mobile */}
+      <div className="flex md:hidden absolute top-12 left-2.5 z-20 pointer-events-auto bg-white/95 border border-slate-200/90 px-2.5 py-1 rounded-xl shadow-md backdrop-blur-md items-center gap-2 font-mono">
+        <div className="text-red-600 font-black text-xs">{speedKmh} <span className="text-[9px] text-slate-500">KM/H</span></div>
+        <div className="h-3 w-[1px] bg-slate-300" />
+        <div className="flex items-center gap-1 text-[10px] text-cyan-700 font-bold">
+          <Flame className={`w-3 h-3 ${isNitroActive ? 'text-cyan-500 animate-bounce' : ''}`} />
+          <span>{nitroGauge}%</span>
+        </div>
+      </div>
+
+      {/* Approaching Project Campus Notification Banner (Mobile Responsive) */}
       {activeZone && (
-        <div className="absolute top-20 inset-x-4 sm:inset-x-0 sm:w-max sm:mx-auto z-20 flex flex-col items-center">
-          <div className="p-4 sm:px-6 rounded-2xl bg-white/95 border-2 border-emerald-500 shadow-[0_15px_40px_rgba(0,0,0,0.25)] backdrop-blur-xl flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
-            <div className="w-12 h-12 rounded-xl bg-emerald-500/15 border border-emerald-500 flex items-center justify-center text-emerald-600 font-bold">
-              <Zap className="w-6 h-6 animate-pulse" />
+        <div className="absolute top-16 sm:top-20 inset-x-2 sm:inset-x-0 sm:max-w-xl sm:mx-auto z-20 flex flex-col items-center pointer-events-auto">
+          <div className="w-full p-3 sm:p-5 rounded-2xl bg-white/95 border-2 border-emerald-500 shadow-[0_15px_40px_rgba(0,0,0,0.25)] backdrop-blur-xl flex flex-col sm:flex-row items-center gap-3 text-center sm:text-left">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-emerald-500/15 border border-emerald-500 flex items-center justify-center text-emerald-600 font-bold shrink-0">
+              <Zap className="w-5 h-5 sm:w-6 sm:h-6 animate-pulse" />
             </div>
 
-            <div>
-              <div className="font-mono text-[11px] text-emerald-600 font-black tracking-wider uppercase">
+            <div className="min-w-0 flex-1">
+              <div className="font-mono text-[10px] sm:text-[11px] text-emerald-600 font-black tracking-wider uppercase truncate">
                 {activeZone.tag}
               </div>
-              <div className="text-base sm:text-xl font-black text-slate-900 font-sans">
+              <div className="text-sm sm:text-lg font-black text-slate-900 font-sans truncate">
                 {activeZone.title}
               </div>
-              <div className="text-slate-600 text-xs mt-0.5 max-w-md font-sans">
+              <div className="text-slate-600 text-[11px] sm:text-xs mt-0.5 line-clamp-2 font-sans">
                 {activeZone.desc}
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex flex-col sm:flex-row gap-1.5 sm:gap-2 w-full sm:w-auto shrink-0">
               <button
                 onClick={() => handleCampusAction(activeZone.actionType)}
-                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-mono font-black text-xs flex items-center gap-2 shadow-lg shadow-red-500/30 transition-transform hover:scale-105 active:scale-95 cursor-pointer whitespace-nowrap"
+                className="w-full sm:w-auto px-4 py-2 sm:py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-mono font-black text-xs flex items-center justify-center gap-1.5 shadow-lg shadow-red-500/30 transition-transform active:scale-95 cursor-pointer whitespace-nowrap"
               >
-                <span>{activeZone.actionText} [ENTER]</span>
-                <ExternalLink className="w-4 h-4" />
+                <span>{activeZone.actionText}</span>
+                <ExternalLink className="w-3.5 h-3.5" />
               </button>
 
               {activeZone.githubUrl && (
@@ -1414,9 +1437,9 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => sound.playClick()}
-                  className="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-black text-amber-200 border border-slate-700 font-mono font-bold text-xs flex items-center gap-1.5 transition-all shadow-md cursor-pointer whitespace-nowrap"
+                  className="w-full sm:w-auto px-3 py-2 sm:py-2.5 rounded-xl bg-slate-900 hover:bg-black text-amber-200 border border-slate-700 font-mono font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-md cursor-pointer whitespace-nowrap"
                 >
-                  <GithubIcon className="w-4 h-4" />
+                  <GithubIcon className="w-3.5 h-3.5" />
                   <span>GitHub</span>
                 </a>
               )}
@@ -1452,11 +1475,11 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
         </div>
       </div>
 
-      {/* Bottom HUD: Speedometer, Nitro Gauge & Controls */}
-      <div className="absolute bottom-5 inset-x-4 sm:inset-x-6 flex flex-col sm:flex-row items-end sm:items-center justify-between gap-4 pointer-events-none z-20">
+      {/* Bottom HUD: Speedometer, Nitro Gauge & Controls (Mobile & Desktop) */}
+      <div className="absolute bottom-3 sm:bottom-5 inset-x-2 sm:inset-x-6 flex flex-col sm:flex-row items-center sm:items-center justify-between gap-3 pointer-events-none z-20">
         
-        {/* Speedometer & Nitro Boost Gauge */}
-        <div className="bg-white/95 border border-slate-200/90 px-5 py-3 rounded-2xl backdrop-blur-md shadow-lg flex items-center gap-4 pointer-events-auto">
+        {/* Desktop Speedometer & Nitro Boost Gauge */}
+        <div className="hidden md:flex bg-white/95 border border-slate-200/90 px-5 py-3 rounded-2xl backdrop-blur-md shadow-lg items-center gap-4 pointer-events-auto">
           <div className="font-mono">
             <div className="text-3xl sm:text-4xl font-black text-red-600 tracking-tight flex items-baseline gap-1">
               <span>{speedKmh}</span>
@@ -1503,69 +1526,98 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
           <span className="text-stone-800 font-bold">[R]</span> Reset
         </div>
 
-        {/* Mobile Touch Controls */}
-        <div className="flex md:hidden items-center gap-2 pointer-events-auto">
-          {/* Steer Buttons */}
-          <div className="flex items-center gap-1">
+        {/* Mobile Ergonomic Touch Gamepad (100% Width Safe) */}
+        <div className="w-full flex md:hidden items-center justify-between gap-1 pointer-events-none select-none">
+          
+          {/* Left Thumb: Steer ◀ and ▶ */}
+          <div className="flex items-center gap-1.5 pointer-events-auto">
             <button
               onTouchStart={() => (keysRef.current.left = true)}
               onTouchEnd={() => (keysRef.current.left = false)}
               onMouseDown={() => (keysRef.current.left = true)}
               onMouseUp={() => (keysRef.current.left = false)}
-              className="w-11 h-11 rounded-xl bg-white border border-slate-200 text-slate-800 shadow-md flex items-center justify-center active:scale-95 font-bold"
+              className="w-12 h-12 rounded-2xl bg-white/95 border border-slate-300 shadow-xl text-slate-900 flex items-center justify-center active:bg-slate-200 active:scale-90 font-black cursor-pointer"
+              title="Steer Left"
             >
-              <ArrowLeft className="w-5 h-5" />
+              <ArrowLeft className="w-5 h-5 text-slate-900" />
             </button>
             <button
               onTouchStart={() => (keysRef.current.right = true)}
               onTouchEnd={() => (keysRef.current.right = false)}
               onMouseDown={() => (keysRef.current.right = true)}
               onMouseUp={() => (keysRef.current.right = false)}
-              className="w-11 h-11 rounded-xl bg-white border border-slate-200 text-slate-800 shadow-md flex items-center justify-center active:scale-95 font-bold"
+              className="w-12 h-12 rounded-2xl bg-white/95 border border-slate-300 shadow-xl text-slate-900 flex items-center justify-center active:bg-slate-200 active:scale-90 font-black cursor-pointer"
+              title="Steer Right"
             >
-              <ArrowRight className="w-5 h-5" />
+              <ArrowRight className="w-5 h-5 text-slate-900" />
             </button>
           </div>
 
-          {/* Nitro Touch Button */}
-          <button
-            onTouchStart={() => {
-              keysRef.current.nitro = true;
-              sound.playNitroBoost();
-            }}
-            onTouchEnd={() => (keysRef.current.nitro = false)}
-            onMouseDown={() => {
-              keysRef.current.nitro = true;
-              sound.playNitroBoost();
-            }}
-            onMouseUp={() => (keysRef.current.nitro = false)}
-            className="w-11 h-11 rounded-xl bg-cyan-500 text-white shadow-md flex items-center justify-center active:scale-95 font-bold"
-            title="Nitro Boost"
-          >
-            <Flame className="w-5 h-5" />
-          </button>
+          {/* Center Actions: Nitro & Drift */}
+          <div className="flex items-center gap-1.5 pointer-events-auto">
+            <button
+              onTouchStart={() => {
+                keysRef.current.nitro = true;
+                sound.playNitroBoost();
+              }}
+              onTouchEnd={() => (keysRef.current.nitro = false)}
+              onMouseDown={() => {
+                keysRef.current.nitro = true;
+                sound.playNitroBoost();
+              }}
+              onMouseUp={() => (keysRef.current.nitro = false)}
+              className={`w-11 h-11 rounded-2xl border text-white shadow-xl flex items-center justify-center active:scale-90 font-black cursor-pointer transition-all ${
+                isNitroActive
+                  ? 'bg-cyan-400 border-white scale-105 shadow-cyan-400/50'
+                  : 'bg-cyan-500 border-cyan-400 shadow-cyan-500/30'
+              }`}
+              title="Nitro Boost"
+            >
+              <Flame className="w-5 h-5" />
+            </button>
 
-          {/* Gas & Reverse Buttons */}
-          <div className="flex items-center gap-1">
+            <button
+              onTouchStart={() => {
+                keysRef.current.handbrake = true;
+                sound.playDriftScreech();
+              }}
+              onTouchEnd={() => (keysRef.current.handbrake = false)}
+              onMouseDown={() => {
+                keysRef.current.handbrake = true;
+                sound.playDriftScreech();
+              }}
+              onMouseUp={() => (keysRef.current.handbrake = false)}
+              className="w-11 h-11 rounded-2xl bg-amber-500 border border-amber-400 text-white shadow-xl flex items-center justify-center active:scale-90 font-mono text-[10px] font-black cursor-pointer"
+              title="Drift"
+            >
+              DRIFT
+            </button>
+          </div>
+
+          {/* Right Thumb: Reverse ▼ and Forward ▲ */}
+          <div className="flex items-center gap-1.5 pointer-events-auto">
             <button
               onTouchStart={() => (keysRef.current.backward = true)}
               onTouchEnd={() => (keysRef.current.backward = false)}
               onMouseDown={() => (keysRef.current.backward = true)}
               onMouseUp={() => (keysRef.current.backward = false)}
-              className="w-11 h-11 rounded-xl bg-white border border-slate-200 text-slate-800 shadow-md flex items-center justify-center active:scale-95 font-bold"
+              className="w-12 h-12 rounded-2xl bg-white/95 border border-slate-300 shadow-xl text-slate-900 flex items-center justify-center active:bg-slate-200 active:scale-90 font-black cursor-pointer"
+              title="Reverse"
             >
-              <ArrowDown className="w-5 h-5" />
+              <ArrowDown className="w-5 h-5 text-slate-900" />
             </button>
             <button
               onTouchStart={() => (keysRef.current.forward = true)}
               onTouchEnd={() => (keysRef.current.forward = false)}
               onMouseDown={() => (keysRef.current.forward = true)}
               onMouseUp={() => (keysRef.current.forward = false)}
-              className="w-11 h-11 rounded-xl bg-red-600 text-white shadow-lg shadow-red-500/40 flex items-center justify-center active:scale-95 font-bold"
+              className="w-13 h-13 rounded-2xl bg-red-600 border-2 border-red-500 shadow-2xl shadow-red-500/50 text-white flex items-center justify-center active:bg-red-700 active:scale-90 font-black cursor-pointer"
+              title="Drive Forward"
             >
-              <ArrowUp className="w-5 h-5" />
+              <ArrowUp className="w-6 h-6 text-white" />
             </button>
           </div>
+
         </div>
 
       </div>

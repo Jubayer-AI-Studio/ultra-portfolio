@@ -150,8 +150,8 @@ export const LivingAvatar: React.FC<LivingAvatarProps> = ({ avatarUrl, name }) =
           <div
             className={`p-[3px] rounded-[32px] bg-gradient-to-br ${getBorderColor()} shadow-[0_20px_60px_rgba(0,0,0,0.25)] transition-all duration-500 group-hover:shadow-[0_25px_80px_rgba(217,119,6,0.35)]`}
           >
-            {/* Main Photo Chamber - SIGNIFICANTLY ENLARGED */}
-            <div className="relative w-[280px] h-[370px] sm:w-[360px] sm:h-[480px] md:w-[420px] md:h-[560px] lg:w-[460px] lg:h-[600px] rounded-[29px] overflow-hidden bg-stone-950 border border-white/20">
+            {/* Main Photo Chamber - Mobile-Safe Responsive Scaling */}
+            <div className="relative w-[250px] h-[330px] min-[380px]:w-[280px] min-[380px]:h-[370px] sm:w-[360px] sm:h-[480px] md:w-[420px] md:h-[560px] lg:w-[460px] lg:h-[600px] rounded-[24px] sm:rounded-[29px] overflow-hidden bg-stone-950 border border-white/20">
               
               {/* Layer 1: Base High-Res Real Studio Photo with 3D Depth Scale */}
               <motion.img
@@ -263,32 +263,32 @@ export const LivingAvatar: React.FC<LivingAvatarProps> = ({ avatarUrl, name }) =
             </div>
           </div>
 
-          {/* Floating High-Impact Badges Orbiting around Photo */}
+          {/* Floating High-Impact Badges Orbiting around Photo (Mobile Safe) */}
           <motion.div
-            animate={{ y: [0, -10, 0] }}
+            animate={{ y: [0, -8, 0] }}
             transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute -top-5 -right-6 px-4 py-2 rounded-2xl bg-stone-950/95 border border-amber-500/60 text-amber-200 text-xs font-mono font-bold flex items-center gap-2 shadow-2xl backdrop-blur-xl z-30"
+            className="absolute -top-4 right-0 sm:-right-6 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl sm:rounded-2xl bg-stone-950/95 border border-amber-500/60 text-amber-200 text-[10px] sm:text-xs font-mono font-bold flex items-center gap-1.5 sm:gap-2 shadow-2xl backdrop-blur-xl z-30 max-w-[85%]"
           >
-            <Film className="w-4 h-4 text-amber-400" />
-            <span>AI Film Director (ICON 2030)</span>
+            <Film className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 shrink-0" />
+            <span className="truncate">AI Film Director</span>
           </motion.div>
 
           <motion.div
-            animate={{ y: [0, 10, 0] }}
+            animate={{ y: [0, 8, 0] }}
             transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute -bottom-5 -left-6 px-4 py-2 rounded-2xl bg-stone-950/95 border border-cyan-400/60 text-cyan-200 text-xs font-mono font-bold flex items-center gap-2 shadow-2xl backdrop-blur-xl z-30"
+            className="absolute -bottom-4 left-0 sm:-left-6 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl sm:rounded-2xl bg-stone-950/95 border border-cyan-400/60 text-cyan-200 text-[10px] sm:text-xs font-mono font-bold flex items-center gap-1.5 sm:gap-2 shadow-2xl backdrop-blur-xl z-30 max-w-[85%]"
           >
-            <Code2 className="w-4 h-4 text-cyan-400" />
-            <span>Full-Stack Architect (NOORHUB)</span>
+            <Code2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 shrink-0" />
+            <span className="truncate">Full-Stack Architect</span>
           </motion.div>
 
           <motion.div
             animate={{ x: [0, 8, 0] }}
             transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute top-1/2 -right-8 -translate-y-1/2 px-3 py-1.5 rounded-xl bg-stone-950/90 border border-emerald-400/50 text-emerald-300 text-[11px] font-mono flex items-center gap-1.5 shadow-xl backdrop-blur-xl hidden sm:flex z-30 font-bold"
+            className="absolute top-1/2 -right-4 sm:-right-8 -translate-y-1/2 px-3 py-1.5 rounded-xl bg-stone-950/90 border border-emerald-400/50 text-emerald-300 text-[10px] sm:text-[11px] font-mono items-center gap-1.5 shadow-xl backdrop-blur-xl hidden md:flex z-30 font-bold"
           >
             <Camera className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Virtual Production Set</span>
+            <span>Virtual Studio</span>
           </motion.div>
 
         </motion.div>

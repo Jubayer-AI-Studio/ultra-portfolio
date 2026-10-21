@@ -210,7 +210,7 @@ export const SnellenbergWork: React.FC = () => {
                   sound.playHover();
                 }}
                 onMouseLeave={() => setHoveredIndex(null)}
-                className="group relative py-8 sm:py-12 px-4 -mx-4 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all duration-300 hover:bg-[#dfcfb8]/60 cursor-pointer"
+                className="group relative py-8 sm:py-12 px-3 sm:px-4 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all duration-300 hover:bg-[#dfcfb8]/60 cursor-pointer"
               >
                 {/* Left: Title & Subtitle with smooth hover slide */}
                 <div className="space-y-2 z-10">
@@ -230,7 +230,7 @@ export const SnellenbergWork: React.FC = () => {
                 </div>
 
                 {/* Right: Meta & Direct Triggers */}
-                <div className="flex items-center gap-6 z-10">
+                <div className="flex flex-wrap items-center justify-between md:justify-end gap-3 sm:gap-6 z-10 w-full md:w-auto">
                   <div className="text-left md:text-right font-mono">
                     <div className="text-sm font-black text-stone-950 group-hover:text-amber-800 transition-colors">
                       {work.categoryLabel}

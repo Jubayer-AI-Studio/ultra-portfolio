@@ -13,6 +13,7 @@ import { CareerOdyssey } from './components/CareerOdyssey';
 import { DennisFooter } from './components/DennisFooter';
 import { CyberTerminal } from './components/CyberTerminal';
 import { BrunoWorld } from './components/BrunoWorld';
+import { PWAInstallPrompt } from './components/PWAInstallPrompt';
 
 export function App() {
   const [activeSection, setActiveSection] = useState('hero');
@@ -133,6 +134,9 @@ export function App() {
         isOpen={brunoWorldOpen}
         onClose={() => setBrunoWorldOpen(false)}
       />
+
+      {/* 6. PWA Mobile Installation Floating Guide & Prompt */}
+      <PWAInstallPrompt />
     </div>
   );
 }

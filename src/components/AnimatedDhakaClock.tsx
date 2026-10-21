@@ -82,7 +82,7 @@ export const AnimatedDhakaClock: React.FC = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
       onClick={handleClockClick}
-      className={`relative group cursor-pointer select-none rounded-3xl p-5 sm:p-6 bg-gradient-to-br from-[#f5ecde] to-[#eadbc5] border-2 border-[#c8b59b] shadow-[0_10px_30px_rgba(0,0,0,0.08)] hover:shadow-[0_15px_40px_rgba(0,0,0,0.14)] hover:border-amber-700/50 transition-all duration-300 w-full overflow-hidden ${
+      className={`relative group cursor-pointer select-none rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 bg-gradient-to-br from-[#f5ecde] to-[#eadbc5] border-2 border-[#c8b59b] shadow-[0_10px_30px_rgba(0,0,0,0.08)] hover:shadow-[0_15px_40px_rgba(0,0,0,0.14)] hover:border-amber-700/50 transition-all duration-300 w-full overflow-hidden ${
         activePulse ? 'scale-[1.01]' : 'scale-100'
       }`}
     >
@@ -92,105 +92,105 @@ export const AnimatedDhakaClock: React.FC = () => {
       {/* Background Radial Glow */}
       <div className="absolute -right-16 -top-16 w-48 h-48 rounded-full bg-amber-500/10 blur-3xl pointer-events-none" />
 
-      {/* Top Header Row: Location, Timezone & Live Status */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#c8b59b]/60 pb-3 mb-4">
+      {/* Top Header Row: Location, Timezone & Live Status (Strict Mobile Responsive) */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 border-b border-[#c8b59b]/60 pb-3 mb-4">
         
         {/* City & Zone */}
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-xl bg-amber-900/10 border border-amber-800/30 flex items-center justify-center text-amber-900 shadow-sm">
-            <Globe className="w-4 h-4 animate-[spin_18s_linear_infinite]" />
+          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-amber-900/10 border border-amber-800/30 flex items-center justify-center text-amber-900 shadow-sm shrink-0">
+            <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-[spin_18s_linear_infinite]" />
           </div>
-          <div>
-            <div className="flex items-center gap-2">
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
               <span className="font-mono text-xs sm:text-sm font-black text-stone-950 tracking-wider">
                 DHAKA, BANGLADESH
               </span>
-              <span className="px-2 py-0.5 rounded-md bg-stone-950 text-amber-200 text-[10px] font-mono font-black tracking-widest shadow-sm">
+              <span className="px-1.5 sm:px-2 py-0.5 rounded bg-stone-950 text-amber-200 text-[9px] sm:text-[10px] font-mono font-black tracking-widest shadow-sm">
                 BST (GMT+6)
               </span>
             </div>
-            <div className="text-[10px] font-mono text-stone-600 font-bold tracking-tight">
+            <div className="text-[9px] sm:text-[10px] font-mono text-stone-600 font-bold tracking-tight">
               LAT: 23.8103° N • LON: 90.4125° E
             </div>
           </div>
         </div>
 
         {/* Live Day/Night Indicator & Audio Equalizer */}
-        <div className="flex items-center gap-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#dfcfb8] border border-[#c8b59b] text-[11px] font-mono font-bold text-stone-900">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          <div className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-full bg-[#dfcfb8] border border-[#c8b59b] text-[10px] sm:text-[11px] font-mono font-bold text-stone-900">
             {time.isDaytime ? (
               <>
-                <Sun className="w-3.5 h-3.5 text-amber-600 animate-[spin_10s_linear_infinite]" />
+                <Sun className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-600 animate-[spin_10s_linear_infinite]" />
                 <span className="text-amber-900">DAYLIGHT</span>
               </>
             ) : (
               <>
-                <Moon className="w-3.5 h-3.5 text-indigo-700" />
+                <Moon className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-indigo-700" />
                 <span className="text-indigo-950">NIGHT SKY</span>
               </>
             )}
           </div>
 
-          <div className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-600/15 border border-emerald-600/30 text-emerald-900 text-[10px] font-mono font-bold">
-            <Radio className="w-3 h-3 text-emerald-700 animate-pulse" />
+          <div className="flex items-center gap-1 px-2 sm:px-2.5 py-1 rounded-full bg-emerald-600/15 border border-emerald-600/30 text-emerald-900 text-[9px] sm:text-[10px] font-mono font-bold">
+            <Radio className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-emerald-700 animate-pulse" />
             <span>LIVE SYNC</span>
           </div>
         </div>
 
       </div>
 
-      {/* Main Clock Numerals Chamber (BIG ANIMATED TIME) */}
+      {/* Main Clock Numerals Chamber (BIG ANIMATED TIME - Scaled for 100% Mobile Safety) */}
       <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4">
         
-        {/* BIG NUMERALS */}
-        <div className="flex items-baseline gap-1 sm:gap-2">
+        {/* BIG NUMERALS - Mobile Safe Flex */}
+        <div className="flex items-baseline gap-1 sm:gap-2 max-w-full">
           
           {/* Hours Card */}
-          <div className="relative px-3 sm:px-4 py-2 sm:py-3 rounded-2xl bg-stone-950 text-amber-200 shadow-md border border-stone-800">
-            <span className="font-mono text-4xl sm:text-6xl md:text-7xl font-black tracking-tight drop-shadow-md">
+          <div className="relative px-2.5 min-[380px]:px-3.5 sm:px-4 py-1.5 sm:py-3 rounded-xl sm:rounded-2xl bg-stone-950 text-amber-200 shadow-md border border-stone-800">
+            <span className="font-mono text-3xl min-[380px]:text-4xl min-[480px]:text-5xl sm:text-6xl md:text-7xl font-black tracking-tight drop-shadow-md">
               {time.hours}
             </span>
-            <div className="absolute bottom-1 inset-x-0 text-center text-[9px] font-mono text-amber-400/80 uppercase tracking-widest font-bold">
+            <div className="text-center text-[7px] sm:text-[9px] font-mono text-amber-400/80 uppercase tracking-widest font-bold">
               HRS
             </div>
           </div>
 
           {/* Animated Pulsing Colon */}
-          <span className="font-mono text-3xl sm:text-5xl font-black text-stone-900 animate-pulse px-1">
+          <span className="font-mono text-2xl min-[380px]:text-3xl sm:text-5xl font-black text-stone-900 animate-pulse px-0.5 sm:px-1">
             :
           </span>
 
           {/* Minutes Card */}
-          <div className="relative px-3 sm:px-4 py-2 sm:py-3 rounded-2xl bg-stone-950 text-amber-200 shadow-md border border-stone-800">
-            <span className="font-mono text-4xl sm:text-6xl md:text-7xl font-black tracking-tight drop-shadow-md">
+          <div className="relative px-2.5 min-[380px]:px-3.5 sm:px-4 py-1.5 sm:py-3 rounded-xl sm:rounded-2xl bg-stone-950 text-amber-200 shadow-md border border-stone-800">
+            <span className="font-mono text-3xl min-[380px]:text-4xl min-[480px]:text-5xl sm:text-6xl md:text-7xl font-black tracking-tight drop-shadow-md">
               {time.minutes}
             </span>
-            <div className="absolute bottom-1 inset-x-0 text-center text-[9px] font-mono text-amber-400/80 uppercase tracking-widest font-bold">
+            <div className="text-center text-[7px] sm:text-[9px] font-mono text-amber-400/80 uppercase tracking-widest font-bold">
               MIN
             </div>
           </div>
 
           {/* Animated Pulsing Colon */}
-          <span className="font-mono text-3xl sm:text-5xl font-black text-stone-900 animate-pulse px-1">
+          <span className="font-mono text-2xl min-[380px]:text-3xl sm:text-5xl font-black text-stone-900 animate-pulse px-0.5 sm:px-1">
             :
           </span>
 
           {/* Seconds Card (Animated Color Tick) */}
-          <div className="relative px-3 sm:px-4 py-2 sm:py-3 rounded-2xl bg-amber-700 text-white shadow-lg border border-amber-600 shadow-amber-700/20">
-            <span className="font-mono text-4xl sm:text-6xl md:text-7xl font-black tracking-tight drop-shadow-md">
+          <div className="relative px-2.5 min-[380px]:px-3.5 sm:px-4 py-1.5 sm:py-3 rounded-xl sm:rounded-2xl bg-amber-700 text-white shadow-lg border border-amber-600 shadow-amber-700/20">
+            <span className="font-mono text-3xl min-[380px]:text-4xl min-[480px]:text-5xl sm:text-6xl md:text-7xl font-black tracking-tight drop-shadow-md">
               {time.seconds}
             </span>
-            <div className="absolute bottom-1 inset-x-0 text-center text-[9px] font-mono text-amber-200 uppercase tracking-widest font-bold">
+            <div className="text-center text-[7px] sm:text-[9px] font-mono text-amber-200 uppercase tracking-widest font-bold">
               SEC
             </div>
           </div>
 
           {/* Milliseconds Ticker (Running Rapidly) */}
-          <div className="hidden md:flex flex-col items-start ml-2 pl-2 border-l-2 border-[#c8b59b]">
-            <div className="font-mono text-xs font-bold text-stone-500 uppercase tracking-widest">
+          <div className="hidden min-[480px]:flex flex-col items-start ml-2 pl-2 border-l-2 border-[#c8b59b]">
+            <div className="font-mono text-[9px] sm:text-xs font-bold text-stone-500 uppercase tracking-widest">
               MS
             </div>
-            <div className="font-mono text-xl lg:text-2xl font-black text-amber-800">
+            <div className="font-mono text-lg sm:text-xl lg:text-2xl font-black text-amber-800">
               .{time.millis}
             </div>
           </div>
@@ -199,16 +199,16 @@ export const AnimatedDhakaClock: React.FC = () => {
 
         {/* Live Date, Day & Telemetry Sidebar */}
         <div className="sm:text-right space-y-1">
-          <div className="font-mono text-lg sm:text-xl font-black text-stone-950 flex items-center sm:justify-end gap-2">
-            <Clock className="w-5 h-5 text-amber-700 animate-spin" style={{ animationDuration: '60s' }} />
+          <div className="font-mono text-base sm:text-xl font-black text-stone-950 flex items-center sm:justify-end gap-2">
+            <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-amber-700 animate-spin" style={{ animationDuration: '60s' }} />
             <span>{time.dayName}</span>
           </div>
           <div className="font-mono text-xs sm:text-sm text-stone-700 font-bold">
             {time.dateFormatted}
           </div>
-          <div className="text-[11px] font-mono text-stone-600 flex items-center sm:justify-end gap-1.5 pt-1">
-            <Activity className="w-3.5 h-3.5 text-emerald-600 animate-pulse" />
-            <span>Bangladeshi Standard Timezone • Online 24/7</span>
+          <div className="text-[10px] sm:text-[11px] font-mono text-stone-600 flex items-center sm:justify-end gap-1.5 pt-0.5">
+            <Activity className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-600 animate-pulse" />
+            <span>BST GMT+6 • Dhaka Live</span>
           </div>
         </div>
 

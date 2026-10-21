@@ -436,9 +436,9 @@ export const NoorHubModal: React.FC<NoorHubModalProps> = ({ isOpen, onClose }) =
                 </div>
               </div>
 
-              {/* Students Table */}
-              <div className="rounded-2xl border border-slate-800 overflow-hidden bg-slate-900/60">
-                <table className="w-full text-left text-xs font-sans">
+              {/* Students Table with Smooth Mobile Horizontal Scrolling */}
+              <div className="rounded-2xl border border-slate-800 overflow-x-auto bg-slate-900/60 scrollbar-thin scrollbar-thumb-slate-700">
+                <table className="w-full min-w-[620px] text-left text-xs font-sans">
                   <thead className="bg-slate-900 text-slate-400 border-b border-slate-800 font-mono text-[11px]">
                     <tr>
                       <th className="p-3">রোল</th>

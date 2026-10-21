@@ -110,7 +110,7 @@ export const HUDNavbar: React.FC<HUDNavbarProps> = ({
         </nav>
 
         {/* Action Controls & Socials */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 sm:gap-2">
           {/* Bruno Simon 3D Car World Launcher */}
           {onOpenBrunoWorld && (
             <button
@@ -120,10 +120,13 @@ export const HUDNavbar: React.FC<HUDNavbarProps> = ({
               }}
               aria-label="Drive 3D Car World (Bruno Simon Mode)"
               title="Drive 3D Car World (Bruno Simon Mode)"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-mono font-bold transition-all shadow-md shadow-red-600/30 cursor-pointer min-h-[36px]"
+              className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-mono font-bold transition-all shadow-md shadow-red-600/30 cursor-pointer min-h-[36px]"
             >
               <span className="w-2 h-2 rounded-full bg-white animate-ping" />
-              <span>🚗 3D CAR WORLD</span>
+              <span>
+                <span className="hidden sm:inline">🚗 3D CAR WORLD</span>
+                <span className="sm:hidden">🚗 3D</span>
+              </span>
             </button>
           )}
 
@@ -135,7 +138,7 @@ export const HUDNavbar: React.FC<HUDNavbarProps> = ({
             }}
             aria-label="Open Interactive Cyber Terminal"
             title="Open Interactive Cyber Terminal"
-            className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-[#dfcfb8] border border-[#c8b59b] text-stone-900 hover:bg-[#d4c3ab] text-xs font-mono font-bold transition-all shadow-sm cursor-pointer min-h-[36px]"
+            className="flex items-center gap-1 p-2 sm:px-2.5 sm:py-1.5 rounded-lg bg-[#dfcfb8] border border-[#c8b59b] text-stone-900 hover:bg-[#d4c3ab] text-xs font-mono font-bold transition-all shadow-sm cursor-pointer min-h-[36px]"
           >
             <Terminal className="w-3.5 h-3.5 text-stone-800" />
             <span className="hidden lg:inline">CLI_v2.6</span>

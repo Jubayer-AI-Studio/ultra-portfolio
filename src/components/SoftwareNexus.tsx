@@ -221,7 +221,7 @@ export const SoftwareNexus: React.FC = () => {
               </div>
 
               {/* CTAs - TWO CLEAR OPTIONS: DIRECT LIVE SOFTWARE vs GITHUB */}
-              <div className="flex flex-wrap items-center gap-3 pt-2">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
                 {/* OPTION 1: Direct Live Software Launcher */}
                 <button
                   onClick={() => {
@@ -229,7 +229,7 @@ export const SoftwareNexus: React.FC = () => {
                     setNoorHubModalOpen(true);
                   }}
                   data-cursor="LAUNCH SAAS"
-                  className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-400 via-teal-300 to-cyan-400 hover:from-cyan-300 hover:to-teal-200 text-black font-mono font-black text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-cyan-400/30 transition-all cursor-pointer hover:scale-[1.03] active:scale-[0.98]"
+                  className="w-full sm:w-auto px-5 sm:px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-400 via-teal-300 to-cyan-400 hover:from-cyan-300 hover:to-teal-200 text-black font-mono font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-cyan-400/30 transition-all cursor-pointer hover:scale-[1.03] active:scale-[0.98]"
                 >
                   <Sparkles className="w-4 h-4 text-black fill-black" />
                   <span>🚀 সরাসরি নূরহাব সফটওয়্যারে প্রবেশ করুন</span>
@@ -244,7 +244,7 @@ export const SoftwareNexus: React.FC = () => {
                     rel="noopener noreferrer"
                     onClick={() => sound.playClick()}
                     data-cursor="VIEW CODE"
-                    className="px-5 py-3.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-zinc-700 font-mono font-bold text-xs flex items-center gap-2 transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+                    className="w-full sm:w-auto px-4 sm:px-5 py-3.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-zinc-700 font-mono font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
                   >
                     <GithubIcon className="w-4 h-4 text-cyan-400" />
                     <span>গিটহাব সোর্স কোড (GitHub Repository)</span>
