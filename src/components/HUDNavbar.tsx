@@ -68,7 +68,7 @@ export const HUDNavbar: React.FC<HUDNavbarProps> = ({
           onClick={() => handleNavClick('hero')}
           className="flex items-center gap-2 group text-left cursor-pointer"
         >
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-purple-600 flex items-center justify-center font-mono font-bold text-black text-sm shadow-md shadow-cyan-500/20 group-hover:scale-105 transition-transform">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center font-mono font-bold text-black text-sm shadow-md shadow-cyan-500/20 group-hover:scale-105 transition-transform">
             J
           </div>
           <div>

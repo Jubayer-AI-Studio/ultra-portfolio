@@ -69,7 +69,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onScrollTo }) => {
           {/* Main Title & Brand Identity */}
           <div className="space-y-3">
             <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white font-sans">
-              JUBAYER <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">AHMAD</span>
+              JUBAYER <span className="bg-gradient-to-r from-white via-zinc-200 to-cyan-400 bg-clip-text text-transparent">AHMAD</span>
             </h1>
 
             {/* Dynamic Rotating Role */}
@@ -95,10 +95,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onScrollTo }) => {
           <p className="text-base sm:text-lg text-zinc-400 leading-relaxed max-w-2xl font-sans">
             Building software systems that feel truly alive. From modern SaaS platforms like{' '}
             <span className="text-cyan-300 font-medium">NOORHUB</span> to browser-based 2D/3D games and cinematic AI storytelling in the{' '}
-            <span className="text-purple-300 font-medium">ICON 2030</span> universe.
+            <span className="text-zinc-200 font-medium">ICON 2030</span> universe.
           </p>
 
-          {/* Action Portals with Magnetic Cursor tags */}
+          {/* Action Portals */}
           <div className="flex flex-wrap items-center gap-3 pt-2">
             <button
               onClick={() => {
@@ -106,8 +106,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onScrollTo }) => {
                 onScrollTo('software');
               }}
               onMouseEnter={() => sound.playHover()}
-              data-cursor="CODE"
-              className="px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-mono font-bold text-sm flex items-center gap-2 hover:opacity-95 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg shadow-cyan-500/25 cursor-pointer"
+              className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-400 to-cyan-500 text-black font-mono font-bold text-xs sm:text-sm flex items-center gap-2 hover:shadow-[0_0_30px_rgba(0,240,255,0.4)] hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
             >
               <span>Explore Code & SaaS</span>
               <ArrowRight className="w-4 h-4" />
@@ -119,10 +118,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onScrollTo }) => {
                 onScrollTo('arcade');
               }}
               onMouseEnter={() => sound.playHover()}
-              data-cursor="PLAY"
-              className="px-5 py-3 rounded-xl bg-zinc-900 border border-purple-500/40 text-purple-300 font-mono text-sm flex items-center gap-2 hover:bg-purple-950/30 hover:border-purple-400 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg shadow-purple-950/30 cursor-pointer"
+              className="px-6 py-3.5 rounded-xl bg-zinc-900/90 border border-white/10 hover:border-cyan-400/50 text-zinc-200 hover:text-white font-mono text-xs sm:text-sm flex items-center gap-2 hover:bg-zinc-800/80 hover:scale-[1.02] active:scale-[0.98] transition-all backdrop-blur-md cursor-pointer shadow-lg shadow-black/40"
             >
-              <Play className="w-4 h-4 text-purple-400" />
+              <Play className="w-4 h-4 text-cyan-400 fill-cyan-400/20" />
               <span>Play Arcade Games</span>
             </button>
 
@@ -132,30 +130,29 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onScrollTo }) => {
                 onScrollTo('cinema');
               }}
               onMouseEnter={() => sound.playHover()}
-              data-cursor="CINEMA"
-              className="px-4 py-3 rounded-xl bg-zinc-900 border border-pink-500/40 text-pink-300 font-mono text-sm flex items-center gap-2 hover:bg-pink-950/30 hover:border-pink-400 transition-all cursor-pointer shadow-lg shadow-pink-950/30"
+              className="px-5 py-3.5 rounded-xl bg-zinc-900/90 border border-white/10 hover:border-zinc-700 text-zinc-300 hover:text-white font-mono text-xs sm:text-sm flex items-center gap-2 hover:bg-zinc-800/80 transition-all backdrop-blur-md cursor-pointer"
             >
-              <Film className="w-4 h-4 text-pink-400" />
+              <Film className="w-4 h-4 text-rose-400" />
               <span>AI Cinema Studio</span>
             </button>
           </div>
 
           {/* Verified Engineering Stats HUD */}
           <div className="pt-6 border-t border-zinc-800/80 grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <div className="p-3 rounded-xl bg-zinc-950/60 border border-white/5">
+            <div className="p-3.5 rounded-xl bg-zinc-950/70 border border-white/10 backdrop-blur-sm hover:border-cyan-500/30 transition-colors">
               <div className="text-2xl font-mono font-bold text-cyan-400">21+</div>
               <div className="text-xs font-mono text-zinc-400">GitHub Repos</div>
             </div>
-            <div className="p-3 rounded-xl bg-zinc-950/60 border border-white/5">
-              <div className="text-2xl font-mono font-bold text-purple-400">NOORHUB</div>
+            <div className="p-3.5 rounded-xl bg-zinc-950/70 border border-white/10 backdrop-blur-sm hover:border-cyan-500/30 transition-colors">
+              <div className="text-2xl font-mono font-bold text-white">NOORHUB</div>
               <div className="text-xs font-mono text-zinc-400">Full SaaS Platform</div>
             </div>
-            <div className="p-3 rounded-xl bg-zinc-950/60 border border-white/5">
-              <div className="text-2xl font-mono font-bold text-emerald-400">5+</div>
+            <div className="p-3.5 rounded-xl bg-zinc-950/70 border border-white/10 backdrop-blur-sm hover:border-cyan-500/30 transition-colors">
+              <div className="text-2xl font-mono font-bold text-cyan-300">5+</div>
               <div className="text-xs font-mono text-zinc-400">Playable Games</div>
             </div>
-            <div className="p-3 rounded-xl bg-zinc-950/60 border border-white/5">
-              <div className="text-2xl font-mono font-bold text-pink-400">3 Chapters</div>
+            <div className="p-3.5 rounded-xl bg-zinc-950/70 border border-white/10 backdrop-blur-sm hover:border-cyan-500/30 transition-colors">
+              <div className="text-2xl font-mono font-bold text-zinc-200">3 Chapters</div>
               <div className="text-xs font-mono text-zinc-400">ICON 2030 Series</div>
             </div>
           </div>

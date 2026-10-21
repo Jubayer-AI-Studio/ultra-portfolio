@@ -15,11 +15,12 @@
     overflow-x: hidden;
   }
 
-  /* Hide default cursor on desktop when custom cursor takes over */
-  @media (pointer: fine) {
-    body, a, button, [role="button"] {
-      cursor: none !important;
-    }
+  /* Ensure native cursor is always visible and responsive */
+  body, a, button, [role="button"] {
+    cursor: auto;
+  }
+  a, button, [role="button"] {
+    cursor: pointer;
   }
 
   /* Custom subtle dark scrollbar */

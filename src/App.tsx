@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { ThreeCanvas } from './components/ThreeCanvas';
 import { FilmGrain } from './components/FilmGrain';
-import { CustomCursor } from './components/CustomCursor';
 import { HUDNavbar } from './components/HUDNavbar';
 import { HeroSection } from './components/HeroSection';
 import { SoftwareNexus } from './components/SoftwareNexus';
@@ -30,17 +29,14 @@ export function App() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#06070a] text-zinc-100 selection:bg-cyan-400 selection:text-black overflow-x-hidden font-sans">
-      {/* 1. Three.js Interactive 3D WebGL Quantum Core */}
+    <div className="relative min-h-screen bg-[#07090e] text-zinc-100 selection:bg-cyan-400 selection:text-black overflow-x-hidden font-sans">
+      {/* 1. Three.js Interactive 3D WebGL Quantum Core (with pointerEvents none so scroll is never blocked) */}
       <ThreeCanvas />
 
       {/* 2. Cinematic Film Grain Texture */}
       <FilmGrain />
 
-      {/* 3. Fluid Magnetic Custom Cursor */}
-      <CustomCursor />
-
-      {/* 4. Top Cyber HUD Navigation */}
+      {/* 3. Top Cyber HUD Navigation */}
       <HUDNavbar
         activeSection={activeSection}
         onNavigate={handleNavigate}
