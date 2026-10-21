@@ -54,14 +54,14 @@ export const SoftwareNexus: React.FC = () => {
         
         {/* Section Header */}
         <div className="space-y-3">
-          <div className="flex items-center gap-2 font-mono text-xs text-cyan-400">
-            <Layers className="w-4 h-4" />
+          <div className="inline-flex items-center gap-2 font-mono text-xs text-stone-900 font-bold bg-[#dfcfb8] px-3.5 py-1.5 rounded-full border border-[#c8b59b]">
+            <Layers className="w-4 h-4 text-stone-800" />
             <span>SECTOR 01 // SOFTWARE & SAAS ARCHITECTURE</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-white tracking-tight">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-stone-950 tracking-tight font-sans">
             Production Software & Full-Stack Systems
           </h2>
-          <p className="text-zinc-400 max-w-2xl text-sm sm:text-base">
+          <p className="text-stone-700 max-w-2xl text-sm sm:text-base font-medium">
             Verified software projects architected by Jubayer Ahmad, spanning enterprise educational SaaS, AI automation pipelines, and modern full-stack web applications.
           </p>
         </div>

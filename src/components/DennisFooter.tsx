@@ -38,26 +38,26 @@ export const DennisFooter: React.FC<DennisFooterProps> = ({
   return (
     <footer
       id="contact"
-      className="relative pt-32 pb-16 px-4 sm:px-6 bg-[#f59e0b] text-slate-950 border-t-4 border-amber-600/40 select-none transition-colors"
+      className="relative pt-32 pb-16 px-4 sm:px-6 bg-[#dfcfb8] text-stone-950 border-t-4 border-[#c8b59b] select-none transition-colors"
     >
       <div className="max-w-7xl mx-auto space-y-20">
         
         {/* Dennis Snellenberg Massive Headline & Magnetic Circle */}
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-12">
           <div className="space-y-4 max-w-3xl">
-            <div className="inline-flex items-center gap-2 font-mono text-xs text-black font-black bg-amber-400/90 border border-amber-600/30 px-3.5 py-1.5 rounded-full shadow-sm">
-              <Sparkles className="w-4 h-4 text-slate-950" />
+            <div className="inline-flex items-center gap-2 font-mono text-xs text-stone-950 font-black bg-[#cfbeaa] border border-[#c8b59b] px-3.5 py-1.5 rounded-full shadow-sm">
+              <Sparkles className="w-4 h-4 text-stone-950" />
               <span>COLLABORATION & SOFTWARE ARCHITECTURE</span>
             </div>
 
-            <h2 className="text-5xl sm:text-7xl md:text-8xl font-black text-slate-950 tracking-tight leading-[1.03] font-sans">
+            <h2 className="text-5xl sm:text-7xl md:text-8xl font-black text-stone-950 tracking-tight leading-[1.03] font-sans">
               Let&apos;s build <br />
-              <span className="text-black underline decoration-black/20 decoration-wavy">
+              <span className="text-stone-950 underline decoration-stone-950/30 decoration-wavy">
                 together —
               </span>
             </h2>
 
-            <p className="text-slate-900 font-semibold text-base sm:text-xl max-w-xl font-sans leading-relaxed">
+            <p className="text-stone-800 font-bold text-base sm:text-xl max-w-xl font-sans leading-relaxed">
               Have an ambitious SaaS product, game concept, or AI pipeline you want to bring to life? Let&apos;s turn vision into high-performance reality.
             </p>
           </div>
@@ -69,22 +69,22 @@ export const DennisFooter: React.FC<DennisFooterProps> = ({
               onClick={() => sound.playWarp()}
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
-              className="relative w-48 h-48 sm:w-60 sm:h-60 rounded-full bg-slate-950 hover:bg-black text-amber-300 flex flex-col items-center justify-center font-mono font-black text-sm sm:text-base tracking-wider uppercase transition-all shadow-[0_25px_60px_rgba(0,0,0,0.45)] cursor-pointer group border-4 border-amber-400"
+              className="relative w-48 h-48 sm:w-60 sm:h-60 rounded-full bg-stone-900 hover:bg-black text-amber-200 flex flex-col items-center justify-center font-mono font-black text-sm sm:text-base tracking-wider uppercase transition-all shadow-[0_25px_60px_rgba(0,0,0,0.3)] cursor-pointer group border-4 border-[#c8b59b]"
             >
               <span className="text-center">Get in Touch</span>
-              <ArrowUpRight className="w-7 h-7 mt-1.5 text-amber-400 group-hover:translate-x-1.5 group-hover:-translate-y-1.5 transition-transform" />
+              <ArrowUpRight className="w-7 h-7 mt-1.5 text-amber-300 group-hover:translate-x-1.5 group-hover:-translate-y-1.5 transition-transform" />
             </motion.a>
           </div>
         </div>
 
         {/* Action Pills & Interactive Terminal Trigger */}
-        <div className="flex flex-wrap items-center gap-4 pt-8 border-t-2 border-amber-600/30">
+        <div className="flex flex-wrap items-center gap-4 pt-8 border-t-2 border-[#c8b59b]">
           <a
             href={`mailto:${profile.email}`}
             onClick={() => sound.playClick()}
-            className="px-6 py-3.5 rounded-full bg-slate-950 hover:bg-black text-white font-mono text-xs font-bold flex items-center gap-2.5 transition-all shadow-md cursor-pointer border border-amber-500/40"
+            className="px-6 py-3.5 rounded-full bg-stone-900 hover:bg-black text-amber-100 font-mono text-xs font-bold flex items-center gap-2.5 transition-all shadow-md cursor-pointer border border-[#c8b59b]"
           >
-            <Mail className="w-4 h-4 text-amber-400" />
+            <Mail className="w-4 h-4 text-amber-300" />
             <span>{profile.email}</span>
           </a>
 
@@ -93,9 +93,9 @@ export const DennisFooter: React.FC<DennisFooterProps> = ({
               sound.playClick();
               onOpenTerminal();
             }}
-            className="px-6 py-3.5 rounded-full bg-slate-950 hover:bg-black text-amber-300 font-mono text-xs font-bold flex items-center gap-2 transition-all shadow-md cursor-pointer border border-amber-500/40"
+            className="px-6 py-3.5 rounded-full bg-stone-900 hover:bg-black text-amber-200 font-mono text-xs font-bold flex items-center gap-2 transition-all shadow-md cursor-pointer border border-[#c8b59b]"
           >
-            <Terminal className="w-4 h-4 text-amber-400" />
+            <Terminal className="w-4 h-4 text-amber-300" />
             <span>Open Terminal CLI</span>
           </button>
 
@@ -104,21 +104,21 @@ export const DennisFooter: React.FC<DennisFooterProps> = ({
               sound.playWarp();
               onScrollToTop();
             }}
-            className="px-6 py-3.5 rounded-full bg-slate-950 hover:bg-black text-white font-mono text-xs font-bold flex items-center gap-2 transition-all ml-auto shadow-md cursor-pointer border border-amber-500/40"
+            className="px-6 py-3.5 rounded-full bg-stone-900 hover:bg-black text-amber-100 font-mono text-xs font-bold flex items-center gap-2 transition-all ml-auto shadow-md cursor-pointer border border-[#c8b59b]"
           >
-            <ArrowUp className="w-4 h-4 text-amber-400" />
+            <ArrowUp className="w-4 h-4 text-amber-300" />
             <span>Back to Top</span>
           </button>
         </div>
 
         {/* Bottom Editorial Meta Bar (Snellenberg Style) */}
-        <div className="pt-8 border-t-2 border-amber-600/30 flex flex-col sm:flex-row items-center justify-between gap-6 font-mono text-xs text-slate-950 font-bold">
+        <div className="pt-8 border-t-2 border-[#c8b59b] flex flex-col sm:flex-row items-center justify-between gap-6 font-mono text-xs text-stone-950 font-bold">
           <div className="flex items-center gap-3">
-            <span className="w-3 h-3 rounded-full bg-red-600 animate-ping" />
+            <span className="w-3 h-3 rounded-full bg-emerald-600 animate-ping" />
             <span>DHAKA, BANGLADESH • {timeStr}</span>
           </div>
 
-          <div className="flex items-center gap-6 text-black font-black">
+          <div className="flex items-center gap-6 text-stone-950 font-black">
             <a
               href={profile.github}
               target="_blank"
@@ -151,7 +151,7 @@ export const DennisFooter: React.FC<DennisFooterProps> = ({
             </a>
           </div>
 
-          <div className="text-slate-900 text-center sm:text-right font-bold">
+          <div className="text-stone-800 text-center sm:text-right font-bold">
             © 2026 Jubayer Ahmad. Directed by JUBAYER AI Specialist.
           </div>
         </div>

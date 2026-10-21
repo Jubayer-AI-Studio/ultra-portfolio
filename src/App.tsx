@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 import Lenis from 'lenis';
-import { ThreeCanvas } from './components/ThreeCanvas';
-import { FilmGrain } from './components/FilmGrain';
 import { HUDNavbar } from './components/HUDNavbar';
 import { HeroSection } from './components/HeroSection';
 import { BrunoCityWorld } from './components/BrunoCityWorld';
@@ -20,7 +18,6 @@ export function App() {
   const [activeSection, setActiveSection] = useState('hero');
   const [terminalOpen, setTerminalOpen] = useState(false);
   const [brunoWorldOpen, setBrunoWorldOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false); // Default to clean, bright, colorful Bruno Simon Daylight Studio Mode
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -55,35 +52,17 @@ export function App() {
     setActiveSection('hero');
   };
 
-  const toggleTheme = () => {
-    setIsDarkMode((prev) => !prev);
-  };
-
   return (
-    <div
-      className={`relative min-h-screen transition-colors duration-500 overflow-x-hidden font-sans ${
-        isDarkMode
-          ? 'bg-[#0b1120] text-zinc-100 selection:bg-red-500 selection:text-white'
-          : 'bg-[#f8fafc] text-slate-900 selection:bg-red-600 selection:text-white'
-      }`}
-    >
-      {/* 1. Three.js Background Ambient Layer (Only in Dark Mode or subtle opacity) */}
-      {isDarkMode && <ThreeCanvas />}
-
-      {/* 2. Cinematic Film Grain Texture */}
-      <FilmGrain />
-
-      {/* 3. Top Cyber HUD Navigation */}
+    <div className="relative min-h-screen bg-[#EADECA] text-stone-900 selection:bg-stone-900 selection:text-amber-200 overflow-x-hidden font-sans">
+      {/* 1. Top Cyber HUD Navigation */}
       <HUDNavbar
         activeSection={activeSection}
         onNavigate={handleNavigate}
         onOpenTerminal={() => setTerminalOpen(true)}
         onOpenBrunoWorld={() => setBrunoWorldOpen(true)}
-        isDark={isDarkMode}
-        onToggleTheme={toggleTheme}
       />
 
-      {/* 4. Main Content Journey */}
+      {/* 2. Main Content Journey */}
       <main className="relative z-10">
         <HeroSection
           onScrollTo={handleNavigate}
@@ -91,26 +70,18 @@ export function App() {
           onOpenBrunoWorld={() => setBrunoWorldOpen(true)}
         />
 
-        {/* 4.1 BIG & PROMINENT BRUNO SIMON 3D CITY WORLD (Front-and-Center) */}
+        {/* 2.1 BIG & PROMINENT BRUNO SIMON 3D CITY WORLD */}
         <section id="city-world" className="relative py-8 px-4 sm:px-6 max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-4">
             <div className="space-y-2">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-700 font-mono text-xs font-bold shadow-sm">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#dfcfb8] border border-[#c8b59b] text-stone-900 font-mono text-xs font-bold shadow-sm">
                 <span className="w-2.5 h-2.5 rounded-full bg-red-600 animate-ping" />
                 <span>BRUNO SIMON 3D INTERACTIVE CITY WORLD</span>
               </div>
-              <h2
-                className={`text-3xl sm:text-5xl font-black tracking-tight font-sans ${
-                  isDarkMode ? 'text-white' : 'text-slate-900'
-                }`}
-              >
+              <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-stone-950 font-sans">
                 Drive the Ferrari Red Roadster to Explore Campuses
               </h2>
-              <p
-                className={`text-sm sm:text-base max-w-2xl font-sans ${
-                  isDarkMode ? 'text-zinc-400' : 'text-slate-600'
-                }`}
-              >
+              <p className="text-sm sm:text-base max-w-2xl text-stone-700 font-medium font-sans">
                 Drive across the sunny 3D city! Cross the wooden river bridge, crash through the wooden crate pyramid, jump the stunt ramp, and enter any of the 4 Tech Factory Campuses to inspect live projects.
               </p>
             </div>
@@ -145,19 +116,19 @@ export function App() {
         <CareerOdyssey />
       </main>
 
-      {/* 5. Dennis Snellenberg Signature Giant Footer */}
+      {/* 3. Dennis Snellenberg Signature Giant Footer */}
       <DennisFooter
         onScrollToTop={handleScrollToTop}
         onOpenTerminal={() => setTerminalOpen(true)}
       />
 
-      {/* 6. Interactive CLI Terminal */}
+      {/* 4. Interactive CLI Terminal */}
       <CyberTerminal
         isOpen={terminalOpen}
         onClose={() => setTerminalOpen(false)}
       />
 
-      {/* 7. Bruno Simon Full-Screen 3D Interactive Car World Modal */}
+      {/* 5. Bruno Simon Full-Screen 3D Interactive Car World Modal */}
       <BrunoWorld
         isOpen={brunoWorldOpen}
         onClose={() => setBrunoWorldOpen(false)}

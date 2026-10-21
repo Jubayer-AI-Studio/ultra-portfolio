@@ -13,12 +13,12 @@ export const InfiniteMarquee: React.FC = () => {
   ];
 
   return (
-    <div className="relative w-full py-8 overflow-hidden border-y border-white/[0.08] bg-zinc-950/40 backdrop-blur-md select-none">
-      <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#07080b] to-transparent z-10 pointer-events-none" />
-      <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#07080b] to-transparent z-10 pointer-events-none" />
+    <div className="relative w-full py-6 overflow-hidden border-y-2 border-[#c8b59b] bg-[#dfcfb8]/60 backdrop-blur-md select-none my-6">
+      <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#EADECA] to-transparent z-10 pointer-events-none" />
+      <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#EADECA] to-transparent z-10 pointer-events-none" />
 
       <motion.div
-        className="flex whitespace-nowrap gap-12 font-mono text-sm tracking-widest text-zinc-400 font-bold uppercase items-center"
+        className="flex whitespace-nowrap gap-12 font-mono text-sm tracking-widest text-stone-900 font-black uppercase items-center"
         animate={{ x: ['0%', '-50%'] }}
         transition={{
           repeat: Infinity,
@@ -30,11 +30,11 @@ export const InfiniteMarquee: React.FC = () => {
           const IconComp = item.icon;
           return (
             <div key={idx} className="flex items-center gap-4 group cursor-default">
-              <span className="text-zinc-300 group-hover:text-cyan-400 transition-colors">
+              <span className="text-stone-900 group-hover:text-amber-800 transition-colors">
                 {item.text}
               </span>
-              <IconComp className="w-4 h-4 text-cyan-400/70" />
-              <span className="text-zinc-700">—</span>
+              <IconComp className="w-4 h-4 text-stone-800" />
+              <span className="text-stone-500 font-bold">—</span>
             </div>
           );
         })}

@@ -63,19 +63,19 @@ export const AICinemaStudio: React.FC = () => {
         {/* Section Header with Official Director Laurel Wreath */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="space-y-3">
-            <div className="flex items-center gap-2 font-mono text-xs text-pink-400">
-              <Film className="w-4 h-4" />
+            <div className="inline-flex items-center gap-2 font-mono text-xs text-stone-900 font-bold bg-[#dfcfb8] px-3.5 py-1.5 rounded-full border border-[#c8b59b]">
+              <Film className="w-4 h-4 text-red-600" />
               <span>SECTOR 03 // AI CINEMA STUDIO</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-white tracking-tight">
+            <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-stone-950 tracking-tight font-sans">
               ICON 2030 Cinematic Universe
             </h2>
             <div className="flex flex-wrap items-center gap-3">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-pink-950/40 border border-pink-500/40 text-pink-300 font-mono text-xs font-bold tracking-wide shadow-lg shadow-pink-950/40">
-                <Award className="w-3.5 h-3.5 text-yellow-400" />
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#f5ecde] border border-[#c8b59b] text-stone-900 font-mono text-xs font-bold tracking-wide shadow-sm">
+                <Award className="w-3.5 h-3.5 text-amber-600" />
                 <span>{PORTFOLIO_DATA.profile.creativeCredit}</span>
               </div>
-              <span className="text-xs font-mono text-zinc-500">
+              <span className="text-xs font-mono text-stone-600 font-bold">
                 3 Epic Chapters • 10s Continuity Architecture
               </span>
             </div>

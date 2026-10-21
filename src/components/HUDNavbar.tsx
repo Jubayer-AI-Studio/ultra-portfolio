@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { sound } from '../utils/sound';
-import { Volume2, VolumeX, Menu, X, Terminal, Cpu, Sun, Moon } from 'lucide-react';
+import { Volume2, VolumeX, Menu, X, Terminal, Cpu } from 'lucide-react';
 import { GithubIcon, YoutubeIcon } from './Icons';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 
@@ -9,8 +9,6 @@ interface HUDNavbarProps {
   onNavigate: (sectionId: string) => void;
   onOpenTerminal: () => void;
   onOpenBrunoWorld?: () => void;
-  isDark?: boolean;
-  onToggleTheme?: () => void;
 }
 
 export const HUDNavbar: React.FC<HUDNavbarProps> = ({
@@ -18,8 +16,6 @@ export const HUDNavbar: React.FC<HUDNavbarProps> = ({
   onNavigate,
   onOpenTerminal,
   onOpenBrunoWorld,
-  isDark = false,
-  onToggleTheme,
 }) => {
   const [timeStr, setTimeStr] = useState('');
   const [isMuted, setIsMuted] = useState(false);
@@ -69,31 +65,31 @@ export const HUDNavbar: React.FC<HUDNavbarProps> = ({
 
   return (
     <header className="fixed top-0 inset-x-0 z-50 px-4 py-3 sm:px-6">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-2.5 rounded-2xl bg-zinc-950/70 border border-white/10 backdrop-blur-xl shadow-2xl shadow-black/80">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-2 rounded-2xl bg-[#EADECA]/95 border border-[#c8b59b] backdrop-blur-xl shadow-md">
         
         {/* Brand / Monogram */}
         <button
           onClick={() => handleNavClick('hero')}
           className="flex items-center gap-2 group text-left cursor-pointer"
         >
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center font-mono font-bold text-black text-sm shadow-md shadow-cyan-500/20 group-hover:scale-105 transition-transform">
+          <div className="w-8 h-8 rounded-lg bg-stone-900 flex items-center justify-center font-mono font-black text-amber-200 text-sm shadow-md group-hover:scale-105 transition-transform">
             J
           </div>
           <div>
-            <div className="font-mono text-sm font-bold tracking-wider text-white group-hover:text-cyan-400 transition-colors flex items-center gap-1.5">
+            <div className="font-mono text-sm font-black tracking-wider text-stone-950 group-hover:text-amber-800 transition-colors flex items-center gap-1.5">
               <span>JUBAYER</span>
-              <span className="text-[10px] px-1.5 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800/50">
+              <span className="text-[10px] px-1.5 py-0.5 rounded bg-stone-900 text-amber-200 font-bold">
                 DEV
               </span>
             </div>
-            <div className="text-[10px] font-mono text-zinc-500 tracking-tight hidden sm:block">
+            <div className="text-[10px] font-mono text-stone-700 tracking-tight hidden sm:block font-bold">
               DHAKA [BST] {timeStr}
             </div>
           </div>
         </button>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-1 bg-zinc-900/60 p-1 rounded-xl border border-white/5">
+        <nav className="hidden md:flex items-center gap-1 bg-[#dfcfb8]/80 p-1 rounded-xl border border-[#c8b59b]">
           {navLinks.map((link) => {
             const isActive = activeSection === link.id;
             return (
@@ -101,10 +97,10 @@ export const HUDNavbar: React.FC<HUDNavbarProps> = ({
                 key={link.id}
                 onClick={() => handleNavClick(link.id)}
                 onMouseEnter={() => sound.playHover()}
-                className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all cursor-pointer ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all cursor-pointer font-bold ${
                   isActive
-                    ? 'bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 shadow-sm shadow-cyan-500/20'
-                    : 'text-zinc-400 hover:text-white hover:bg-white/5'
+                    ? 'bg-stone-900 text-amber-200 shadow-sm'
+                    : 'text-stone-800 hover:text-black hover:bg-stone-900/10'
                 }`}
               >
                 {link.label}
@@ -124,9 +120,9 @@ export const HUDNavbar: React.FC<HUDNavbarProps> = ({
               }}
               aria-label="Drive 3D Car World (Bruno Simon Mode)"
               title="Drive 3D Car World (Bruno Simon Mode)"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500/25 to-orange-500/25 border border-amber-400/60 text-amber-300 hover:bg-amber-500/35 text-xs font-mono font-bold transition-all shadow-md shadow-amber-950/40 cursor-pointer min-h-[36px]"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-mono font-bold transition-all shadow-md shadow-red-600/30 cursor-pointer min-h-[36px]"
             >
-              <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
+              <span className="w-2 h-2 rounded-full bg-white animate-ping" />
               <span>🚗 3D CAR WORLD</span>
             </button>
           )}
@@ -139,9 +135,9 @@ export const HUDNavbar: React.FC<HUDNavbarProps> = ({
             }}
             aria-label="Open Interactive Cyber Terminal"
             title="Open Interactive Cyber Terminal"
-            className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-purple-950/40 border border-purple-500/30 text-purple-300 hover:bg-purple-900/40 text-xs font-mono transition-all shadow-sm shadow-purple-900/30 cursor-pointer min-h-[36px]"
+            className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-[#dfcfb8] border border-[#c8b59b] text-stone-900 hover:bg-[#d4c3ab] text-xs font-mono font-bold transition-all shadow-sm cursor-pointer min-h-[36px]"
           >
-            <Terminal className="w-3.5 h-3.5 text-purple-400" />
+            <Terminal className="w-3.5 h-3.5 text-stone-800" />
             <span className="hidden lg:inline">CLI_v2.6</span>
           </button>
 
@@ -150,29 +146,10 @@ export const HUDNavbar: React.FC<HUDNavbarProps> = ({
             onClick={toggleSound}
             aria-label={isMuted ? 'Unmute Sound' : 'Mute Sound'}
             title={isMuted ? 'Unmute Sound' : 'Mute Sound'}
-            className={`p-2 rounded-lg border transition-all cursor-pointer min-h-[36px] min-w-[36px] flex items-center justify-center ${
-              isMuted
-                ? 'bg-zinc-900 border-zinc-800 text-zinc-500'
-                : 'bg-cyan-950/40 border-cyan-500/30 text-cyan-400 shadow-sm shadow-cyan-500/20'
-            }`}
+            className="p-2 rounded-lg border border-[#c8b59b] bg-[#dfcfb8] hover:bg-[#d4c3ab] text-stone-900 transition-all cursor-pointer min-h-[36px] min-w-[36px] flex items-center justify-center font-bold"
           >
-            {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+            {isMuted ? <VolumeX className="w-4 h-4 text-stone-500" /> : <Volume2 className="w-4 h-4 text-stone-900" />}
           </button>
-
-          {/* Theme Daylight/Midnight Switcher */}
-          {onToggleTheme && (
-            <button
-              onClick={() => {
-                sound.playClick();
-                onToggleTheme();
-              }}
-              aria-label={isDark ? 'Switch to Daylight Studio Mode' : 'Switch to Midnight Mode'}
-              title={isDark ? 'Switch to Daylight Studio Mode' : 'Switch to Midnight Mode'}
-              className="p-2 rounded-lg border transition-all cursor-pointer min-h-[36px] min-w-[36px] flex items-center justify-center bg-white/10 hover:bg-white/20 border-white/15"
-            >
-              {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-300" />}
-            </button>
-          )}
 
           {/* GitHub Direct Link */}
           <a
@@ -182,7 +159,7 @@ export const HUDNavbar: React.FC<HUDNavbarProps> = ({
             onClick={() => sound.playClick()}
             aria-label="GitHub Repository Hub"
             title="GitHub Repository Hub (21+ Repos)"
-            className="p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-white hover:border-zinc-700 transition-colors hidden sm:flex items-center justify-center min-h-[36px] min-w-[36px]"
+            className="p-2 rounded-lg bg-[#dfcfb8] border border-[#c8b59b] text-stone-900 hover:bg-[#d4c3ab] transition-colors hidden sm:flex items-center justify-center min-h-[36px] min-w-[36px]"
           >
             <GithubIcon className="w-4 h-4" />
           </a>

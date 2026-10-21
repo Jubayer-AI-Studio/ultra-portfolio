@@ -150,18 +150,18 @@ export const SnellenbergWork: React.FC = () => {
   };
 
   return (
-    <section id="works-snellenberg" className="relative py-32 px-4 sm:px-6 select-none">
+    <section id="works-snellenberg" className="relative py-28 px-4 sm:px-6 select-none">
       <div className="max-w-7xl mx-auto space-y-12">
         
         {/* Dennis Snellenberg Editorial Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-white/[0.08]">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-[#c8b59b]">
           <div className="space-y-3">
-            <div className="flex items-center gap-2 font-mono text-xs text-cyan-400 tracking-wider">
-              <Layers className="w-4 h-4" />
+            <div className="inline-flex items-center gap-2 font-mono text-xs text-stone-900 font-bold bg-[#dfcfb8] px-3.5 py-1.5 rounded-full border border-[#c8b59b]">
+              <Layers className="w-4 h-4 text-stone-800" />
               <span>SELECTED WORKS // ARCHITECTURE & CREATIONS</span>
             </div>
-            <h2 className="text-4xl sm:text-6xl md:text-7xl font-black text-white tracking-tight font-sans">
-              Recent Projects <span className="font-mono text-2xl sm:text-3xl font-normal text-zinc-500">({filteredWorks.length.toString().padStart(2, '0')})</span>
+            <h2 className="text-4xl sm:text-6xl md:text-7xl font-black text-stone-950 tracking-tight font-sans">
+              Recent Projects <span className="font-mono text-2xl sm:text-3xl font-bold text-stone-600">({filteredWorks.length.toString().padStart(2, '0')})</span>
             </h2>
           </div>
 
@@ -180,10 +180,10 @@ export const SnellenbergWork: React.FC = () => {
                   sound.playClick();
                   setSelectedFilter(tab.id);
                 }}
-                className={`px-4 py-2 rounded-full transition-all cursor-pointer ${
+                className={`px-4 py-2 rounded-full transition-all cursor-pointer font-bold ${
                   selectedFilter === tab.id
-                    ? 'bg-white text-black font-bold shadow-lg shadow-white/20'
-                    : 'bg-zinc-900/80 text-zinc-400 hover:text-white border border-white/[0.08]'
+                    ? 'bg-stone-900 text-amber-200 shadow-md'
+                    : 'bg-[#dfcfb8] text-stone-800 hover:text-black border border-[#c8b59b] hover:bg-[#d5c4ad]'
                 }`}
               >
                 {tab.label}
@@ -196,7 +196,7 @@ export const SnellenbergWork: React.FC = () => {
         <div
           ref={containerRef}
           onMouseMove={handleMouseMove}
-          className="relative divide-y divide-white/[0.08]"
+          className="relative divide-y divide-[#c8b59b]"
         >
           {filteredWorks.map((work, idx) => (
             <div
@@ -207,21 +207,21 @@ export const SnellenbergWork: React.FC = () => {
                   sound.playHover();
                 }}
                 onMouseLeave={() => setHoveredIndex(null)}
-                className="group relative py-8 sm:py-12 px-4 -mx-4 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all duration-300 hover:bg-white/[0.03] cursor-pointer"
+                className="group relative py-8 sm:py-12 px-4 -mx-4 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all duration-300 hover:bg-[#dfcfb8]/60 cursor-pointer"
               >
                 {/* Left: Title & Subtitle with smooth hover slide */}
                 <div className="space-y-2 z-10">
                   <div className="flex items-center gap-3">
-                    <h3 className="text-2xl sm:text-4xl md:text-5xl font-black text-white group-hover:text-cyan-300 transition-all duration-300 group-hover:translate-x-3 tracking-tight font-sans">
+                    <h3 className="text-2xl sm:text-4xl md:text-5xl font-black text-stone-950 group-hover:text-amber-800 transition-all duration-300 group-hover:translate-x-3 tracking-tight font-sans">
                       {work.title}
                     </h3>
                     {work.featured && (
-                      <span className="hidden sm:inline-block px-2.5 py-0.5 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 font-mono text-[11px] font-semibold">
+                      <span className="hidden sm:inline-block px-2.5 py-0.5 rounded-full bg-[#f5ecde] border border-[#c8b59b] text-stone-900 font-mono text-[11px] font-bold">
                         Featured
                       </span>
                     )}
                   </div>
-                  <p className="text-zinc-400 text-sm sm:text-base max-w-xl group-hover:text-zinc-200 transition-colors">
+                  <p className="text-stone-700 text-sm sm:text-base max-w-xl font-medium transition-colors">
                     {work.subtitle}
                   </p>
                 </div>
@@ -229,10 +229,10 @@ export const SnellenbergWork: React.FC = () => {
                 {/* Right: Meta & Direct Triggers */}
                 <div className="flex items-center gap-6 z-10">
                   <div className="text-left md:text-right font-mono">
-                    <div className="text-sm font-bold text-white group-hover:text-cyan-400 transition-colors">
+                    <div className="text-sm font-black text-stone-950 group-hover:text-amber-800 transition-colors">
                       {work.categoryLabel}
                     </div>
-                    <div className="text-xs text-zinc-500 mt-0.5">{work.year}</div>
+                    <div className="text-xs text-stone-600 mt-0.5 font-bold">{work.year}</div>
                   </div>
 
                   <div className="flex items-center gap-2">
@@ -247,13 +247,13 @@ export const SnellenbergWork: React.FC = () => {
                             url: work.liveUrl,
                           });
                         }}
-                        className="px-4 py-2 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-black font-mono font-bold text-xs flex items-center gap-1.5 transition-transform hover:scale-105 active:scale-95 shadow-md shadow-cyan-400/30 cursor-pointer"
+                        className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-mono font-bold text-xs flex items-center gap-1.5 transition-transform hover:scale-105 active:scale-95 shadow-md shadow-red-600/30 cursor-pointer"
                       >
-                        <Play className="w-3.5 h-3.5 fill-black" />
+                        <Play className="w-3.5 h-3.5 fill-white" />
                         <span>PLAY</span>
                       </button>
                     ) : (
-                      <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-zinc-400 group-hover:text-black group-hover:bg-white group-hover:border-white transition-all duration-300 group-hover:rotate-45">
+                      <div className="w-10 h-10 rounded-full border border-stone-800 flex items-center justify-center text-stone-800 group-hover:text-amber-200 group-hover:bg-stone-900 group-hover:border-stone-900 transition-all duration-300 group-hover:rotate-45">
                         <ArrowUpRight className="w-5 h-5" />
                       </div>
                     )}
@@ -268,7 +268,7 @@ export const SnellenbergWork: React.FC = () => {
                           sound.playClick();
                         }}
                         title="GitHub Repository"
-                        className="p-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-white/10 transition-colors cursor-pointer"
+                        className="p-2.5 rounded-xl bg-[#dfcfb8] hover:bg-[#d5c4ad] text-stone-900 border border-[#c8b59b] transition-colors cursor-pointer"
                       >
                         <GithubIcon className="w-4 h-4" />
                       </a>
@@ -296,20 +296,18 @@ export const SnellenbergWork: React.FC = () => {
               >
                 {/* Floating Preview Glass Card */}
                 <div
-                  className="w-72 p-5 rounded-2xl bg-zinc-950/95 border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.9)] backdrop-blur-2xl space-y-3"
-                  style={{ borderColor: filteredWorks[hoveredIndex].accentColor }}
+                  className="w-72 p-5 rounded-2xl bg-[#F8F1E2] border-2 border-stone-900 shadow-[0_20px_50px_rgba(0,0,0,0.3)] backdrop-blur-2xl space-y-3"
                 >
                   <div className="flex items-center justify-between text-xs font-mono">
                     <span
-                      className="font-bold tracking-wider uppercase"
-                      style={{ color: filteredWorks[hoveredIndex].accentColor }}
+                      className="font-black tracking-wider uppercase text-amber-900"
                     >
                       {filteredWorks[hoveredIndex].categoryLabel}
                     </span>
-                    <span className="text-zinc-500">{filteredWorks[hoveredIndex].year}</span>
+                    <span className="text-stone-600 font-bold">{filteredWorks[hoveredIndex].year}</span>
                   </div>
 
-                  <div className="text-lg font-black text-white">
+                  <div className="text-lg font-black text-stone-950">
                     {filteredWorks[hoveredIndex].title}
                   </div>
 
@@ -317,18 +315,18 @@ export const SnellenbergWork: React.FC = () => {
                     {filteredWorks[hoveredIndex].tags.slice(0, 3).map((tag) => (
                       <span
                         key={tag}
-                        className="px-2 py-0.5 rounded bg-zinc-900 border border-white/10 text-zinc-300 text-[10px] font-mono"
+                        className="px-2 py-0.5 rounded bg-[#ebdcc8] border border-[#c8b59b] text-stone-900 text-[10px] font-mono font-bold"
                       >
                         {tag}
                       </span>
                     ))}
                   </div>
 
-                  <div className="pt-2 border-t border-zinc-800 flex items-center justify-between text-[11px] font-mono text-zinc-400">
+                  <div className="pt-2 border-t border-[#c8b59b] flex items-center justify-between text-[11px] font-mono text-stone-800">
                     <span>
                       {filteredWorks[hoveredIndex].category === 'game' ? '⚡ Tap to play now' : '↗ Tap to inspect'}
                     </span>
-                    <span className="text-white font-bold">CLICK</span>
+                    <span className="text-stone-950 font-black">CLICK</span>
                   </div>
                 </div>
               </motion.div>
@@ -338,9 +336,9 @@ export const SnellenbergWork: React.FC = () => {
         </div>
 
         {/* Big Snellenberg GitHub Portal CTA */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div className="text-zinc-400 text-sm font-mono">
-            All code repositories are open and verified on GitHub under <span className="text-white font-bold">@Jubayer-AI-Studio</span>.
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-[#c8b59b]">
+          <div className="text-stone-700 text-sm font-mono font-medium">
+            All code repositories are open and verified on GitHub under <span className="text-stone-950 font-black">@Jubayer-AI-Studio</span>.
           </div>
 
           <a
@@ -348,11 +346,11 @@ export const SnellenbergWork: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => sound.playWarp()}
-            className="px-8 py-4 rounded-full bg-zinc-900 hover:bg-zinc-800 border border-white/15 hover:border-cyan-400/50 text-white font-mono text-xs font-bold flex items-center gap-2.5 transition-all hover:scale-105 shadow-xl shadow-black/60 cursor-pointer"
+            className="px-8 py-4 rounded-full bg-stone-900 hover:bg-black border border-stone-800 text-amber-200 font-mono text-xs font-black flex items-center gap-2.5 transition-all hover:scale-105 shadow-md cursor-pointer"
           >
             <GithubIcon className="w-4 h-4" />
             <span>More Works on GitHub (21+ Repositories)</span>
-            <ArrowUpRight className="w-4 h-4 text-cyan-400" />
+            <ArrowUpRight className="w-4 h-4 text-amber-300" />
           </a>
         </div>
 

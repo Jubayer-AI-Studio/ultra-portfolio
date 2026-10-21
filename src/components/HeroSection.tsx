@@ -29,7 +29,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onScrollTo, onOpenBrun
   }, [roles.length]);
 
   return (
-    <section id="hero" className="relative min-h-screen pt-28 pb-16 px-4 sm:px-6 flex items-center justify-center">
+    <section id="hero" className="relative min-h-[90vh] pt-28 pb-16 px-4 sm:px-6 flex items-center justify-center">
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         
         {/* Left Column: Text & CTAs (7 cols) */}
@@ -41,62 +41,62 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onScrollTo, onOpenBrun
         >
           {/* Status & Audio Waveform Tag */}
           <div className="flex flex-wrap items-center gap-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900/80 border border-cyan-500/30 text-xs font-mono text-cyan-300 backdrop-blur-md shadow-sm shadow-cyan-900/20">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#dfcfb8] border border-[#c8b59b] text-xs font-mono text-stone-900 shadow-sm font-bold">
+              <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
               <span className="flex items-center gap-1">
-                <MapPin className="w-3 h-3 text-cyan-400" />
+                <MapPin className="w-3.5 h-3.5 text-stone-800" />
                 <span>Dhaka, Bangladesh</span>
               </span>
-              <span className="text-zinc-600">|</span>
-              <span className="text-zinc-400">Available for High-Impact Projects</span>
+              <span className="text-stone-400">|</span>
+              <span className="text-stone-700">Available for High-Impact Projects</span>
             </div>
 
             {/* Visual Equalizer Pill */}
-            <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-zinc-950 border border-purple-500/30 text-[11px] font-mono text-purple-300">
-              <Volume2 className="w-3 h-3 text-purple-400" />
+            <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#dfcfb8] border border-[#c8b59b] text-[11px] font-mono text-stone-800 font-bold">
+              <Volume2 className="w-3.5 h-3.5 text-stone-700" />
               <div className="flex items-end gap-[2px] h-3">
                 {[8, 14, 6, 12, 10, 16, 8, 12].map((h, i) => (
                   <span
                     key={i}
                     style={{ height: `${h}px` }}
-                    className="w-[2px] bg-purple-400 rounded-full animate-pulse"
+                    className="w-[2px] bg-stone-800 rounded-full animate-pulse"
                   />
                 ))}
               </div>
-              <span className="text-zinc-500 text-[10px]">60 FPS</span>
+              <span className="text-stone-600 text-[10px]">60 FPS</span>
             </div>
           </div>
 
-          {/* Main Title & Brand Identity */}
+          {/* Main Title & Brand Identity (100% High-Contrast on #EADECA) */}
           <div className="space-y-3">
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white font-sans">
-              JUBAYER <span className="bg-gradient-to-r from-white via-zinc-200 to-cyan-400 bg-clip-text text-transparent">AHMAD</span>
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-stone-950 font-sans">
+              JUBAYER <span className="text-amber-800 underline decoration-amber-600/30">AHMAD</span>
             </h1>
 
             {/* Dynamic Rotating Role */}
             <div className="h-10 flex items-center">
-              <span className="font-mono text-lg sm:text-2xl text-zinc-300 flex items-center gap-2">
-                <span className="text-cyan-400">&gt;</span>
+              <span className="font-mono text-lg sm:text-2xl text-stone-800 flex items-center gap-2 font-bold">
+                <span className="text-amber-700">&gt;</span>
                 <motion.span
                   key={roleIndex}
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.3 }}
-                  className="font-bold text-transparent bg-gradient-to-r from-white via-zinc-200 to-zinc-400 bg-clip-text"
+                  className="font-black text-stone-950"
                 >
                   {roles[roleIndex]}
                 </motion.span>
-                <span className="w-2 h-5 bg-cyan-400 animate-pulse inline-block" />
+                <span className="w-2.5 h-5 bg-amber-700 animate-pulse inline-block" />
               </span>
             </div>
           </div>
 
           {/* Bio Paragraph */}
-          <p className="text-base sm:text-lg text-zinc-400 leading-relaxed max-w-2xl font-sans">
+          <p className="text-base sm:text-lg text-stone-700 leading-relaxed max-w-2xl font-sans font-medium">
             Building software systems that feel truly alive. From modern SaaS platforms like{' '}
-            <span className="text-cyan-300 font-medium">NOORHUB</span> to browser-based 2D/3D games and cinematic AI storytelling in the{' '}
-            <span className="text-zinc-200 font-medium">ICON 2030</span> universe.
+            <span className="text-stone-950 font-bold underline decoration-amber-500">NOORHUB</span> to browser-based 2D/3D games and cinematic AI storytelling in the{' '}
+            <span className="text-stone-950 font-bold underline decoration-amber-500">ICON 2030</span> universe.
           </p>
 
           {/* Action Portals */}
@@ -107,10 +107,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onScrollTo, onOpenBrun
                 if (onOpenBrunoWorld) onOpenBrunoWorld();
               }}
               onMouseEnter={() => sound.playHover()}
-              className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-amber-400 via-orange-500 to-amber-500 text-black font-mono font-black text-xs sm:text-sm flex items-center gap-2 hover:shadow-[0_0_35px_rgba(245,158,11,0.5)] hover:scale-[1.03] active:scale-[0.98] transition-all cursor-pointer"
+              className="px-6 py-3.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-mono font-black text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-red-600/25 hover:scale-[1.03] active:scale-[0.98] transition-all cursor-pointer"
             >
               <span>🚗 Drive 3D Car (Bruno Simon Mode)</span>
-              <Sparkles className="w-4 h-4 fill-black" />
+              <Sparkles className="w-4 h-4 fill-white" />
             </button>
 
             <button
@@ -119,10 +119,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onScrollTo, onOpenBrun
                 onScrollTo('works-snellenberg');
               }}
               onMouseEnter={() => sound.playHover()}
-              className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-400 to-cyan-500 text-black font-mono font-bold text-xs sm:text-sm flex items-center gap-2 hover:shadow-[0_0_30px_rgba(0,240,255,0.4)] hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+              className="px-6 py-3.5 rounded-xl bg-stone-900 hover:bg-black text-amber-100 font-mono font-bold text-xs sm:text-sm flex items-center gap-2 shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
             >
               <span>Explore Works</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 text-amber-300" />
             </button>
 
             <button
@@ -131,9 +131,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onScrollTo, onOpenBrun
                 onScrollTo('arcade');
               }}
               onMouseEnter={() => sound.playHover()}
-              className="px-6 py-3.5 rounded-xl bg-zinc-900/90 border border-white/10 hover:border-cyan-400/50 text-zinc-200 hover:text-white font-mono text-xs sm:text-sm flex items-center gap-2 hover:bg-zinc-800/80 hover:scale-[1.02] active:scale-[0.98] transition-all backdrop-blur-md cursor-pointer shadow-lg shadow-black/40"
+              className="px-6 py-3.5 rounded-xl bg-[#f5ecde] hover:bg-[#ebdcc8] border border-[#c8b59b] text-stone-900 font-mono font-bold text-xs sm:text-sm flex items-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-sm cursor-pointer"
             >
-              <Play className="w-4 h-4 text-cyan-400 fill-cyan-400/20" />
+              <Play className="w-4 h-4 text-stone-800 fill-stone-800" />
               <span>Play Arcade Games</span>
             </button>
 
@@ -143,30 +143,30 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onScrollTo, onOpenBrun
                 onScrollTo('cinema');
               }}
               onMouseEnter={() => sound.playHover()}
-              className="px-5 py-3.5 rounded-xl bg-zinc-900/90 border border-white/10 hover:border-zinc-700 text-zinc-300 hover:text-white font-mono text-xs sm:text-sm flex items-center gap-2 hover:bg-zinc-800/80 transition-all backdrop-blur-md cursor-pointer"
+              className="px-5 py-3.5 rounded-xl bg-[#f5ecde] hover:bg-[#ebdcc8] border border-[#c8b59b] text-stone-900 font-mono font-bold text-xs sm:text-sm flex items-center gap-2 transition-all shadow-sm cursor-pointer"
             >
-              <Film className="w-4 h-4 text-rose-400" />
+              <Film className="w-4 h-4 text-red-600" />
               <span>AI Cinema Studio</span>
             </button>
           </div>
 
           {/* Verified Engineering Stats HUD */}
-          <div className="pt-6 border-t border-zinc-800/80 grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <div className="p-3.5 rounded-xl bg-zinc-950/70 border border-white/10 backdrop-blur-sm hover:border-cyan-500/30 transition-colors">
-              <div className="text-2xl font-mono font-bold text-cyan-400">21+</div>
-              <div className="text-xs font-mono text-zinc-400">GitHub Repos</div>
+          <div className="pt-6 border-t border-[#c8b59b] grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div className="p-3.5 rounded-xl bg-[#f5ecde] border border-[#c8b59b] shadow-sm hover:border-stone-800 transition-colors">
+              <div className="text-2xl font-mono font-black text-stone-950">21+</div>
+              <div className="text-xs font-mono text-stone-600 font-bold">GitHub Repos</div>
             </div>
-            <div className="p-3.5 rounded-xl bg-zinc-950/70 border border-white/10 backdrop-blur-sm hover:border-cyan-500/30 transition-colors">
-              <div className="text-2xl font-mono font-bold text-white">NOORHUB</div>
-              <div className="text-xs font-mono text-zinc-400">Full SaaS Platform</div>
+            <div className="p-3.5 rounded-xl bg-[#f5ecde] border border-[#c8b59b] shadow-sm hover:border-stone-800 transition-colors">
+              <div className="text-2xl font-mono font-black text-stone-950">NOORHUB</div>
+              <div className="text-xs font-mono text-stone-600 font-bold">Full SaaS Platform</div>
             </div>
-            <div className="p-3.5 rounded-xl bg-zinc-950/70 border border-white/10 backdrop-blur-sm hover:border-cyan-500/30 transition-colors">
-              <div className="text-2xl font-mono font-bold text-cyan-300">5+</div>
-              <div className="text-xs font-mono text-zinc-400">Playable Games</div>
+            <div className="p-3.5 rounded-xl bg-[#f5ecde] border border-[#c8b59b] shadow-sm hover:border-stone-800 transition-colors">
+              <div className="text-2xl font-mono font-black text-stone-950">5+</div>
+              <div className="text-xs font-mono text-stone-600 font-bold">Playable Games</div>
             </div>
-            <div className="p-3.5 rounded-xl bg-zinc-950/70 border border-white/10 backdrop-blur-sm hover:border-cyan-500/30 transition-colors">
-              <div className="text-2xl font-mono font-bold text-zinc-200">3 Chapters</div>
-              <div className="text-xs font-mono text-zinc-400">ICON 2030 Series</div>
+            <div className="p-3.5 rounded-xl bg-[#f5ecde] border border-[#c8b59b] shadow-sm hover:border-stone-800 transition-colors">
+              <div className="text-2xl font-mono font-black text-stone-950">3 Chapters</div>
+              <div className="text-xs font-mono text-stone-600 font-bold">ICON 2030 Series</div>
             </div>
           </div>
         </motion.div>

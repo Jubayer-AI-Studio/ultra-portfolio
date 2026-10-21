@@ -3,14 +3,17 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    background-color: #EADECA;
+    color: #1c1917;
   }
 
   body {
     margin: 0;
     padding: 0;
+    background-color: #EADECA;
+    color: #1c1917;
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
-    transition: background-color 0.4s ease, color 0.4s ease;
   }
 
   /* Ensure native cursor is always visible and responsive */
@@ -21,19 +24,19 @@
     cursor: pointer;
   }
 
-  /* Custom subtle scrollbar */
+  /* Custom subtle scrollbar matching vintage paper */
   ::-webkit-scrollbar {
     width: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: transparent;
+    background: #EADECA;
   }
   ::-webkit-scrollbar-thumb {
-    background: #94a3b8;
+    background: #c8b59b;
     border-radius: 9999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #dc2626;
+    background: #a8957b;
   }
 }
 
