@@ -1,0 +1,31 @@
+# Robots.txt for Jubayer Ahmad Official Portfolio (https://jubayer-portfolio-delta.vercel.app/)
+User-agent: *
+Allow: /
+
+# Priority Access for Search Engine & AI Knowledge Crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# Sitemap Index
+Sitemap: https://jubayer-portfolio-delta.vercel.app/sitemap.xml

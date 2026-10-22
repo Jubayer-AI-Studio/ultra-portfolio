@@ -60,13 +60,17 @@ export const PlayableArcade: React.FC = () => {
     const obstacles: { x: number; y: number; speed: number; size: number; color: string }[] = [];
 
     const handleTouchOrMove = (e: MouseEvent | TouchEvent) => {
+      if ('touches' in e && e.cancelable) {
+        e.preventDefault();
+      }
       const rect = canvas.getBoundingClientRect();
-      const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+      const clientX = 'touches' in e && e.touches.length > 0 ? e.touches[0].clientX : (e as MouseEvent).clientX;
       playerX = Math.max(playerSize, Math.min(width - playerSize, clientX - rect.left));
     };
 
     canvas.addEventListener('mousemove', handleTouchOrMove);
-    canvas.addEventListener('touchmove', handleTouchOrMove);
+    canvas.addEventListener('touchmove', handleTouchOrMove, { passive: false });
+    canvas.addEventListener('touchstart', handleTouchOrMove, { passive: false });
 
     let frameCount = 0;
 
@@ -156,6 +160,7 @@ export const PlayableArcade: React.FC = () => {
       cancelAnimationFrame(animId);
       canvas.removeEventListener('mousemove', handleTouchOrMove);
       canvas.removeEventListener('touchmove', handleTouchOrMove);
+      canvas.removeEventListener('touchstart', handleTouchOrMove);
     };
   }, [gameActive]);
 
@@ -217,7 +222,7 @@ export const PlayableArcade: React.FC = () => {
 
             {/* CRT Screen Display with Scanlines */}
             <div className="relative my-2.5 rounded-2xl bg-black border border-purple-900/40 overflow-hidden flex items-center justify-center h-32 shadow-inner">
-              <canvas ref={canvasRef} className="w-full h-full block" />
+              <canvas ref={canvasRef} style={{ touchAction: 'none' }} className="w-full h-full block" />
               
               {/* Scanline CRT overlay */}
               <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/5 to-transparent bg-[length:100%_4px] pointer-events-none" />
@@ -330,7 +335,8 @@ export const PlayableArcade: React.FC = () => {
                 </div>
 
                 {/* Actions: Direct In-Page Play / AI Studio Link / View Code */}
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2 pt-1">
+                  {/* Primary In-Browser Play Button (100% Mobile Ready) */}
                   <button
                     onClick={() => {
                       sound.playWarp();
@@ -340,24 +346,27 @@ export const PlayableArcade: React.FC = () => {
                         url: game.liveUrl,
                       });
                     }}
-                    data-cursor="FIGHT"
-                    className="flex-1 py-3 px-3.5 rounded-xl bg-gradient-to-r from-cyan-400 to-cyan-500 hover:from-cyan-300 hover:to-cyan-400 text-black font-mono font-black text-xs flex items-center justify-center gap-1.5 shadow-lg shadow-cyan-400/25 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                    data-cursor="PLAY"
+                    className="flex-1 py-3 px-3.5 rounded-xl bg-gradient-to-r from-cyan-400 via-teal-300 to-cyan-400 hover:from-cyan-300 hover:to-teal-200 text-black font-mono font-black text-xs flex items-center justify-center gap-1.5 shadow-lg shadow-cyan-400/25 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer whitespace-nowrap min-h-[42px]"
                   >
                     <Play className="w-3.5 h-3.5 fill-black" />
-                    <span>PLAY IN-PAGE</span>
+                    <span>🎮 সরাসরি খেলুন (PLAY)</span>
                   </button>
 
+                  {/* External Google AI Studio Link (Desktop Optimized) */}
                   {game.liveUrl && (
                     <button
                       onClick={() => handleLaunchExternal(game.liveUrl!)}
                       data-cursor="AI STUDIO"
-                      title="Open in Google AI Studio"
-                      className="py-3 px-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-white/10 hover:border-cyan-400/40 text-cyan-300 font-mono text-xs flex items-center justify-center gap-1 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                      title="Open Web App in Google AI Studio (Best on Desktop)"
+                      className="py-2.5 px-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-white/10 hover:border-cyan-400/40 text-cyan-300 font-mono text-[11px] font-bold flex items-center justify-center gap-1 transition-all cursor-pointer min-h-[42px]"
                     >
+                      <span className="hidden sm:inline">AI Studio</span>
                       <ArrowUpRight className="w-3.5 h-3.5" />
                     </button>
                   )}
 
+                  {/* GitHub Source Code */}
                   {game.githubUrl && (
                     <a
                       href={game.githubUrl}
@@ -366,7 +375,7 @@ export const PlayableArcade: React.FC = () => {
                       onClick={() => sound.playClick()}
                       data-cursor="CODE"
                       title="GitHub Repository"
-                      className="p-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white transition-colors cursor-pointer"
+                      className="p-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white transition-colors cursor-pointer min-h-[42px] flex items-center justify-center"
                     >
                       <GithubIcon className="w-4 h-4" />
                     </a>

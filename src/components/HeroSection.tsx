@@ -74,10 +74,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onScrollTo, onOpenBrun
             </div>
           </div>
 
-          {/* Main Title & Brand Identity (100% High-Contrast on #EADECA) */}
+          {/* Main Title & Brand Identity (100% High-Contrast on #EADECA with Bengali Entity) */}
           <div className="space-y-3">
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-stone-950 font-sans">
-              JUBAYER <span className="text-amber-800 underline decoration-amber-600/30">AHMAD</span>
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-stone-950 font-sans flex flex-wrap items-baseline gap-2 sm:gap-3">
+              <span>JUBAYER</span>
+              <span className="text-amber-800 underline decoration-amber-600/30">AHMAD</span>
+              <span className="text-xl sm:text-2xl md:text-3xl font-bold text-stone-600 font-sans tracking-normal">
+                (জুবায়ের আহমদ)
+              </span>
             </h1>
 
             {/* Dynamic Rotating Role */}
