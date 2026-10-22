@@ -10,6 +10,50 @@
     <link rel="apple-touch-icon" href="/avatar.jpg" />
     <link rel="manifest" href="/manifest.json" />
 
+    <!-- PWA Self-Healing & Instant Cache Rescue Script -->
+    <script>
+      (function() {
+        // Purge legacy caches on startup if old version detected
+        if ('caches' in window) {
+          caches.keys().then(function(keys) {
+            keys.forEach(function(k) {
+              if (k.indexOf('v5') === -1 && k.indexOf('jubayer') !== -1) {
+                console.log('Purging obsolete cache:', k);
+                caches.delete(k);
+              }
+            });
+          });
+        }
+
+        // Catch asset chunk loading errors (e.g., when a deployment updates hashes)
+        window.addEventListener('error', function(e) {
+          var target = e.target;
+          if (target && (target.tagName === 'SCRIPT' || target.tagName === 'LINK')) {
+            console.warn('Chunk load error in PWA. Purging cache and auto-reloading...');
+            if ('caches' in window) {
+              caches.keys().then(function(keys) {
+                keys.forEach(function(k) { caches.delete(k); });
+              });
+            }
+            if ('serviceWorker' in navigator) {
+              navigator.serviceWorker.getRegistrations().then(function(regs) {
+                regs.forEach(function(r) { r.unregister(); });
+              });
+            }
+            if (!sessionStorage.getItem('pwa_chunk_retry')) {
+              sessionStorage.setItem('pwa_chunk_retry', '1');
+              window.location.reload(true);
+            }
+          }
+        }, true);
+
+        // Reset retry flag upon successful DOM load
+        window.addEventListener('DOMContentLoaded', function() {
+          sessionStorage.removeItem('pwa_chunk_retry');
+        });
+      })();
+    </script>
+
     <!-- Google Search Console Verification -->
     <meta name="google-site-verification" content="29O24SJ5OWwkfB7wgFKwUwOHIqAEXKwb8YuTvZxxSVI" />
 

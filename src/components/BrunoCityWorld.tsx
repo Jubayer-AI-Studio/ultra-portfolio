@@ -139,19 +139,23 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
     scene.background = new THREE.Color(0x93c5fd); // Clear sunny blue sky
     scene.fog = new THREE.FogExp2(0x93c5fd, 0.008);
 
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const initialWidth = container.clientWidth || (typeof window !== 'undefined' ? window.innerWidth : 360);
+    const initialHeight = container.clientHeight || 540;
+
     const camera = new THREE.PerspectiveCamera(
       45,
-      container.clientWidth / container.clientHeight,
+      initialWidth / Math.max(initialHeight, 1),
       0.1,
       280
     );
 
     const renderer = new THREE.WebGLRenderer({
-      antialias: true,
-      powerPreference: 'high-performance',
+      antialias: !isMobile,
+      powerPreference: isMobile ? 'default' : 'high-performance',
     });
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(initialWidth, initialHeight);
+    renderer.setPixelRatio(Math.min(typeof window !== 'undefined' ? window.devicePixelRatio : 1, isMobile ? 1.5 : 2));
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFShadowMap;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -165,8 +169,8 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
     const sunLight = new THREE.DirectionalLight(0xfffaed, 2.9);
     sunLight.position.set(45, 65, 35);
     sunLight.castShadow = true;
-    sunLight.shadow.mapSize.width = 2048;
-    sunLight.shadow.mapSize.height = 2048;
+    sunLight.shadow.mapSize.width = isMobile ? 1024 : 2048;
+    sunLight.shadow.mapSize.height = isMobile ? 1024 : 2048;
     sunLight.shadow.camera.near = 0.5;
     sunLight.shadow.camera.far = 190;
     sunLight.shadow.camera.left = -70;
