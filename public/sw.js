@@ -1,24 +1,9 @@
-// Modern PWA Service Worker for Jubayer Ahmad Portfolio
-// Designed for Zero-Freeze Instant Mobile & Standalone PWA Loading
-const CACHE_NAME = 'jubayer-portfolio-v5';
-
-// Core shell assets to pre-cache on install
-const CORE_ASSETS = [
-  '/',
-  '/manifest.json',
-  '/avatar.jpg',
-  '/favicon.svg'
-];
+// Robust, Non-Blocking PWA Service Worker for Jubayer Ahmad Portfolio (v6)
+// Guarantees zero blank screens, zero network-errors, and zero reload loops
+const CACHE_NAME = 'jubayer-portfolio-v6';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(CORE_ASSETS).catch((err) => {
-        console.warn('Pre-caching non-fatal warning:', err);
-      });
-    })
-  );
 });
 
 self.addEventListener('activate', (event) => {
@@ -27,7 +12,7 @@ self.addEventListener('activate', (event) => {
       return Promise.all(
         keys.map((key) => {
           if (key !== CACHE_NAME) {
-            console.log('Purging legacy PWA cache:', key);
+            console.log('Purging legacy cache:', key);
             return caches.delete(key);
           }
         })
@@ -39,64 +24,35 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const { request } = event;
 
-  // Ignore non-GET and cross-origin requests (except font/image CDNs)
-  if (request.method !== 'GET') return;
+  // Only handle GET requests from http/https protocols
+  if (request.method !== 'GET' || !request.url.startsWith('http')) return;
 
-  const url = new URL(request.url);
-
-  // 1. NAVIGATION REQUESTS (HTML / Root): ALWAYS NETWORK-FIRST
-  // This ensures mobile PWA users always get the latest bundle hashes on app launch!
-  if (request.mode === 'navigate') {
-    event.respondWith(
-      fetch(request)
-        .then((networkResponse) => {
-          if (networkResponse && networkResponse.status === 200) {
-            const responseClone = networkResponse.clone();
-            caches.open(CACHE_NAME).then((cache) => {
-              cache.put(request, responseClone);
-            });
-          }
-          return networkResponse;
-        })
-        .catch(() => {
-          // Offline fallback
-          return caches.match(request).then((cached) => {
-            return cached || caches.match('/');
-          });
-        })
-    );
-    return;
-  }
-
-  // 2. STATIC ASSETS (JS, CSS, Images, Fonts): Stale-While-Revalidate with network fallback
   event.respondWith(
-    caches.match(request).then((cachedResponse) => {
-      const fetchPromise = fetch(request)
-        .then((networkResponse) => {
-          if (networkResponse && networkResponse.status === 200) {
-            const responseClone = networkResponse.clone();
-            caches.open(CACHE_NAME).then((cache) => {
-              cache.put(request, responseClone);
-            });
-          }
-          return networkResponse;
-        })
-        .catch(() => cachedResponse);
-
-      // Return cached version if available, otherwise wait for network
-      return cachedResponse || fetchPromise;
-    })
+    fetch(request)
+      .then((networkResponse) => {
+        // Cache successful first-party static assets for offline use
+        if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
+          const responseClone = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(request, responseClone).catch(() => {});
+          });
+        }
+        return networkResponse;
+      })
+      .catch(async () => {
+        // Fallback to cache if offline
+        const cached = await caches.match(request);
+        if (cached) return cached;
+        if (request.mode === 'navigate') {
+          const fallback = await caches.match('/');
+          if (fallback) return fallback;
+        }
+        // Safety: Always return a valid Response, NEVER return undefined
+        return new Response('Offline mode. Please check connection.', {
+          status: 503,
+          statusText: 'Service Unavailable',
+          headers: new Headers({ 'Content-Type': 'text/plain; charset=utf-8' })
+        });
+      })
   );
-});
-
-// Listen for message from main app to purge cache immediately if requested
-self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
-  if (event.data && event.data.type === 'PURGE_CACHE') {
-    caches.keys().then((keys) => {
-      keys.forEach((key) => caches.delete(key));
-    });
-  }
 });

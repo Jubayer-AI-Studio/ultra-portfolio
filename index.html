@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="bn" class="dark scroll-smooth">
+<html lang="bn" class="dark scroll-smooth" style="background-color: #EADECA;">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
@@ -9,50 +9,6 @@
     <meta name="apple-mobile-web-app-title" content="Jubayer" />
     <link rel="apple-touch-icon" href="/avatar.jpg" />
     <link rel="manifest" href="/manifest.json" />
-
-    <!-- PWA Self-Healing & Instant Cache Rescue Script -->
-    <script>
-      (function() {
-        // Purge legacy caches on startup if old version detected
-        if ('caches' in window) {
-          caches.keys().then(function(keys) {
-            keys.forEach(function(k) {
-              if (k.indexOf('v5') === -1 && k.indexOf('jubayer') !== -1) {
-                console.log('Purging obsolete cache:', k);
-                caches.delete(k);
-              }
-            });
-          });
-        }
-
-        // Catch asset chunk loading errors (e.g., when a deployment updates hashes)
-        window.addEventListener('error', function(e) {
-          var target = e.target;
-          if (target && (target.tagName === 'SCRIPT' || target.tagName === 'LINK')) {
-            console.warn('Chunk load error in PWA. Purging cache and auto-reloading...');
-            if ('caches' in window) {
-              caches.keys().then(function(keys) {
-                keys.forEach(function(k) { caches.delete(k); });
-              });
-            }
-            if ('serviceWorker' in navigator) {
-              navigator.serviceWorker.getRegistrations().then(function(regs) {
-                regs.forEach(function(r) { r.unregister(); });
-              });
-            }
-            if (!sessionStorage.getItem('pwa_chunk_retry')) {
-              sessionStorage.setItem('pwa_chunk_retry', '1');
-              window.location.reload(true);
-            }
-          }
-        }, true);
-
-        // Reset retry flag upon successful DOM load
-        window.addEventListener('DOMContentLoaded', function() {
-          sessionStorage.removeItem('pwa_chunk_retry');
-        });
-      })();
-    </script>
 
     <!-- Google Search Console Verification -->
     <meta name="google-site-verification" content="29O24SJ5OWwkfB7wgFKwUwOHIqAEXKwb8YuTvZxxSVI" />
@@ -235,7 +191,7 @@
     }
     </script>
   </head>
-  <body class="bg-[#EADECA] text-stone-900 antialiased selection:bg-stone-900 selection:text-amber-200 overflow-x-hidden font-sans">
+  <body style="margin: 0; background-color: #EADECA; color: #1c1917; min-height: 100vh;" class="bg-[#EADECA] text-stone-900 antialiased selection:bg-stone-900 selection:text-amber-200 overflow-x-hidden font-sans">
     
     <!-- Crawlable Semantic Fallback for Search Bots & AI Crawlers (SearchGPT, Perplexity, Googlebot) -->
     <noscript>
@@ -262,7 +218,20 @@
       </main>
     </noscript>
 
-    <div id="root"></div>
+    <!-- React App Root with Instant Warm Shell (Guarantees Screen is Never White) -->
+    <div id="root">
+      <div style="min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #EADECA; color: #1c1917; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; text-align: center; padding: 24px;">
+        <div style="width: 56px; height: 56px; border-radius: 16px; background-color: #1c1917; color: #fef08a; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 900; margin-bottom: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); font-family: monospace;">
+          J
+        </div>
+        <div style="font-size: 19px; font-weight: 900; letter-spacing: 1px; margin-bottom: 6px; color: #0c0a09;">
+          JUBAYER AHMAD
+        </div>
+        <div style="font-size: 13px; font-weight: 700; color: #78716c; font-family: monospace;">
+          LOADING 3D PORTFOLIO...
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
