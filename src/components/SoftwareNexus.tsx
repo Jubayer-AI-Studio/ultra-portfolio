@@ -222,6 +222,20 @@ export const SoftwareNexus: React.FC = () => {
 
               {/* CTAs - TWO CLEAR OPTIONS: DIRECT LIVE SOFTWARE vs GITHUB */}
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+                {/* OPTION 0: Direct Live Website on Vercel */}
+                <a
+                  href="https://noorhub.vercel.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => sound.playWarp()}
+                  data-cursor="VISIT LIVE"
+                  className="w-full sm:w-auto px-5 sm:px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 hover:from-emerald-300 hover:to-cyan-300 text-black font-mono font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-400/30 transition-all cursor-pointer hover:scale-[1.03] active:scale-[0.98]"
+                >
+                  <ExternalLink className="w-4 h-4 text-black" />
+                  <span>লাইভ ওয়েবসাইট (noorhub.vercel.app)</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 text-black" />
+                </a>
+
                 {/* OPTION 1: Direct Live Software Launcher */}
                 <button
                   onClick={() => {

@@ -601,7 +601,7 @@ export const NoorHubModal: React.FC<NoorHubModalProps> = ({ isOpen, onClose }) =
           <div className="flex items-center gap-2.5 w-full sm:w-auto">
             {/* OPTION 1: GitHub Source Code Button */}
             <a
-              href="https://github.com/Jubayer-AI-Studio/NoorHub-Madrasa-Management-SaaS"
+              href="https://noorhub.vercel.app"
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => sound.playClick()}

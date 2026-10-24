@@ -56,6 +56,7 @@ export const PORTFOLIO_DATA = {
     description: 'An enterprise-grade educational institute management SaaS built with Next.js App Router, TypeScript, and Node.js. Features full student/teacher record administration, RBAC security, automated monthly fee invoicing, and local-to-cloud sync via Cloudflare Tunnel.',
     tags: ['Next.js App Router', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Cloudflare Tunnel', 'RBAC Security'],
     githubUrl: 'https://github.com/Jubayer-AI-Studio/NoorHub-Madrasa-Management-SaaS',
+    liveUrl: 'https://noorhub.vercel.app',
     features: [
       'Student & Teacher Lifecycle Management',
       'Database-backed records with Role-Based Access Control',
@@ -215,6 +216,7 @@ export const PORTFOLIO_DATA = {
     description: 'A modern, responsive web publishing platform designed to showcase curated articles, thought leadership, and client-provided editorial content with high-contrast typography.',
     tags: ['Next.js', 'Editorial Layout', 'Tailwind CSS', 'Digital Magazine'],
     githubUrl: 'https://github.com/Jubayer-AI-Studio/affan-labib-blog-v2',
+    liveUrl: 'https://affan-labib-blog-v2.vercel.app',
   },
 
   credentials: [

@@ -35,6 +35,18 @@ export const DigitalPublishing: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-3">
+            {pub.liveUrl && (
+              <a
+                href={pub.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => sound.playWarp()}
+                className="px-5 py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-mono text-xs font-bold flex items-center gap-2 transition-colors shadow-md cursor-pointer"
+              >
+                <ArrowUpRight className="w-4 h-4" />
+                <span>Visit Live Website</span>
+              </a>
+            )}
             {pub.githubUrl && (
               <a
                 href={pub.githubUrl}
@@ -44,7 +56,7 @@ export const DigitalPublishing: React.FC = () => {
                 className="px-5 py-3 rounded-xl bg-stone-900 hover:bg-black text-amber-200 font-mono text-xs font-bold flex items-center gap-2 transition-colors shadow-md cursor-pointer"
               >
                 <GithubIcon className="w-4 h-4" />
-                <span>Magazine Repository</span>
+                <span>Source Code</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
               </a>
             )}
