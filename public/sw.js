@@ -1,6 +1,6 @@
-// Robust, Non-Blocking PWA Service Worker for Jubayer Ahmad Portfolio (v6)
+// Robust, Non-Blocking PWA Service Worker for Jubayer Ahmad Portfolio (v7)
 // Guarantees zero blank screens, zero network-errors, and zero reload loops
-const CACHE_NAME = 'jubayer-portfolio-v6';
+const CACHE_NAME = 'jubayer-portfolio-v7';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
@@ -44,7 +44,7 @@ self.addEventListener('fetch', (event) => {
         const cached = await caches.match(request);
         if (cached) return cached;
         if (request.mode === 'navigate') {
-          const fallback = await caches.match('/');
+          const fallback = (await caches.match(self.registration.scope)) || (await caches.match('/ultra-portfolio/')) || (await caches.match('/'));
           if (fallback) return fallback;
         }
         // Safety: Always return a valid Response, NEVER return undefined

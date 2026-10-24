@@ -75,7 +75,7 @@ class GlobalErrorBoundary extends Component<Props, State> {
 // Register PWA Service Worker for Mobile Installation with Instant Update Trigger
 if ('serviceWorker' in navigator && import.meta.env.PROD) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').then((registration) => {
+    navigator.serviceWorker.register(`${import.meta.env.BASE_URL}sw.js`).then((registration) => {
       // Force immediate check for sw updates
       registration.update();
     }).catch((err) => {
