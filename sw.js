@@ -1,18 +1,9 @@
-const CACHE_NAME = 'jubayer-portfolio-v1';
-const ASSETS_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/favicon.svg',
-  '/avatar.jpg'
-];
+// Robust, Non-Blocking PWA Service Worker for Jubayer Ahmad Portfolio (v7)
+// Guarantees zero blank screens, zero network-errors, and zero reload loops
+const CACHE_NAME = 'jubayer-portfolio-v7';
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS_TO_CACHE);
-    }).then(() => self.skipWaiting())
-  );
+  self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
@@ -21,6 +12,7 @@ self.addEventListener('activate', (event) => {
       return Promise.all(
         keys.map((key) => {
           if (key !== CACHE_NAME) {
+            console.log('Purging legacy cache:', key);
             return caches.delete(key);
           }
         })
@@ -30,8 +22,37 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  if (event.request.method !== 'GET') return;
+  const { request } = event;
+
+  // Only handle GET requests from http/https protocols
+  if (request.method !== 'GET' || !request.url.startsWith('http')) return;
+
   event.respondWith(
-    fetch(event.request).catch(() => caches.match(event.request))
+    fetch(request)
+      .then((networkResponse) => {
+        // Cache successful first-party static assets for offline use
+        if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
+          const responseClone = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(request, responseClone).catch(() => {});
+          });
+        }
+        return networkResponse;
+      })
+      .catch(async () => {
+        // Fallback to cache if offline
+        const cached = await caches.match(request);
+        if (cached) return cached;
+        if (request.mode === 'navigate') {
+          const fallback = (await caches.match(self.registration.scope)) || (await caches.match('/ultra-portfolio/')) || (await caches.match('/'));
+          if (fallback) return fallback;
+        }
+        // Safety: Always return a valid Response, NEVER return undefined
+        return new Response('Offline mode. Please check connection.', {
+          status: 503,
+          statusText: 'Service Unavailable',
+          headers: new Headers({ 'Content-Type': 'text/plain; charset=utf-8' })
+        });
+      })
   );
 });

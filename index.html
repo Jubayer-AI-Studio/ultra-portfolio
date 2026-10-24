@@ -1,76 +1,238 @@
 <!doctype html>
-<html lang="en" class="dark scroll-smooth">
+<html lang="bn" class="dark scroll-smooth" style="background-color: #EADECA;">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
     <meta name="theme-color" content="#EADECA" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <meta name="apple-mobile-web-app-title" content="JUBAYER" />
-    <link rel="apple-touch-icon" href="./avatar.jpg" />
-    <link rel="manifest" href="./manifest.json" />
-    <title>Jubayer Ahmad // Full-Stack Software Developer & AI Specialist</title>
-    <meta name="description" content="Official portfolio of Jubayer Ahmad (JUBAYER). Full-Stack Developer specializing in SaaS architectures (NOORHUB), playable 2D/3D browser games, and cinematic AI filmmaking (ICON 2030)." />
-    <meta name="keywords" content="Jubayer Ahmad, Software Developer Dhaka, Full-Stack Developer, NOORHUB, AI Film Director, ICON 2030, WebGL Games" />
-    <meta name="author" content="Jubayer Ahmad" />
-    <meta name="robots" content="index, follow" />
+    <meta name="apple-mobile-web-app-title" content="Jubayer" />
+    <link rel="apple-touch-icon" href="/ultra-portfolio/avatar.jpg" />
+    <link rel="manifest" href="/ultra-portfolio/manifest.json" />
 
-    <!-- Open Graph / Social Sharing -->
+    <!-- Google Search Console Verification -->
+    <meta name="google-site-verification" content="29O24SJ5OWwkfB7wgFKwUwOHIqAEXKwb8YuTvZxxSVI" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://jubayer-portfolio-delta.vercel.app/" />
+
+    <!-- Primary Search Title & Meta (Targeting: Jubayer, Jubayer Ahmad, জুবায়ের, জুবায়ের আহমদ) -->
+    <title>Jubayer Ahmad (জুবায়ের আহমদ) | Official Portfolio | Full-Stack Software Developer &amp; AI Specialist</title>
+    <meta name="title" content="Jubayer Ahmad (জুবায়ের আহমদ) | Official Portfolio | Full-Stack Software Developer &amp; AI Specialist" />
+    <meta name="description" content="অফিসিয়াল পোর্টফোলিও - Jubayer Ahmad (জুবায়ের আহমদ)। Full-Stack Software Developer, SaaS Architect (NOORHUB), 2D/3D Game Creator, and AI Cinema Director (ICON 2030). Explore live projects, code repositories, and interactive 3D experiences." />
+    <meta name="keywords" content="Jubayer, Jubayer Ahmad, জুবায়ের, জুবায়ের আহমদ, Jubayer AI Specialist, Jubayer Portfolio, Jubayer Developer, Jubayer Software Engineer, Jubayer Dhaka, NOORHUB SaaS, Jubayer Bangladesh, Jubayer GitHub, jubayer-portfolio-delta.vercel.app, Bruno Simon 3D Portfolio, Full-Stack Developer Dhaka" />
+    <meta name="author" content="Jubayer Ahmad" />
+    <meta name="creator" content="Jubayer Ahmad" />
+    <meta name="publisher" content="Jubayer Ahmad" />
+    <meta name="application-name" content="Jubayer Ahmad Portfolio" />
+
+    <!-- Search Engine Crawlers Directives -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+
+    <!-- Open Graph / Facebook / LinkedIn / WhatsApp Sharing -->
     <meta property="og:type" content="profile" />
-    <meta property="og:title" content="Jubayer Ahmad // Full-Stack Developer & AI Specialist" />
-    <meta property="og:description" content="Interactive 3D portfolio featuring enterprise SaaS architecture, playable 2D/3D browser games, and cinematic AI universes." />
-    <meta property="og:image" content="./avatar.jpg" />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="Jubayer Ahmad Official Portfolio" />
+    <meta property="og:url" content="https://jubayer-portfolio-delta.vercel.app/" />
+    <meta property="og:title" content="Jubayer Ahmad (জুবায়ের আহমদ) // Full-Stack Developer &amp; AI Specialist" />
+    <meta property="og:description" content="Official portfolio of Jubayer Ahmad (জুবায়ের আহমদ). Creator of NOORHUB SaaS, interactive 3D browser games, and cinematic AI universes (ICON 2030)." />
+    <meta property="og:image" content="https://jubayer-portfolio-delta.vercel.app/avatar.jpg" />
+    <meta property="og:image:secure_url" content="https://jubayer-portfolio-delta.vercel.app/avatar.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Jubayer Ahmad - Full-Stack Software Developer &amp; AI Specialist" />
+    <meta property="og:locale" content="bn_BD" />
+    <meta property="og:locale:alternate" content="en_US" />
+
+    <!-- Twitter / X Cards -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Jubayer Ahmad // Full-Stack Developer & AI Specialist" />
-    <meta name="twitter:description" content="Explore live SaaS systems, playable browser games, and AI cinema." />
-    <meta name="twitter:image" content="./avatar.jpg" />
+    <meta name="twitter:url" content="https://jubayer-portfolio-delta.vercel.app/" />
+    <meta name="twitter:domain" content="jubayer-portfolio-delta.vercel.app" />
+    <meta name="twitter:title" content="Jubayer Ahmad (জুবায়ের আহমদ) // Software Developer &amp; AI Specialist" />
+    <meta name="twitter:description" content="Explore live SaaS systems (NOORHUB), playable 2D/3D browser games, and AI cinema by Jubayer Ahmad." />
+    <meta name="twitter:image" content="https://jubayer-portfolio-delta.vercel.app/avatar.jpg" />
+    <meta name="twitter:image:alt" content="Jubayer Ahmad" />
 
     <!-- Preload Critical LCP Hero Image -->
-    <link rel="preload" as="image" href="./avatar.jpg" fetchpriority="high" />
+    <link rel="preload" as="image" href="/ultra-portfolio/avatar.jpg" fetchpriority="high" />
 
     <!-- Google Fonts Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-    <!-- JSON-LD Structured Data for Google Indexing -->
+    <!-- JSON-LD Comprehensive Multi-Entity Schema for Google & AI Engines (SearchGPT, Perplexity, Gemini) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Jubayer Ahmad",
-      "alternateName": "JUBAYER",
-      "jobTitle": "Full-Stack Software Developer & AI Specialist",
-      "description": "Full-Stack Developer specializing in Next.js SaaS platforms, 2D/3D game engineering, and AI filmmaking.",
-      "url": "https://github.com/Jubayer-AI-Studio",
-      "sameAs": [
-        "https://github.com/Jubayer-AI-Studio",
-        "https://www.youtube.com/@jubayeraispecialist",
-        "https://www.instagram.com/jubayer_ahmad_2002/"
-      ],
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Dhaka",
-        "addressCountry": "Bangladesh"
-      },
-      "knowsAbout": [
-        "Full-Stack Development",
-        "Next.js App Router",
-        "TypeScript",
-        "Tailwind CSS",
-        "Node.js",
-        "Cloudflare Tunnel",
-        "Game Development",
-        "Generative AI",
-        "AI Filmmaking"
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://jubayer-portfolio-delta.vercel.app/#jubayer",
+          "name": "Jubayer Ahmad",
+          "alternateName": [
+            "Jubayer",
+            "জুবায়ের",
+            "জুবায়ের আহমদ",
+            "Jubayer AI Specialist",
+            "Jubayer Dev",
+            "MD Jubayer Ahmad",
+            "Jubayer Ahmad BD"
+          ],
+          "givenName": "Jubayer",
+          "familyName": "Ahmad",
+          "jobTitle": "Full-Stack Software Developer & AI Specialist",
+          "description": "Jubayer Ahmad (জুবায়ের আহমদ) is a software engineer and AI specialist from Dhaka, Bangladesh. He specializes in enterprise SaaS architecture (NOORHUB), WebGL 2D/3D browser games, and cinematic AI filmmaking (ICON 2030).",
+          "url": "https://jubayer-portfolio-delta.vercel.app",
+          "image": "https://jubayer-portfolio-delta.vercel.app/avatar.jpg",
+          "nationality": {
+            "@type": "Country",
+            "name": "Bangladesh"
+          },
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Dhaka",
+            "addressRegion": "Dhaka Division",
+            "addressCountry": "BD"
+          },
+          "email": "jubayerahmad2002@gmail.com",
+          "sameAs": [
+            "https://github.com/Jubayer-AI-Studio",
+            "https://www.youtube.com/@jubayeraispecialist",
+            "https://www.instagram.com/jubayer_ahmad_2002/",
+            "https://github.com/Jubayer-AI-Studio/NoorHub-Madrasa-Management-SaaS",
+            "https://github.com/Jubayer-AI-Studio/Iron-Strike-2D-Fighter"
+          ],
+          "knowsAbout": [
+            "Full-Stack Web Development",
+            "SaaS Architecture (NOORHUB)",
+            "Next.js 15 App Router",
+            "TypeScript & React",
+            "Node.js & PostgreSQL",
+            "Cloudflare Zero Trust Tunnel",
+            "3D WebGL Game Development (Three.js)",
+            "2D Combat Game Engines",
+            "AI Cinema & Generative Storytelling (ICON 2030)",
+            "Google Veo 3.1 & Gemini 3.7",
+            "Progressive Web Apps (PWA)"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://jubayer-portfolio-delta.vercel.app/#website",
+          "url": "https://jubayer-portfolio-delta.vercel.app/",
+          "name": "Jubayer Ahmad Official Portfolio",
+          "alternateName": [
+            "Jubayer Portfolio",
+            "জুবায়ের পোর্টফোলিও",
+            "Jubayer Ahmad Developer Website"
+          ],
+          "description": "Official interactive portfolio of Jubayer Ahmad - Full-Stack Developer, SaaS Architect (NOORHUB), and AI Specialist.",
+          "publisher": {
+            "@id": "https://jubayer-portfolio-delta.vercel.app/#jubayer"
+          },
+          "inLanguage": ["bn-BD", "en-US"]
+        },
+        {
+          "@type": "ProfilePage",
+          "@id": "https://jubayer-portfolio-delta.vercel.app/#webpage",
+          "url": "https://jubayer-portfolio-delta.vercel.app/",
+          "name": "Jubayer Ahmad (জুবায়ের আহমদ) | Official Portfolio & Software Architect",
+          "isPartOf": {
+            "@id": "https://jubayer-portfolio-delta.vercel.app/#website"
+          },
+          "about": {
+            "@id": "https://jubayer-portfolio-delta.vercel.app/#jubayer"
+          },
+          "mainEntity": {
+            "@id": "https://jubayer-portfolio-delta.vercel.app/#jubayer"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://jubayer-portfolio-delta.vercel.app/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Who is Jubayer Ahmad (জুবায়ের আহমদ)?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Jubayer Ahmad (জুবায়ের আহমদ) is an experienced Full-Stack Software Developer, SaaS Architect, and AI Specialist based in Dhaka, Bangladesh. He is known for building the NOORHUB Madrasa & Institute Management SaaS, 3D WebGL interactive car worlds, and directing the ICON 2030 AI Cinema universe."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is Jubayer Ahmad's official website?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Jubayer Ahmad's official portfolio is hosted live at https://jubayer-portfolio-delta.vercel.app and his official open-source code repositories are available at https://github.com/Jubayer-AI-Studio."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What projects has Jubayer Ahmad built?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Jubayer Ahmad has created NOORHUB SaaS (an enterprise educational platform with RBAC security and automated fee invoicing), Bruno Simon 3D Interactive City World, Iron Strike 2D Fighter, Shafin & Nafis Racing 3D, Jubayer Legends Cyber Runner, and the ICON 2030 cinematic AI film trilogy."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How to contact Jubayer Ahmad for software engineering projects?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "You can contact Jubayer Ahmad directly via email at jubayerahmad2002@gmail.com, via his interactive portfolio at https://jubayer-portfolio-delta.vercel.app, or through his GitHub profile at https://github.com/Jubayer-AI-Studio."
+              }
+            }
+          ]
+        }
       ]
     }
     </script>
-    <script type="module" crossorigin src="./assets/index-DCLY-rRa.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-BqKUxcrT.css">
+    <script type="module" crossorigin src="/ultra-portfolio/assets/index-xcwZpHde.js"></script>
+    <link rel="stylesheet" crossorigin href="/ultra-portfolio/assets/index-CB0O31aJ.css">
   </head>
-  <body class="bg-[#06070a] text-zinc-100 antialiased selection:bg-cyan-400 selection:text-black overflow-x-hidden">
-    <div id="root"></div>
+  <body style="margin: 0; background-color: #EADECA; color: #1c1917; min-height: 100vh;" class="bg-[#EADECA] text-stone-900 antialiased selection:bg-stone-900 selection:text-amber-200 overflow-x-hidden font-sans">
+    
+    <!-- Crawlable Semantic Fallback for Search Bots & AI Crawlers (SearchGPT, Perplexity, Googlebot) -->
+    <noscript>
+      <header style="padding: 24px; text-align: center; background: #dfcfb8; border-bottom: 2px solid #c8b59b;">
+        <h1>Jubayer Ahmad (জুবায়ের আহমদ) - Official Portfolio</h1>
+        <p>Full-Stack Software Developer &amp; AI Specialist | Dhaka, Bangladesh</p>
+        <p>Email: <a href="mailto:jubayerahmad2002@gmail.com">jubayerahmad2002@gmail.com</a> | GitHub: <a href="https://github.com/Jubayer-AI-Studio">https://github.com/Jubayer-AI-Studio</a></p>
+      </header>
+      <main style="max-width: 900px; margin: 0 auto; padding: 32px 20px; font-family: sans-serif; line-height: 1.6;">
+        <section>
+          <h2>About Jubayer Ahmad (জুবায়ের আহমদ)</h2>
+          <p>Jubayer Ahmad is a Full-Stack Software Developer, SaaS Architect, and AI Director from Dhaka, Bangladesh. He specializes in high-performance web applications, interactive 3D WebGL experiences, and enterprise software systems.</p>
+        </section>
+        <section>
+          <h2>Featured Software &amp; SaaS Projects</h2>
+          <ul>
+            <li><strong>NOORHUB SaaS:</strong> Comprehensive Madrasa and Educational Institute Management Platform built with Next.js 15 App Router, TypeScript, and Cloudflare Zero Trust Tunnel. (<a href="https://github.com/Jubayer-AI-Studio/NoorHub-Madrasa-Management-SaaS">GitHub Repository</a>)</li>
+            <li><strong>Bruno Simon 3D Interactive City:</strong> Full-featured WebGL 3D driving simulation allowing users to drive across 4 tech campuses.</li>
+            <li><strong>Iron Strike 2D Fighter:</strong> Arcade martial arts browser game with combo mechanics. (<a href="https://github.com/Jubayer-AI-Studio/Iron-Strike-2D-Fighter">GitHub Repository</a>)</li>
+            <li><strong>Shafin &amp; Nafis Racing 3D:</strong> High-octane mobile 3D racing game.</li>
+            <li><strong>ICON 2030 AI Cinema:</strong> Cinematic trilogy with 10s face-locked continuity architecture directed by Jubayer Ahmad. (<a href="https://www.youtube.com/@jubayeraispecialist">YouTube Channel</a>)</li>
+          </ul>
+        </section>
+      </main>
+    </noscript>
+
+    <!-- React App Root with Instant Warm Shell (Guarantees Screen is Never White) -->
+    <div id="root">
+      <div style="min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #EADECA; color: #1c1917; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; text-align: center; padding: 24px;">
+        <div style="width: 56px; height: 56px; border-radius: 16px; background-color: #1c1917; color: #fef08a; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 900; margin-bottom: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); font-family: monospace;">
+          J
+        </div>
+        <div style="font-size: 19px; font-weight: 900; letter-spacing: 1px; margin-bottom: 6px; color: #0c0a09;">
+          JUBAYER AHMAD
+        </div>
+        <div style="font-size: 13px; font-weight: 700; color: #78716c; font-family: monospace;">
+          LOADING 3D PORTFOLIO...
+        </div>
+      </div>
+    </div>
   </body>
 </html>
