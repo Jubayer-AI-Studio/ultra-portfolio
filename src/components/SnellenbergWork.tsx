@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
-import { motion, AnimatePresence, useSpring } from 'framer-motion';
+import { useSpring } from 'framer-motion';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { sound } from '../utils/sound';
-import { Play, Layers, ExternalLink, Film, Sparkles, ArrowUpRight } from 'lucide-react';
+import { Play, Layers, ExternalLink, Film, Sparkles } from 'lucide-react';
 import { GithubIcon } from './Icons';
 import { ArcadeModal } from './ArcadeModal';
 import { NoorHubModal } from './NoorHubModal';
@@ -23,7 +23,6 @@ interface WorkItem {
 
 export const SnellenbergWork: React.FC = () => {
   const [selectedFilter, setSelectedFilter] = useState<string>('all');
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [activeModalGame, setActiveModalGame] = useState<{ id: string; title: string; url?: string } | null>(null);
   const [noorHubModalOpen, setNoorHubModalOpen] = useState(false);
 
@@ -50,8 +49,74 @@ export const SnellenbergWork: React.FC = () => {
       year: '2026',
       tags: ['Next.js 15', 'TypeScript', 'Cloudflare Tunnel', 'RBAC', 'Node.js'],
       githubUrl: PORTFOLIO_DATA.featuredSaaS.githubUrl,
+      liveUrl: 'https://noorhub.vercel.app',
       featured: true,
       accentColor: '#00f0ff',
+    },
+    {
+      id: 'rihlah-gadget',
+      title: 'Rihlah Gadget Shop (রিহলাহ গ্যাজেট)',
+      subtitle: 'Next.js PWA E-Commerce Platform on Cloudflare Pages',
+      category: 'saas',
+      categoryLabel: 'Cloudflare E-Commerce',
+      year: '2026',
+      tags: ['Next.js 15', 'React 19', 'Cloudflare Pages', 'PWA', 'Tailwind CSS'],
+      githubUrl: 'https://github.com/Jubayer-AI-Studio/rihlah-gadget-shop',
+      liveUrl: 'https://rihlah-gadget-shop.pages.dev',
+      featured: true,
+      accentColor: '#f97316',
+    },
+    {
+      id: 'electronics-importers',
+      title: 'Electronics Importers BD',
+      subtitle: 'B2B Electronic Components & Industrial Hardware Platform',
+      category: 'saas',
+      categoryLabel: 'B2B Procurement',
+      year: '2026',
+      tags: ['Next.js 15', 'TypeScript', 'Tailwind CSS', 'Vercel'],
+      githubUrl: 'https://github.com/Jubayer-AI-Studio/electronics-importers-bd',
+      liveUrl: 'https://electronics-importers-bd.vercel.app',
+      featured: true,
+      accentColor: '#3b82f6',
+    },
+    {
+      id: 'mesk-prokashon',
+      title: 'Mesk Prokashon (মেশক প্রকাশন)',
+      subtitle: 'Islamic Publishing Platform & WhatsApp AI Bookstore',
+      category: 'saas',
+      categoryLabel: 'Digital Publishing & AI',
+      year: '2026',
+      tags: ['Next.js 15', 'WhatsApp AI Bot', 'Tailwind CSS', 'E-Commerce'],
+      githubUrl: 'https://github.com/Jubayer-AI-Studio/mesk',
+      liveUrl: 'https://mesk-nine.vercel.app',
+      featured: true,
+      accentColor: '#10b981',
+    },
+    {
+      id: 'amar-world-map',
+      title: 'Amar World Map (আমার ওয়ার্ল্ড ম্যাপ)',
+      subtitle: 'Bangladesh 64 Districts & World Visual Travel Tracker',
+      category: 'ai-app',
+      categoryLabel: 'Interactive Web Tool',
+      year: '2026',
+      tags: ['React', 'HTML5 Canvas', 'GeoJSON', 'Vite', 'PWA'],
+      githubUrl: 'https://github.com/Jubayer-AI-Studio/amar-world-map',
+      liveUrl: 'https://amar-world-map.vercel.app',
+      featured: true,
+      accentColor: '#ec4899',
+    },
+    {
+      id: 'special-agent',
+      title: 'Jubayer AI Hunter & Special Agent',
+      subtitle: 'Autonomous AI Remote Intelligence & Workflow Engine',
+      category: 'ai-app',
+      categoryLabel: 'Autonomous AI',
+      year: '2026',
+      tags: ['Autonomous AI', 'Python', 'Node.js', 'Vercel'],
+      githubUrl: 'https://github.com/Jubayer-AI-Studio/special-agent',
+      liveUrl: 'https://special-agent-one.vercel.app',
+      featured: true,
+      accentColor: '#eab308',
     },
     {
       id: 'iron-strike',
@@ -114,6 +179,18 @@ export const SnellenbergWork: React.FC = () => {
       accentColor: '#06b6d4',
     },
     {
+      id: 'affan-labib',
+      title: 'Affan Labib Literary Studio (আফফান লাবীব)',
+      subtitle: 'Writer Studio & Cloudflare Edge Web Magazine',
+      category: 'saas',
+      categoryLabel: 'Cloudflare Pages',
+      year: '2026',
+      tags: ['Astro v5', 'Cloudflare Pages', 'Cloudflare KV', 'Tailwind CSS'],
+      githubUrl: 'https://github.com/Jubayer-AI-Studio/affan-labib-blog',
+      liveUrl: 'https://affan-labib.pages.dev',
+      accentColor: '#a78bfa',
+    },
+    {
       id: 'jubayer-legends',
       title: 'Jubayer Legends 3D',
       subtitle: 'Futuristic Cyberpunk Skyline Endless Runner Experience',
@@ -134,7 +211,7 @@ export const SnellenbergWork: React.FC = () => {
 
   const handleRowClick = (item: WorkItem) => {
     sound.playWarp();
-    if (item.category === 'saas' || item.id === 'noorhub') {
+    if (item.id === 'noorhub') {
       setNoorHubModalOpen(true);
     } else if (item.category === 'game') {
       setActiveModalGame({
@@ -183,10 +260,10 @@ export const SnellenbergWork: React.FC = () => {
                   sound.playClick();
                   setSelectedFilter(tab.id);
                 }}
-                className={`px-4 py-2 rounded-full transition-all cursor-pointer font-bold ${
+                className={`px-4 py-2 rounded-full font-bold transition-all cursor-pointer ${
                   selectedFilter === tab.id
-                    ? 'bg-stone-900 text-amber-200 shadow-md'
-                    : 'bg-[#dfcfb8] text-stone-800 hover:text-black border border-[#c8b59b] hover:bg-[#d5c4ad]'
+                    ? 'bg-stone-950 text-amber-200 shadow-md scale-105'
+                    : 'bg-[#dfcfb8] text-stone-800 hover:bg-[#d0beaa] border border-[#c8b59b]'
                 }`}
               >
                 {tab.label}
@@ -195,52 +272,51 @@ export const SnellenbergWork: React.FC = () => {
           </div>
         </div>
 
-        {/* Dennis Snellenberg Interactive List Container with Floating Cursor Preview */}
+        {/* Snellenberg Interactive Row Container */}
         <div
           ref={containerRef}
           onMouseMove={handleMouseMove}
-          className="relative divide-y divide-[#c8b59b]"
+          className="relative divide-y divide-[#c8b59b] border-y border-[#c8b59b]"
         >
           {filteredWorks.map((work, idx) => (
             <div
               key={work.id}
-                onClick={() => handleRowClick(work)}
-                onMouseEnter={() => {
-                  setHoveredIndex(idx);
-                  sound.playHover();
-                }}
-                onMouseLeave={() => setHoveredIndex(null)}
-                className="group relative py-8 sm:py-12 px-3 sm:px-4 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all duration-300 hover:bg-[#dfcfb8]/60 cursor-pointer"
-              >
-                {/* Left: Title & Subtitle with smooth hover slide */}
-                <div className="space-y-2 z-10">
-                  <div className="flex items-center gap-3">
-                    <h3 className="text-2xl sm:text-4xl md:text-5xl font-black text-stone-950 group-hover:text-amber-800 transition-all duration-300 group-hover:translate-x-3 tracking-tight font-sans">
+              onClick={() => handleRowClick(work)}
+              data-cursor="VIEW PROJECT"
+              className="group relative py-8 sm:py-10 transition-colors duration-300 hover:bg-[#dfcfb8]/60 cursor-pointer px-4 sm:px-6 rounded-2xl"
+            >
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                
+                {/* Left: Index & Main Title */}
+                <div className="flex items-baseline gap-4 sm:gap-6">
+                  <span className="font-mono text-xs sm:text-sm font-bold text-stone-500 group-hover:text-stone-900 transition-colors">
+                    {(idx + 1).toString().padStart(2, '0')}
+                  </span>
+                  <div>
+                    <h3 className="text-2xl sm:text-4xl md:text-5xl font-black text-stone-950 tracking-tight font-sans group-hover:translate-x-2 transition-transform duration-300">
                       {work.title}
                     </h3>
-                    {work.featured && (
-                      <span className="hidden sm:inline-block px-2.5 py-0.5 rounded-full bg-[#f5ecde] border border-[#c8b59b] text-stone-900 font-mono text-[11px] font-bold">
-                        Featured
-                      </span>
-                    )}
+                    <p className="text-xs sm:text-sm text-stone-600 font-mono mt-1 font-medium group-hover:text-stone-900 transition-colors">
+                      {work.subtitle}
+                    </p>
                   </div>
-                  <p className="text-stone-700 text-sm sm:text-base max-w-xl font-medium transition-colors">
-                    {work.subtitle}
-                  </p>
                 </div>
 
-                {/* Right: Meta & Direct Triggers */}
-                <div className="flex flex-wrap items-center justify-between md:justify-end gap-3 sm:gap-6 z-10 w-full md:w-auto">
-                  <div className="text-left md:text-right font-mono">
-                    <div className="text-sm font-black text-stone-950 group-hover:text-amber-800 transition-colors">
+                {/* Right: Year, Category Label & Two Clear Direct Buttons */}
+                <div className="flex flex-wrap items-center gap-3 md:gap-6 self-start md:self-auto pt-2 md:pt-0">
+                  <div className="text-left md:text-right">
+                    <div className="font-mono text-xs font-bold text-stone-900">
                       {work.categoryLabel}
                     </div>
-                    <div className="text-xs text-stone-600 mt-0.5 font-bold">{work.year}</div>
+                    <div className="font-mono text-[11px] text-stone-500">
+                      {work.year}
+                    </div>
                   </div>
 
+                  {/* Two Explicit Buttons so User Never Confuses Between Live Website and GitHub Code */}
                   <div className="flex items-center gap-2">
-                    {/* OPTION 1: Direct Live Software / Play / Watch */}
-                    {work.category === 'saas' ? (
+                    {/* OPTION 1: Direct Live Software / Web Launch Button */}
+                    {work.id === 'noorhub' ? (
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
@@ -293,7 +369,7 @@ export const SnellenbergWork: React.FC = () => {
                         className="px-3.5 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-mono font-bold text-xs flex items-center gap-1.5 transition-transform hover:scale-105 active:scale-95 shadow-md shadow-emerald-700/30 cursor-pointer"
                       >
                         <ExternalLink className="w-3.5 h-3.5" />
-                        <span>লাইভ অ্যাপ</span>
+                        <span>লাইভ সাইট</span>
                       </a>
                     )}
 
@@ -317,102 +393,26 @@ export const SnellenbergWork: React.FC = () => {
                   </div>
                 </div>
               </div>
+            </div>
           ))}
-
-          {/* Dennis Snellenberg Floating Preview Card that follows mouse */}
-          <AnimatePresence>
-            {hoveredIndex !== null && filteredWorks[hoveredIndex] && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.2 }}
-                style={{
-                  left: cursorX,
-                  top: cursorY,
-                  x: '-50%',
-                  y: '-50%',
-                }}
-                className="pointer-events-none fixed z-40 hidden lg:flex flex-col items-center justify-center"
-              >
-                {/* Floating Preview Glass Card */}
-                <div
-                  className="w-72 p-5 rounded-2xl bg-[#F8F1E2] border-2 border-stone-900 shadow-[0_20px_50px_rgba(0,0,0,0.3)] backdrop-blur-2xl space-y-3"
-                >
-                  <div className="flex items-center justify-between text-xs font-mono">
-                    <span
-                      className="font-black tracking-wider uppercase text-amber-900"
-                    >
-                      {filteredWorks[hoveredIndex].categoryLabel}
-                    </span>
-                    <span className="text-stone-600 font-bold">{filteredWorks[hoveredIndex].year}</span>
-                  </div>
-
-                  <div className="text-lg font-black text-stone-950">
-                    {filteredWorks[hoveredIndex].title}
-                  </div>
-
-                  <div className="flex flex-wrap gap-1">
-                    {filteredWorks[hoveredIndex].tags.slice(0, 3).map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2 py-0.5 rounded bg-[#ebdcc8] border border-[#c8b59b] text-stone-900 text-[10px] font-mono font-bold"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="pt-2 border-t border-[#c8b59b] flex items-center justify-between text-[11px] font-mono text-stone-800">
-                    <span>
-                      {filteredWorks[hoveredIndex].category === 'game' ? '⚡ Tap to play now' : '↗ Tap to inspect'}
-                    </span>
-                    <span className="text-stone-950 font-black">CLICK</span>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
         </div>
-
-        {/* Big Snellenberg GitHub Portal CTA */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-[#c8b59b]">
-          <div className="text-stone-700 text-sm font-mono font-medium">
-            All code repositories are open and verified on GitHub under <span className="text-stone-950 font-black">@Jubayer-AI-Studio</span>.
-          </div>
-
-          <a
-            href={PORTFOLIO_DATA.profile.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => sound.playWarp()}
-            className="px-8 py-4 rounded-full bg-stone-900 hover:bg-black border border-stone-800 text-amber-200 font-mono text-xs font-black flex items-center gap-2.5 transition-all hover:scale-105 shadow-md cursor-pointer"
-          >
-            <GithubIcon className="w-4 h-4" />
-            <span>More Works on GitHub (21+ Repositories)</span>
-            <ArrowUpRight className="w-4 h-4 text-amber-300" />
-          </a>
-        </div>
-
-        {/* Live Playable Modal if Game Clicked */}
-        {activeModalGame && (
-          <ArcadeModal
-            isOpen={Boolean(activeModalGame)}
-            onClose={() => setActiveModalGame(null)}
-            gameId={activeModalGame.id}
-            gameTitle={activeModalGame.title}
-            externalUrl={activeModalGame.url}
-          />
-        )}
-
-        {/* Live NOORHUB Software Window Modal */}
-        <NoorHubModal
-          isOpen={noorHubModalOpen}
-          onClose={() => setNoorHubModalOpen(false)}
-        />
 
       </div>
+
+      {/* Retro Arcade Modal */}
+      <ArcadeModal
+        isOpen={!!activeModalGame}
+        gameId={activeModalGame?.id || ''}
+        gameTitle={activeModalGame?.title || ''}
+        externalUrl={activeModalGame?.url}
+        onClose={() => setActiveModalGame(null)}
+      />
+
+      {/* NoorHub Interactive Modal */}
+      <NoorHubModal
+        isOpen={noorHubModalOpen}
+        onClose={() => setNoorHubModalOpen(false)}
+      />
     </section>
   );
 };
