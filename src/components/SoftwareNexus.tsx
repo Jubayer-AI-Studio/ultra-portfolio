@@ -232,7 +232,7 @@ export const SoftwareNexus: React.FC = () => {
                   className="w-full sm:w-auto px-5 sm:px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 hover:from-emerald-300 hover:to-cyan-300 text-black font-mono font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-400/30 transition-all cursor-pointer hover:scale-[1.03] active:scale-[0.98]"
                 >
                   <ExternalLink className="w-4 h-4 text-black" />
-                  <span>লাইভ ওয়েবসাইট (noorhub.vercel.app)</span>
+                  <span>Visit Live SaaS (noorhub.vercel.app)</span>
                   <ArrowUpRight className="w-3.5 h-3.5 text-black" />
                 </a>
 
@@ -246,7 +246,7 @@ export const SoftwareNexus: React.FC = () => {
                   className="w-full sm:w-auto px-5 sm:px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-400 via-teal-300 to-cyan-400 hover:from-cyan-300 hover:to-teal-200 text-black font-mono font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-cyan-400/30 transition-all cursor-pointer hover:scale-[1.03] active:scale-[0.98]"
                 >
                   <Sparkles className="w-4 h-4 text-black fill-black" />
-                  <span>🚀 সরাসরি নূরহাব সফটওয়্যারে প্রবেশ করুন</span>
+                  <span>Launch Interactive Software</span>
                   <ExternalLink className="w-4 h-4 text-black" />
                 </button>
 
@@ -261,7 +261,7 @@ export const SoftwareNexus: React.FC = () => {
                     className="w-full sm:w-auto px-4 sm:px-5 py-3.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-zinc-700 font-mono font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
                   >
                     <GithubIcon className="w-4 h-4 text-cyan-400" />
-                    <span>গিটহাব সোর্স কোড (GitHub Repository)</span>
+                    <span>GitHub Source Code</span>
                     <ArrowUpRight className="w-3.5 h-3.5 text-zinc-400" />
                   </a>
                 )}
@@ -307,7 +307,7 @@ export const SoftwareNexus: React.FC = () => {
 
         {/* 2. Bento Grid of Other Key Applications */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {PORTFOLIO_DATA.softwareProjects.map((project) => (
+          {PORTFOLIO_DATA.productionSystems.map((project) => (
             <motion.div
               key={project.id}
               whileHover={{ y: -4 }}
@@ -358,7 +358,7 @@ export const SoftwareNexus: React.FC = () => {
                       className="flex-1 py-2 px-3 rounded-lg bg-cyan-500/25 hover:bg-cyan-500/35 border border-cyan-500/50 text-cyan-300 text-xs font-mono font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                     >
                       <ExternalLink className="w-3.5 h-3.5" />
-                      <span>লাইভ অ্যাপ (Launch)</span>
+                      <span>Launch Live App</span>
                     </a>
                   ) : project.id === 'madrasa-mgmt' ? (
                     <button
@@ -369,7 +369,7 @@ export const SoftwareNexus: React.FC = () => {
                       className="flex-1 py-2 px-3 rounded-lg bg-cyan-500/25 hover:bg-cyan-500/35 border border-cyan-500/50 text-cyan-300 text-xs font-mono font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                     >
                       <ExternalLink className="w-3.5 h-3.5" />
-                      <span>সফটওয়্যার চালান</span>
+                      <span>Launch Platform</span>
                     </button>
                   ) : (
                     <a
@@ -380,7 +380,7 @@ export const SoftwareNexus: React.FC = () => {
                       className="flex-1 py-2 px-3 rounded-lg bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-500/30 text-cyan-300 text-xs font-mono font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                     >
                       <ExternalLink className="w-3.5 h-3.5" />
-                      <span>সরাসরি দেখুন</span>
+                      <span>View Project</span>
                     </a>
                   )}
 
@@ -395,7 +395,7 @@ export const SoftwareNexus: React.FC = () => {
                       className="flex-1 py-2 px-3 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white text-xs font-mono flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                     >
                       <GithubIcon className="w-3.5 h-3.5" />
-                      <span>গিটহাব কোড</span>
+                      <span>Source Code</span>
                     </a>
                   )}
                 </div>

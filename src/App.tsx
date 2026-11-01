@@ -6,7 +6,6 @@ import { BrunoCityWorld } from './components/BrunoCityWorld';
 import { InfiniteMarquee } from './components/InfiniteMarquee';
 import { SnellenbergWork } from './components/SnellenbergWork';
 import { SoftwareNexus } from './components/SoftwareNexus';
-import { PlayableArcade } from './components/PlayableArcade';
 import { AICinemaStudio } from './components/AICinemaStudio';
 import { DigitalPublishing } from './components/DigitalPublishing';
 import { CareerOdyssey } from './components/CareerOdyssey';
@@ -82,14 +81,14 @@ export function App() {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-4">
             <div className="space-y-2">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#dfcfb8] border border-[#c8b59b] text-stone-900 font-mono text-xs font-bold shadow-sm">
-                <span className="w-2.5 h-2.5 rounded-full bg-red-600 animate-ping" />
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
                 <span>BRUNO SIMON 3D INTERACTIVE CITY WORLD</span>
               </div>
               <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-stone-950 font-sans">
-                Drive the Ferrari Red Roadster to Explore Campuses
+                Drive the Obsidian Sports Roadster to Explore Campuses
               </h2>
               <p className="text-sm sm:text-base max-w-2xl text-stone-700 font-medium font-sans">
-                Drive across the sunny 3D city! Cross the wooden river bridge, crash through the wooden crate pyramid, jump the stunt ramp, and enter any of the 4 Tech Factory Campuses to inspect live projects.
+                Drive across the sunny 3D city! Cross the river bridge, crash through crate pyramids, jump the stunt ramp, and visit the Tech Factory Campuses to launch verified live production platforms.
               </p>
             </div>
           </div>
@@ -109,9 +108,6 @@ export function App() {
 
         {/* Deep Software Architecture Spotlight (NOORHUB SaaS) */}
         <SoftwareNexus />
-
-        {/* In-Page Playable Retro Arcade Station (Henry Heffernan Caliber) */}
-        <PlayableArcade />
 
         {/* AI Cinema Virtual IMAX Theater (ICON 2030) */}
         <AICinemaStudio />

@@ -124,7 +124,7 @@ export const DennisFooter: React.FC<DennisFooterProps> = ({
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => sound.playClick()}
-              className="hover:text-red-700 transition-colors flex items-center gap-1.5 underline"
+              className="hover:text-amber-700 transition-colors flex items-center gap-1.5 underline"
             >
               <GithubIcon className="w-4 h-4" />
               <span>GitHub</span>
@@ -134,7 +134,7 @@ export const DennisFooter: React.FC<DennisFooterProps> = ({
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => sound.playClick()}
-              className="hover:text-red-700 transition-colors flex items-center gap-1.5 underline"
+              className="hover:text-amber-700 transition-colors flex items-center gap-1.5 underline"
             >
               <YoutubeIcon className="w-4 h-4" />
               <span>YouTube</span>
@@ -144,7 +144,7 @@ export const DennisFooter: React.FC<DennisFooterProps> = ({
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => sound.playClick()}
-              className="hover:text-red-700 transition-colors flex items-center gap-1.5 underline"
+              className="hover:text-amber-700 transition-colors flex items-center gap-1.5 underline"
             >
               <InstagramIcon className="w-4 h-4" />
               <span>Instagram</span>

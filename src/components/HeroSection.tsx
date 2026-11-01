@@ -156,7 +156,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onScrollTo, onOpenBrun
               onMouseEnter={() => sound.playHover()}
               className="px-5 py-3.5 rounded-xl bg-[#f5ecde] hover:bg-[#ebdcc8] border border-[#c8b59b] text-stone-900 font-mono font-bold text-xs sm:text-sm flex items-center gap-2 transition-all shadow-sm cursor-pointer"
             >
-              <Film className="w-4 h-4 text-red-600" />
+              <Film className="w-4 h-4 text-amber-800" />
               <span>AI Cinema Studio</span>
             </button>
           </div>
@@ -164,7 +164,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onScrollTo, onOpenBrun
           {/* Verified Engineering Stats HUD */}
           <div className="pt-6 border-t border-[#c8b59b] grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div className="p-3.5 rounded-xl bg-[#f5ecde] border border-[#c8b59b] shadow-sm hover:border-stone-800 transition-colors">
-              <div className="text-2xl font-mono font-black text-stone-950">21+</div>
+              <div className="text-2xl font-mono font-black text-stone-950">28+</div>
               <div className="text-xs font-mono text-stone-600 font-bold">GitHub Repos</div>
             </div>
             <div className="p-3.5 rounded-xl bg-[#f5ecde] border border-[#c8b59b] shadow-sm hover:border-stone-800 transition-colors">

@@ -17,7 +17,6 @@ import {
   Compass,
   RotateCcw,
 } from 'lucide-react';
-import { ArcadeModal } from './ArcadeModal';
 import { NoorHubModal } from './NoorHubModal';
 import { GithubIcon } from './Icons';
 
@@ -98,12 +97,12 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
     tag: string;
     desc: string;
     actionText: string;
-    actionType: 'arcade' | 'saas' | 'cinema' | 'racing';
+    actionType: 'saas' | 'cinema' | 'live-url';
+    liveUrl?: string;
     githubUrl?: string;
   } | null>(null);
 
   const [noorHubModalOpen, setNoorHubModalOpen] = useState(false);
-  const [arcadeModalGame, setArcadeModalGame] = useState<{ id: string; title: string } | null>(null);
   const [hornActive, setHornActive] = useState(false);
   const [soundMuted, setSoundMuted] = useState(false);
 
@@ -348,48 +347,52 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
         title: 'NOORHUB SAAS CAMPUS',
         tag: 'FLAGSHIP ENTERPRISE SAAS',
         desc: 'Complete Madrasa & Educational SaaS Platform (Next.js 15, Cloudflare Zero Trust, PostgreSQL & RBAC)',
-        actionText: 'Launch NOORHUB Software',
+        actionText: 'Open NoorHub SaaS',
         actionType: 'saas' as const,
+        liveUrl: 'https://noorhub.vercel.app',
         githubUrl: 'https://github.com/Jubayer-AI-Studio/NoorHub-Madrasa-Management-SaaS',
         x: -42,
         z: -35,
         color: 0x0284c7,
       },
       {
-        id: 'iron-strike',
-        title: 'IRON STRIKE COLISEUM',
-        tag: '2D ARCADE FIGHTER ARENA',
-        desc: 'High-octane Martial Arts Combat with Special Move Gauges & Hitbox Combos',
-        actionText: 'Play Iron Strike Game',
-        actionType: 'arcade' as const,
-        githubUrl: 'https://github.com/Jubayer-AI-Studio/Iron-Strike-2D-Fighter',
+        id: 'rihlah-gadget',
+        title: 'RIHLAH GADGET TECH EXPO',
+        tag: 'CLOUDFLARE EDGE PWA E-COMMERCE',
+        desc: 'Next.js 15 PWA E-Commerce Platform deployed on Cloudflare Pages edge network with instant cart',
+        actionText: 'Visit Rihlah Gadget Shop',
+        actionType: 'live-url' as const,
+        liveUrl: 'https://rihlah-gadget-shop.pages.dev',
+        githubUrl: 'https://github.com/Jubayer-AI-Studio/rihlah-gadget-shop',
         x: 42,
         z: -35,
-        color: 0xf59e0b,
+        color: 0xd97706,
       },
       {
         id: 'icon-2030',
         title: 'ICON 2030 CINEMA STUDIO',
         tag: 'AI CINEMA TRILOGY',
-        desc: 'Cinematic Universe with 10s Face-Locked Continuity Architecture (Directed by JUBAYER AI Specialist)',
+        desc: 'Cinematic Universe with 10s Face-Locked Continuity Architecture (Directed by Jubayer Ahmad)',
         actionText: 'Watch ICON 2030 Cinema',
         actionType: 'cinema' as const,
+        liveUrl: 'https://www.youtube.com/@jubayeraispecialist',
         githubUrl: 'https://github.com/Jubayer-AI-Studio',
         x: 42,
         z: 35,
-        color: 0xe11d48,
+        color: 0x8b5cf6,
       },
       {
-        id: 'dhaka-racing',
-        title: 'DHAKA RACING GRANDSTAND',
-        tag: 'OPEN-WORLD URBAN DRIVING',
-        desc: 'Explore 10+ Authentic Dhaka Routes with Realistic Damage Physics & Dynamic Weather',
-        actionText: 'Launch Dhaka Racing',
-        actionType: 'racing' as const,
-        githubUrl: 'https://github.com/Jubayer-AI-Studio/Dhaka-Open-World-Racing',
+        id: 'mesk-prokashon',
+        title: 'MESK PROKASHON & AI TOWER',
+        tag: 'DIGITAL BOOKSTORE & WHATSAPP AI',
+        desc: 'Official digital bookstore of Maulana Muhammad Zainul Abedin with automated WhatsApp AI order bot',
+        actionText: 'Visit Mesk Bookstore',
+        actionType: 'live-url' as const,
+        liveUrl: 'https://mesk-nine.vercel.app',
+        githubUrl: 'https://github.com/Jubayer-AI-Studio/mesk',
         x: -42,
         z: 35,
-        color: 0x16a34a,
+        color: 0x059669,
       },
     ];
 
@@ -906,7 +909,7 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
       }
       if (k === 'enter') {
         const cur = activeZoneRef.current;
-        if (cur) handleCampusAction(cur.actionType);
+        if (cur) handleCampusAction(cur);
       }
     };
 
@@ -1271,24 +1274,23 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
     };
   }, [isFullscreen]);
 
-  const handleCampusAction = (actionType: 'arcade' | 'saas' | 'cinema' | 'racing') => {
+  const handleCampusAction = (zone: {
+    actionType: 'saas' | 'cinema' | 'live-url';
+    liveUrl?: string;
+  } | null) => {
+    if (!zone) return;
     sound.playWarp();
-    if (actionType === 'arcade') {
-      setArcadeModalGame({
-        id: 'iron-strike',
-        title: 'Iron Strike 2D Fighter',
-      });
-    } else if (actionType === 'saas') {
+    if (zone.actionType === 'saas') {
       if (onOpenSaaS) onOpenSaaS();
       setNoorHubModalOpen(true);
-    } else if (actionType === 'cinema') {
+    } else if (zone.actionType === 'cinema') {
       if (onOpenCinema) onOpenCinema();
       else {
         const el = document.getElementById('cinema');
         if (el) el.scrollIntoView({ behavior: 'smooth' });
       }
-    } else if (actionType === 'racing') {
-      window.open('https://github.com/Jubayer-AI-Studio/Dhaka-Open-World-Racing', '_blank');
+    } else if (zone.liveUrl) {
+      window.open(zone.liveUrl, '_blank');
     }
   };
 
@@ -1312,7 +1314,7 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
       {/* Top HUD Bar (Ultra-Compact on Mobile) */}
       <div className="absolute top-2.5 sm:top-4 inset-x-2 sm:inset-x-6 flex items-center justify-between pointer-events-none z-20">
         <div className="flex items-center gap-1.5 sm:gap-2.5 bg-white/95 border border-slate-200/90 px-2.5 py-1 sm:px-4 sm:py-2 rounded-xl sm:rounded-2xl backdrop-blur-md shadow-md pointer-events-auto shrink-0">
-          <span className="w-2.5 h-2.5 rounded-full bg-red-600 animate-ping shrink-0" />
+          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
           <span className="font-mono text-[11px] sm:text-xs font-black text-slate-900 tracking-wider whitespace-nowrap">
             <span className="hidden sm:inline">BRUNO SIMON 3D CITY // </span>JUBAYER
           </span>
@@ -1387,7 +1389,7 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
                 sound.playClick();
                 onClose();
               }}
-              className="px-2.5 sm:px-3.5 py-1.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-mono text-xs font-bold flex items-center gap-1 transition-colors shadow-md cursor-pointer"
+              className="px-2.5 sm:px-3.5 py-1.5 rounded-xl bg-stone-900 hover:bg-black text-amber-200 border border-stone-700 font-mono text-xs font-bold flex items-center gap-1 transition-colors shadow-md cursor-pointer"
             >
               <X className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">EXIT</span>
@@ -1428,8 +1430,8 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
 
             <div className="flex flex-col sm:flex-row gap-1.5 sm:gap-2 w-full sm:w-auto shrink-0">
               <button
-                onClick={() => handleCampusAction(activeZone.actionType)}
-                className="w-full sm:w-auto px-4 py-2 sm:py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-mono font-black text-xs flex items-center justify-center gap-1.5 shadow-lg shadow-red-500/30 transition-transform active:scale-95 cursor-pointer whitespace-nowrap"
+                onClick={() => handleCampusAction(activeZone)}
+                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-stone-950 hover:bg-black text-amber-200 border border-amber-500/50 font-mono font-black text-xs flex items-center justify-center gap-1.5 shadow-xl transition-transform active:scale-95 cursor-pointer whitespace-nowrap"
               >
                 <span>{activeZone.actionText}</span>
                 <ExternalLink className="w-3.5 h-3.5" />
@@ -1479,163 +1481,110 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
         </div>
       </div>
 
-      {/* Bottom HUD: Speedometer, Nitro Gauge & Controls (Mobile & Desktop) */}
-      <div className="absolute bottom-3 sm:bottom-5 inset-x-2 sm:inset-x-6 flex flex-col sm:flex-row items-center sm:items-center justify-between gap-3 pointer-events-none z-20">
+      {/* Universal Virtual Driving Controller (Always Visible on Mobile & Desktop) */}
+      <div className="absolute bottom-3 sm:bottom-4 inset-x-2 sm:inset-x-5 flex items-end justify-between pointer-events-none z-20">
         
-        {/* Desktop Speedometer & Nitro Boost Gauge */}
-        <div className="hidden md:flex bg-white/95 border border-slate-200/90 px-5 py-3 rounded-2xl backdrop-blur-md shadow-lg items-center gap-4 pointer-events-auto">
-          <div className="font-mono">
-            <div className="text-3xl sm:text-4xl font-black text-red-600 tracking-tight flex items-baseline gap-1">
-              <span>{speedKmh}</span>
-              <span className="text-xs text-slate-500 font-bold">KM/H</span>
+        {/* Left Control Cluster: Steering & Speedometer */}
+        <div className="flex flex-col gap-2 pointer-events-auto">
+          {/* Speedometer & Nitro Status Pill */}
+          <div className="bg-stone-950/90 border border-stone-800 text-white px-3.5 py-1.5 rounded-xl shadow-lg backdrop-blur-md flex items-center gap-3 font-mono">
+            <div className="text-xl sm:text-2xl font-black text-amber-400">
+              {speedKmh} <span className="text-[10px] text-stone-400 font-bold">KM/H</span>
             </div>
-            <div className="text-[10px] text-slate-500 uppercase tracking-widest font-bold">
-              FERRARI RED
-            </div>
-          </div>
-
-          <div className="h-10 w-[1px] bg-slate-200" />
-
-          {/* Nitro Gauge */}
-          <div className="space-y-1 font-mono">
-            <div className="flex items-center justify-between text-[10px] font-bold text-slate-700">
-              <span className="flex items-center gap-1 text-cyan-700">
-                <Flame className={`w-3.5 h-3.5 ${isNitroActive ? 'text-cyan-500 animate-bounce' : ''}`} />
-                <span>NITRO [SHIFT]</span>
-              </span>
+            <div className="h-4 w-[1px] bg-stone-700" />
+            <div className="flex items-center gap-1 text-[11px] text-cyan-400 font-bold">
+              <Flame className={`w-3.5 h-3.5 ${isNitroActive ? 'text-cyan-300 animate-bounce' : ''}`} />
               <span>{nitroGauge}%</span>
             </div>
-            <div className="w-24 sm:w-28 h-2 bg-slate-200 rounded-full overflow-hidden">
-              <div
-                style={{ width: `${nitroGauge}%` }}
-                className={`h-full transition-all duration-150 ${
-                  isNitroActive
-                    ? 'bg-gradient-to-r from-cyan-400 to-blue-600 animate-pulse'
-                    : 'bg-cyan-500'
-                }`}
-              />
-            </div>
+          </div>
+
+          {/* Steer Left & Right Buttons */}
+          <div className="flex items-center gap-2">
+            <button
+              onPointerDown={(e) => { e.preventDefault(); keysRef.current.left = true; }}
+              onPointerUp={(e) => { e.preventDefault(); keysRef.current.left = false; }}
+              onPointerLeave={() => { keysRef.current.left = false; }}
+              className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-stone-950/90 hover:bg-stone-900 active:bg-amber-500/20 active:scale-95 border-2 border-stone-700 text-amber-200 shadow-2xl flex items-center justify-center font-black cursor-pointer transition-all backdrop-blur-md"
+              title="Steer Left [A / ←]"
+            >
+              <ArrowLeft className="w-6 h-6 text-amber-200" />
+            </button>
+
+            <button
+              onPointerDown={(e) => { e.preventDefault(); keysRef.current.right = true; }}
+              onPointerUp={(e) => { e.preventDefault(); keysRef.current.right = false; }}
+              onPointerLeave={() => { keysRef.current.right = false; }}
+              className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-stone-950/90 hover:bg-stone-900 active:bg-amber-500/20 active:scale-95 border-2 border-stone-700 text-amber-200 shadow-2xl flex items-center justify-center font-black cursor-pointer transition-all backdrop-blur-md"
+              title="Steer Right [D / →]"
+            >
+              <ArrowRight className="w-6 h-6 text-amber-200" />
+            </button>
           </div>
         </div>
 
-        {/* Desktop Keyboard Controls Legend */}
-        <div className="hidden md:flex items-center gap-2 bg-white/95 border border-slate-200/90 px-4 py-2.5 rounded-2xl backdrop-blur-md font-mono text-xs text-slate-700 shadow-lg pointer-events-auto">
-          <span className="font-bold text-slate-900">KEYS:</span>
-          <span className="text-red-600 font-bold">[W / ↑]</span> Drive •
-          <span className="text-red-600 font-bold">[A / D]</span> Steer •
-          <span className="text-cyan-600 font-bold">[SHIFT]</span> Nitro •
-          <span className="text-amber-600 font-bold">[SPACE]</span> Drift •
-          <span className="text-stone-800 font-bold">[C]</span> Cam •
-          <span className="text-stone-800 font-bold">[H]</span> Horn •
-          <span className="text-stone-800 font-bold">[R]</span> Reset
+        {/* Center Control Cluster: Nitro Boost & Drift Handbrake */}
+        <div className="flex items-center gap-2 pointer-events-auto mb-1">
+          <button
+            onPointerDown={(e) => {
+              e.preventDefault();
+              keysRef.current.nitro = true;
+              sound.playNitroBoost();
+            }}
+            onPointerUp={(e) => { e.preventDefault(); keysRef.current.nitro = false; }}
+            onPointerLeave={() => { keysRef.current.nitro = false; }}
+            className={`px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-2xl border-2 font-mono text-xs font-black flex items-center gap-1.5 shadow-xl transition-all cursor-pointer backdrop-blur-md ${
+              isNitroActive
+                ? 'bg-cyan-500 text-black border-cyan-300 scale-105 shadow-cyan-500/50'
+                : 'bg-stone-950/90 hover:bg-stone-900 text-cyan-300 border-cyan-800/80 active:scale-95'
+            }`}
+            title="Nitro Boost [SHIFT]"
+          >
+            <Flame className="w-4 h-4" />
+            <span className="hidden sm:inline">NITRO</span>
+          </button>
+
+          <button
+            onPointerDown={(e) => {
+              e.preventDefault();
+              keysRef.current.handbrake = true;
+              sound.playDriftScreech();
+            }}
+            onPointerUp={(e) => { e.preventDefault(); keysRef.current.handbrake = false; }}
+            onPointerLeave={() => { keysRef.current.handbrake = false; }}
+            className="px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-2xl bg-stone-950/90 hover:bg-stone-900 active:scale-95 border-2 border-amber-700/80 text-amber-300 shadow-xl font-mono text-xs font-black flex items-center gap-1.5 transition-all cursor-pointer backdrop-blur-md"
+            title="Drift Handbrake [SPACE]"
+          >
+            <span>DRIFT</span>
+          </button>
         </div>
 
-        {/* Mobile Ergonomic Touch Gamepad (100% Width Safe) */}
-        <div className="w-full flex md:hidden items-center justify-between gap-1 pointer-events-none select-none">
-          
-          {/* Left Thumb: Steer ◀ and ▶ */}
-          <div className="flex items-center gap-1.5 pointer-events-auto">
-            <button
-              onTouchStart={() => (keysRef.current.left = true)}
-              onTouchEnd={() => (keysRef.current.left = false)}
-              onMouseDown={() => (keysRef.current.left = true)}
-              onMouseUp={() => (keysRef.current.left = false)}
-              className="w-12 h-12 rounded-2xl bg-white/95 border border-slate-300 shadow-xl text-slate-900 flex items-center justify-center active:bg-slate-200 active:scale-90 font-black cursor-pointer"
-              title="Steer Left"
-            >
-              <ArrowLeft className="w-5 h-5 text-slate-900" />
-            </button>
-            <button
-              onTouchStart={() => (keysRef.current.right = true)}
-              onTouchEnd={() => (keysRef.current.right = false)}
-              onMouseDown={() => (keysRef.current.right = true)}
-              onMouseUp={() => (keysRef.current.right = false)}
-              className="w-12 h-12 rounded-2xl bg-white/95 border border-slate-300 shadow-xl text-slate-900 flex items-center justify-center active:bg-slate-200 active:scale-90 font-black cursor-pointer"
-              title="Steer Right"
-            >
-              <ArrowRight className="w-5 h-5 text-slate-900" />
-            </button>
-          </div>
+        {/* Right Control Cluster: Reverse & Prominent DRIVE FORWARD */}
+        <div className="flex items-center gap-2 pointer-events-auto">
+          <button
+            onPointerDown={(e) => { e.preventDefault(); keysRef.current.backward = true; }}
+            onPointerUp={(e) => { e.preventDefault(); keysRef.current.backward = false; }}
+            onPointerLeave={() => { keysRef.current.backward = false; }}
+            className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-stone-950/90 hover:bg-stone-900 active:bg-amber-500/20 active:scale-95 border-2 border-stone-700 text-amber-200 shadow-2xl flex items-center justify-center font-black cursor-pointer transition-all backdrop-blur-md"
+            title="Reverse / Brake [S / ↓]"
+          >
+            <ArrowDown className="w-6 h-6 text-stone-300" />
+          </button>
 
-          {/* Center Actions: Nitro & Drift */}
-          <div className="flex items-center gap-1.5 pointer-events-auto">
-            <button
-              onTouchStart={() => {
-                keysRef.current.nitro = true;
-                sound.playNitroBoost();
-              }}
-              onTouchEnd={() => (keysRef.current.nitro = false)}
-              onMouseDown={() => {
-                keysRef.current.nitro = true;
-                sound.playNitroBoost();
-              }}
-              onMouseUp={() => (keysRef.current.nitro = false)}
-              className={`w-11 h-11 rounded-2xl border text-white shadow-xl flex items-center justify-center active:scale-90 font-black cursor-pointer transition-all ${
-                isNitroActive
-                  ? 'bg-cyan-400 border-white scale-105 shadow-cyan-400/50'
-                  : 'bg-cyan-500 border-cyan-400 shadow-cyan-500/30'
-              }`}
-              title="Nitro Boost"
-            >
-              <Flame className="w-5 h-5" />
-            </button>
-
-            <button
-              onTouchStart={() => {
-                keysRef.current.handbrake = true;
-                sound.playDriftScreech();
-              }}
-              onTouchEnd={() => (keysRef.current.handbrake = false)}
-              onMouseDown={() => {
-                keysRef.current.handbrake = true;
-                sound.playDriftScreech();
-              }}
-              onMouseUp={() => (keysRef.current.handbrake = false)}
-              className="w-11 h-11 rounded-2xl bg-amber-500 border border-amber-400 text-white shadow-xl flex items-center justify-center active:scale-90 font-mono text-[10px] font-black cursor-pointer"
-              title="Drift"
-            >
-              DRIFT
-            </button>
-          </div>
-
-          {/* Right Thumb: Reverse ▼ and Forward ▲ */}
-          <div className="flex items-center gap-1.5 pointer-events-auto">
-            <button
-              onTouchStart={() => (keysRef.current.backward = true)}
-              onTouchEnd={() => (keysRef.current.backward = false)}
-              onMouseDown={() => (keysRef.current.backward = true)}
-              onMouseUp={() => (keysRef.current.backward = false)}
-              className="w-12 h-12 rounded-2xl bg-white/95 border border-slate-300 shadow-xl text-slate-900 flex items-center justify-center active:bg-slate-200 active:scale-90 font-black cursor-pointer"
-              title="Reverse"
-            >
-              <ArrowDown className="w-5 h-5 text-slate-900" />
-            </button>
-            <button
-              onTouchStart={() => (keysRef.current.forward = true)}
-              onTouchEnd={() => (keysRef.current.forward = false)}
-              onMouseDown={() => (keysRef.current.forward = true)}
-              onMouseUp={() => (keysRef.current.forward = false)}
-              className="w-13 h-13 rounded-2xl bg-red-600 border-2 border-red-500 shadow-2xl shadow-red-500/50 text-white flex items-center justify-center active:bg-red-700 active:scale-90 font-black cursor-pointer"
-              title="Drive Forward"
-            >
-              <ArrowUp className="w-6 h-6 text-white" />
-            </button>
-          </div>
-
+          <button
+            onPointerDown={(e) => { e.preventDefault(); keysRef.current.forward = true; }}
+            onPointerUp={(e) => { e.preventDefault(); keysRef.current.forward = false; }}
+            onPointerLeave={() => { keysRef.current.forward = false; }}
+            className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-t from-stone-950 to-stone-900 hover:from-black hover:to-stone-800 active:scale-95 border-2 border-amber-500 shadow-[0_0_25px_rgba(245,158,11,0.35)] text-amber-300 flex flex-col items-center justify-center font-black cursor-pointer transition-all backdrop-blur-md"
+            title="Drive Forward [W / ↑]"
+          >
+            <ArrowUp className="w-7 h-7 text-amber-300 animate-pulse" />
+            <span className="text-[9px] font-mono font-bold tracking-wider text-amber-400 -mt-1">DRIVE</span>
+          </button>
         </div>
 
       </div>
 
-      {/* Embedded Arcade Modal if triggered from Coliseum */}
-      {arcadeModalGame && (
-        <ArcadeModal
-          isOpen={Boolean(arcadeModalGame)}
-          onClose={() => setArcadeModalGame(null)}
-          gameId={arcadeModalGame.id}
-          gameTitle={arcadeModalGame.title}
-          externalUrl="https://ai.studio/apps/45effe9f-8244-49d3-a401-e4a0e09f9e90"
-        />
-      )}
+
 
       {/* Embedded Live NOORHUB SaaS Modal if triggered from Campus */}
       <NoorHubModal

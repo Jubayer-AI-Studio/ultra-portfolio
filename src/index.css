@@ -12,7 +12,7 @@
     padding: 0;
     background-color: #EADECA;
     color: #1c1917;
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    font-family: 'Plus Jakarta Sans', 'Hind Siliguri', system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
   }
 
@@ -50,4 +50,8 @@
   100% {
     transform: translateY(-100%);
   }
+}
+
+.animate-scan {
+  animation: scan 3s ease-in-out infinite;
 }

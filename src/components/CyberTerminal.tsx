@@ -52,7 +52,7 @@ export const CyberTerminal: React.FC<CyberTerminalProps> = ({ isOpen, onClose })
             <div>- <span className="text-cyan-400">about</span>: Developer profile summary</div>
             <div>- <span className="text-cyan-400">skills</span>: Full technical stack</div>
             <div>- <span className="text-cyan-400">saas</span>: NOORHUB SaaS details</div>
-            <div>- <span className="text-cyan-400">games</span>: List playable arcade games</div>
+            <div>- <span className="text-cyan-400">projects</span>: List live production systems</div>
             <div>- <span className="text-cyan-400">cinema</span>: ICON 2030 trilogy details</div>
             <div>- <span className="text-cyan-400">github</span>: Open GitHub in new tab</div>
             <div>- <span className="text-cyan-400">contact</span>: Direct communication info</div>
@@ -74,24 +74,21 @@ export const CyberTerminal: React.FC<CyberTerminalProps> = ({ isOpen, onClose })
         break;
 
       case 'games':
+      case 'projects':
         res = (
           <div className="space-y-1">
-            <div>PLAYABLE GAMES:</div>
-            {PORTFOLIO_DATA.games.map((g) => (
-              <div key={g.id}>
-                • <span className="text-purple-400 font-bold">{g.title}</span> ({g.genre}) -{' '}
-                {g.liveUrl ? (
-                  <a
-                    href={g.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-cyan-400 underline"
-                  >
-                    Launch Play
-                  </a>
-                ) : (
-                  'Engine in Repo'
-                )}
+            <div>VERIFIED LIVE PRODUCTION SYSTEMS:</div>
+            {PORTFOLIO_DATA.productionSystems.map((p) => (
+              <div key={p.id}>
+                • <span className="text-amber-400 font-bold">{p.title}</span> [{p.platform}] -{' '}
+                <a
+                  href={p.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-cyan-400 underline"
+                >
+                  Visit Live Site
+                </a>
               </div>
             ))}
           </div>

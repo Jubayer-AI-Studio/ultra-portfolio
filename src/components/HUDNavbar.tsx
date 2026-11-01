@@ -175,7 +175,7 @@ export const HUDNavbar: React.FC<HUDNavbarProps> = ({
             onClick={() => sound.playClick()}
             aria-label="AI Cinema YouTube Channel"
             title="AI Cinema YouTube Channel"
-            className="p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-red-400 hover:text-red-300 hover:border-red-900 transition-colors hidden sm:flex items-center justify-center min-h-[36px] min-w-[36px]"
+            className="p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-amber-400 hover:text-red-300 hover:border-red-900 transition-colors hidden sm:flex items-center justify-center min-h-[36px] min-w-[36px]"
           >
             <YoutubeIcon className="w-4 h-4" />
           </a>
@@ -222,7 +222,7 @@ export const HUDNavbar: React.FC<HUDNavbarProps> = ({
               href={PORTFOLIO_DATA.profile.youtube}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 py-2 rounded-lg bg-zinc-900 border border-zinc-800 text-red-400 text-xs flex items-center justify-center gap-1.5"
+              className="flex-1 py-2 rounded-lg bg-zinc-900 border border-zinc-800 text-amber-400 text-xs flex items-center justify-center gap-1.5"
             >
               <YoutubeIcon className="w-3.5 h-3.5" />
               <span>Cinema</span>

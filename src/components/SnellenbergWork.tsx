@@ -2,9 +2,8 @@ import React, { useState, useRef } from 'react';
 import { useSpring } from 'framer-motion';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { sound } from '../utils/sound';
-import { Play, Layers, ExternalLink, Film, Sparkles } from 'lucide-react';
+import { Layers, ExternalLink, Film, Sparkles } from 'lucide-react';
 import { GithubIcon } from './Icons';
-import { ArcadeModal } from './ArcadeModal';
 import { NoorHubModal } from './NoorHubModal';
 
 interface WorkItem {
@@ -23,7 +22,6 @@ interface WorkItem {
 
 export const SnellenbergWork: React.FC = () => {
   const [selectedFilter, setSelectedFilter] = useState<string>('all');
-  const [activeModalGame, setActiveModalGame] = useState<{ id: string; title: string; url?: string } | null>(null);
   const [noorHubModalOpen, setNoorHubModalOpen] = useState(false);
 
   // Mouse Coordinates for Floating Snellenberg Preview
@@ -43,11 +41,11 @@ export const SnellenbergWork: React.FC = () => {
     {
       id: 'noorhub',
       title: 'NOORHUB SaaS',
-      subtitle: 'Complete Madrasa & Educational Institute Management Platform',
+      subtitle: 'Enterprise Madrasa & Institute Management Cloud Platform',
       category: 'saas',
-      categoryLabel: 'SaaS Architecture',
+      categoryLabel: 'Enterprise SaaS',
       year: '2026',
-      tags: ['Next.js 15', 'TypeScript', 'Cloudflare Tunnel', 'RBAC', 'Node.js'],
+      tags: ['Next.js 15', 'TypeScript', 'Cloudflare Tunnel', 'RBAC', 'PostgreSQL'],
       githubUrl: PORTFOLIO_DATA.featuredSaaS.githubUrl,
       liveUrl: 'https://noorhub.vercel.app',
       featured: true,
@@ -56,37 +54,37 @@ export const SnellenbergWork: React.FC = () => {
     {
       id: 'rihlah-gadget',
       title: 'Rihlah Gadget Shop (রিহলাহ গ্যাজেট)',
-      subtitle: 'Next.js PWA E-Commerce Platform on Cloudflare Pages',
+      subtitle: 'Next.js 15 PWA E-Commerce Platform on Cloudflare Pages Edge',
       category: 'saas',
-      categoryLabel: 'Cloudflare E-Commerce',
+      categoryLabel: 'E-Commerce PWA',
       year: '2026',
       tags: ['Next.js 15', 'React 19', 'Cloudflare Pages', 'PWA', 'Tailwind CSS'],
       githubUrl: 'https://github.com/Jubayer-AI-Studio/rihlah-gadget-shop',
       liveUrl: 'https://rihlah-gadget-shop.pages.dev',
       featured: true,
-      accentColor: '#f97316',
+      accentColor: '#f59e0b',
     },
     {
       id: 'electronics-importers',
       title: 'Electronics Importers BD',
-      subtitle: 'B2B Electronic Components & Industrial Hardware Platform',
+      subtitle: 'B2B Industrial Electronic Components & Supply Chain Procurement',
       category: 'saas',
       categoryLabel: 'B2B Procurement',
       year: '2026',
-      tags: ['Next.js 15', 'TypeScript', 'Tailwind CSS', 'Vercel'],
+      tags: ['Next.js 15', 'TypeScript', 'Tailwind CSS', 'Vercel Production'],
       githubUrl: 'https://github.com/Jubayer-AI-Studio/electronics-importers-bd',
       liveUrl: 'https://electronics-importers-bd.vercel.app',
       featured: true,
-      accentColor: '#3b82f6',
+      accentColor: '#38bdf8',
     },
     {
       id: 'mesk-prokashon',
       title: 'Mesk Prokashon (মেশক প্রকাশন)',
-      subtitle: 'Islamic Publishing Platform & WhatsApp AI Bookstore',
+      subtitle: 'Official Islamic Literature Bookstore & WhatsApp Order Bot',
       category: 'saas',
-      categoryLabel: 'Digital Publishing & AI',
+      categoryLabel: 'Digital Bookstore & AI',
       year: '2026',
-      tags: ['Next.js 15', 'WhatsApp AI Bot', 'Tailwind CSS', 'E-Commerce'],
+      tags: ['Next.js 15', 'WhatsApp AI Bot', 'Tailwind CSS', 'Vercel'],
       githubUrl: 'https://github.com/Jubayer-AI-Studio/mesk',
       liveUrl: 'https://mesk-nine.vercel.app',
       featured: true,
@@ -108,80 +106,20 @@ export const SnellenbergWork: React.FC = () => {
     {
       id: 'special-agent',
       title: 'Jubayer AI Hunter & Special Agent',
-      subtitle: 'Autonomous AI Remote Intelligence & Workflow Engine',
+      subtitle: 'Autonomous AI Remote Intelligence & Task Execution Engine',
       category: 'ai-app',
       categoryLabel: 'Autonomous AI',
       year: '2026',
-      tags: ['Autonomous AI', 'Python', 'Node.js', 'Vercel'],
+      tags: ['Autonomous AI', 'Python', 'Node.js', 'Vercel Production'],
       githubUrl: 'https://github.com/Jubayer-AI-Studio/special-agent',
       liveUrl: 'https://special-agent-one.vercel.app',
       featured: true,
       accentColor: '#eab308',
     },
     {
-      id: 'iron-strike',
-      title: 'Iron Strike 2D Fighter',
-      subtitle: 'Arcade Martial Arts Duel with Special Gauges & Combos',
-      category: 'game',
-      categoryLabel: 'Playable Arcade Game',
-      year: '2026',
-      tags: ['2D Combat Engine', 'Combo System', 'AI Studio Web App'],
-      githubUrl: 'https://github.com/Jubayer-AI-Studio/Iron-Strike-2D-Fighter',
-      liveUrl: 'https://ai.studio/apps/45effe9f-8244-49d3-a401-e4a0e09f9e90',
-      featured: true,
-      accentColor: '#f59e0b',
-    },
-    {
-      id: 'icon-2030',
-      title: 'ICON 2030 Universe',
-      subtitle: 'AI Cinema Trilogy with 10s Face-Locked Continuity Architecture',
-      category: 'film',
-      categoryLabel: 'Cinematic AI Film',
-      year: '2026',
-      tags: ['Google Veo 3.1', 'Gemini 3.7', 'Google Flow', 'CapCut'],
-      githubUrl: 'https://github.com/Jubayer-AI-Studio',
-      liveUrl: PORTFOLIO_DATA.profile.youtube,
-      featured: true,
-      accentColor: '#f43f5e',
-    },
-    {
-      id: 'two-friends',
-      title: 'Two Friends Driving Studio',
-      subtitle: 'Veo 3.1 & Gemini 3.7 Flash AI Cinematic Story Generator',
-      category: 'ai-app',
-      categoryLabel: 'AI Video Studio',
-      year: '2026',
-      tags: ['Google Veo 3.1', 'Gemini 3.7 Flash', 'React 19', 'Web Audio'],
-      githubUrl: 'https://github.com/Jubayer-AI-Studio/Two-Friends-Driving-Masters-Video-Studio',
-      accentColor: '#818cf8',
-    },
-    {
-      id: 'dhaka-racing',
-      title: 'Dhaka Open World Racing',
-      subtitle: 'Urban 10+ Routes Driving Simulation with Dynamic Weather',
-      category: 'game',
-      categoryLabel: '3D Driving Simulation',
-      year: '2026',
-      tags: ['Open World', 'Vehicle Physics', 'Dhaka 10+ Routes'],
-      githubUrl: 'https://github.com/Jubayer-AI-Studio/Dhaka-Open-World-Racing',
-      accentColor: '#10b981',
-    },
-    {
-      id: 'nasrullah',
-      title: 'Nasrullah Companion',
-      subtitle: 'Smart Islamic FinTech, Expense Tracking & Gemini Receipt Scanner',
-      category: 'ai-app',
-      categoryLabel: 'FinTech & AI Utility',
-      year: '2026',
-      tags: ['Gemini Vision', 'Islamic FinTech', 'Taka Budgeting'],
-      githubUrl: 'https://github.com/Jubayer-AI-Studio/Nasrullah-Islamic-Expense-Companion',
-      liveUrl: 'https://ai.studio/apps/b164edd9-53c9-49da-904f-039560e0746b',
-      accentColor: '#06b6d4',
-    },
-    {
       id: 'affan-labib',
       title: 'Affan Labib Literary Studio (আফফান লাবীব)',
-      subtitle: 'Writer Studio & Cloudflare Edge Web Magazine',
+      subtitle: 'Writer Studio & Cloudflare Pages Edge Web Magazine',
       category: 'saas',
       categoryLabel: 'Cloudflare Pages',
       year: '2026',
@@ -191,16 +129,53 @@ export const SnellenbergWork: React.FC = () => {
       accentColor: '#a78bfa',
     },
     {
-      id: 'jubayer-legends',
-      title: 'Jubayer Legends 3D',
-      subtitle: 'Futuristic Cyberpunk Skyline Endless Runner Experience',
-      category: 'game',
-      categoryLabel: '3D Endless Runner',
+      id: 'max-portfolio',
+      title: 'Max Interactive 3D Portfolio',
+      subtitle: 'Three.js WebGL Interactive Showroom & PWA Experience',
+      category: 'ai-app',
+      categoryLabel: '3D WebGL Showroom',
       year: '2026',
-      tags: ['3D WebGL', 'Cyber Neon', 'Sky Flight'],
-      githubUrl: 'https://github.com/Jubayer-AI-Studio/Jubayer-Legends-3D-Runner',
-      liveUrl: 'https://ai.studio/apps/8bc3f588-063b-4d86-85fc-f9115b059d7a',
-      accentColor: '#a855f7',
+      tags: ['Three.js', 'WebGL', 'PWA', 'Tailwind CSS', 'Vercel'],
+      githubUrl: 'https://github.com/Jubayer-AI-Studio/max-portfolio',
+      liveUrl: 'https://max-portfolio-eta.vercel.app',
+      accentColor: '#06b6d4',
+    },
+    {
+      id: 'ibrahim-studio',
+      title: 'Ibrahim Creative Studio',
+      subtitle: 'Digital Agency Platform & High-Conversion Showcase',
+      category: 'saas',
+      categoryLabel: 'Creative Agency',
+      year: '2026',
+      tags: ['Next.js', 'React', 'Tailwind CSS', 'Vercel'],
+      githubUrl: 'https://github.com/Jubayer-AI-Studio/ibrahim-studio',
+      liveUrl: 'https://ibrahim-jade.vercel.app',
+      accentColor: '#14b8a6',
+    },
+    {
+      id: 'kawsar-suite',
+      title: 'Kawsar Professional Suite',
+      subtitle: 'Engineering Consultancy & Brand Showcase Portal',
+      category: 'saas',
+      categoryLabel: 'Consultancy Portal',
+      year: '2026',
+      tags: ['Next.js', 'React', 'Tailwind CSS', 'Vercel'],
+      githubUrl: 'https://github.com/Jubayer-AI-Studio/kawsar-portfolio',
+      liveUrl: 'https://kawsar-seven.vercel.app',
+      accentColor: '#6366f1',
+    },
+    {
+      id: 'icon-2030',
+      title: 'ICON 2030 Cinematic Universe',
+      subtitle: 'AI Film Trilogy with 10s Face-Locked Continuity Architecture',
+      category: 'film',
+      categoryLabel: 'Cinematic AI Film',
+      year: '2026',
+      tags: ['Google Veo 3.1', 'Gemini 3.7', 'Google Flow', 'CapCut'],
+      githubUrl: 'https://github.com/Jubayer-AI-Studio',
+      liveUrl: PORTFOLIO_DATA.profile.youtube,
+      featured: true,
+      accentColor: '#d97706',
     },
   ];
 
@@ -213,12 +188,6 @@ export const SnellenbergWork: React.FC = () => {
     sound.playWarp();
     if (item.id === 'noorhub') {
       setNoorHubModalOpen(true);
-    } else if (item.category === 'game') {
-      setActiveModalGame({
-        id: item.id,
-        title: item.title,
-        url: item.liveUrl,
-      });
     } else if (item.category === 'film') {
       const el = document.getElementById('cinema');
       if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -326,23 +295,7 @@ export const SnellenbergWork: React.FC = () => {
                         className="px-3.5 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white font-mono font-bold text-xs flex items-center gap-1.5 transition-transform hover:scale-105 active:scale-95 shadow-md shadow-cyan-600/30 cursor-pointer"
                       >
                         <Sparkles className="w-3.5 h-3.5" />
-                        <span>সফটওয়্যার চালান</span>
-                      </button>
-                    ) : work.category === 'game' ? (
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          sound.playWarp();
-                          setActiveModalGame({
-                            id: work.id,
-                            title: work.title,
-                            url: work.liveUrl,
-                          });
-                        }}
-                        className="px-3.5 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-mono font-bold text-xs flex items-center gap-1.5 transition-transform hover:scale-105 active:scale-95 shadow-md shadow-red-600/30 cursor-pointer"
-                      >
-                        <Play className="w-3.5 h-3.5 fill-white" />
-                        <span>গেম খেলুন</span>
+                        <span>Launch SaaS</span>
                       </button>
                     ) : work.category === 'film' ? (
                       <button
@@ -352,10 +305,10 @@ export const SnellenbergWork: React.FC = () => {
                           const el = document.getElementById('cinema');
                           if (el) el.scrollIntoView({ behavior: 'smooth' });
                         }}
-                        className="px-3.5 py-2 rounded-xl bg-rose-700 hover:bg-rose-800 text-white font-mono font-bold text-xs flex items-center gap-1.5 transition-transform hover:scale-105 active:scale-95 shadow-md shadow-rose-700/30 cursor-pointer"
+                        className="px-3.5 py-2 rounded-xl bg-stone-950 hover:bg-black text-amber-200 border border-stone-800 text-white font-mono font-bold text-xs flex items-center gap-1.5 transition-transform hover:scale-105 active:scale-95 shadow-md shadow-rose-700/30 cursor-pointer"
                       >
                         <Film className="w-3.5 h-3.5" />
-                        <span>সিনেমা দেখুন</span>
+                        <span>Watch Cinema</span>
                       </button>
                     ) : (
                       <a
@@ -369,7 +322,7 @@ export const SnellenbergWork: React.FC = () => {
                         className="px-3.5 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-mono font-bold text-xs flex items-center gap-1.5 transition-transform hover:scale-105 active:scale-95 shadow-md shadow-emerald-700/30 cursor-pointer"
                       >
                         <ExternalLink className="w-3.5 h-3.5" />
-                        <span>লাইভ সাইট</span>
+                        <span>Visit Live Site</span>
                       </a>
                     )}
 
@@ -387,7 +340,7 @@ export const SnellenbergWork: React.FC = () => {
                         className="px-3 py-2 rounded-xl bg-stone-900 hover:bg-black text-amber-200 border border-stone-800 font-mono font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer shadow-sm"
                       >
                         <GithubIcon className="w-3.5 h-3.5" />
-                        <span className="hidden sm:inline">গিটহাব</span>
+                        <span className="hidden sm:inline">GitHub</span>
                       </a>
                     )}
                   </div>
@@ -399,14 +352,7 @@ export const SnellenbergWork: React.FC = () => {
 
       </div>
 
-      {/* Retro Arcade Modal */}
-      <ArcadeModal
-        isOpen={!!activeModalGame}
-        gameId={activeModalGame?.id || ''}
-        gameTitle={activeModalGame?.title || ''}
-        externalUrl={activeModalGame?.url}
-        onClose={() => setActiveModalGame(null)}
-      />
+
 
       {/* NoorHub Interactive Modal */}
       <NoorHubModal
