@@ -53,7 +53,7 @@ export const SnellenbergWork: React.FC = () => {
     },
     {
       id: 'rihlah-gadget',
-      title: 'Rihlah Gadget Shop (রিহলাহ গ্যাজেট)',
+      title: 'Rihlah Gadget Shop',
       subtitle: 'Next.js 15 PWA E-Commerce Platform on Cloudflare Pages Edge',
       category: 'saas',
       categoryLabel: 'E-Commerce PWA',
@@ -79,7 +79,7 @@ export const SnellenbergWork: React.FC = () => {
     },
     {
       id: 'mesk-prokashon',
-      title: 'Mesk Prokashon (মেশক প্রকাশন)',
+      title: 'Mesk Publications (Mesk Prokashon)',
       subtitle: 'Official Islamic Literature Bookstore & WhatsApp Order Bot',
       category: 'saas',
       categoryLabel: 'Digital Bookstore & AI',
@@ -92,7 +92,7 @@ export const SnellenbergWork: React.FC = () => {
     },
     {
       id: 'amar-world-map',
-      title: 'Amar World Map (আমার ওয়ার্ল্ড ম্যাপ)',
+      title: 'Amar World Map (Interactive Geo)',
       subtitle: 'Bangladesh 64 Districts & World Visual Travel Tracker',
       category: 'ai-app',
       categoryLabel: 'Interactive Web Tool',
@@ -118,7 +118,7 @@ export const SnellenbergWork: React.FC = () => {
     },
     {
       id: 'affan-labib',
-      title: 'Affan Labib Literary Studio (আফফান লাবীব)',
+      title: 'Affan Labib Literary Studio',
       subtitle: 'Writer Studio & Cloudflare Pages Edge Web Magazine',
       category: 'saas',
       categoryLabel: 'Cloudflare Pages',
@@ -305,7 +305,7 @@ export const SnellenbergWork: React.FC = () => {
                           const el = document.getElementById('cinema');
                           if (el) el.scrollIntoView({ behavior: 'smooth' });
                         }}
-                        className="px-3.5 py-2 rounded-xl bg-stone-950 hover:bg-black text-amber-200 border border-stone-800 text-white font-mono font-bold text-xs flex items-center gap-1.5 transition-transform hover:scale-105 active:scale-95 shadow-md shadow-rose-700/30 cursor-pointer"
+                        className="px-3.5 py-2 rounded-xl bg-stone-950 hover:bg-black text-amber-200 border border-stone-800 text-white font-mono font-bold text-xs flex items-center gap-1.5 transition-transform hover:scale-105 active:scale-95 shadow-md shadow-amber-700/30 cursor-pointer"
                       >
                         <Film className="w-3.5 h-3.5" />
                         <span>Watch Cinema</span>

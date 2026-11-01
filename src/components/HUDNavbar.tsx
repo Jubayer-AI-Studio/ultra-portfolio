@@ -120,7 +120,7 @@ export const HUDNavbar: React.FC<HUDNavbarProps> = ({
               }}
               aria-label="Drive 3D Car World (Bruno Simon Mode)"
               title="Drive 3D Car World (Bruno Simon Mode)"
-              className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-mono font-bold transition-all shadow-md shadow-red-600/30 cursor-pointer min-h-[36px]"
+              className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-mono font-bold transition-all shadow-md shadow-emerald-600/30 cursor-pointer min-h-[36px]"
             >
               <span className="w-2 h-2 rounded-full bg-white animate-ping" />
               <span>
@@ -175,7 +175,7 @@ export const HUDNavbar: React.FC<HUDNavbarProps> = ({
             onClick={() => sound.playClick()}
             aria-label="AI Cinema YouTube Channel"
             title="AI Cinema YouTube Channel"
-            className="p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-amber-400 hover:text-red-300 hover:border-red-900 transition-colors hidden sm:flex items-center justify-center min-h-[36px] min-w-[36px]"
+            className="p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-amber-400 hover:text-amber-200 hover:border-amber-700 transition-colors hidden sm:flex items-center justify-center min-h-[36px] min-w-[36px]"
           >
             <YoutubeIcon className="w-4 h-4" />
           </a>

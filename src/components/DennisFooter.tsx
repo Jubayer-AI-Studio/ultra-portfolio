@@ -152,7 +152,7 @@ export const DennisFooter: React.FC<DennisFooterProps> = ({
           </div>
 
           <div className="text-stone-800 text-center sm:text-right font-bold">
-            © 2026 Jubayer Ahmad (জুবায়ের আহমদ). Directed by JUBAYER AI Specialist.
+            © 2026 Jubayer Ahmad. Directed by JUBAYER AI Specialist.
           </div>
         </div>
 

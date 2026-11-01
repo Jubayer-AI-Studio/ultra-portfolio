@@ -1400,7 +1400,7 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
 
       {/* Floating Speedometer & Nitro Mini-Badge for Mobile */}
       <div className="flex md:hidden absolute top-12 left-2.5 z-20 pointer-events-auto bg-white/95 border border-slate-200/90 px-2.5 py-1 rounded-xl shadow-md backdrop-blur-md items-center gap-2 font-mono">
-        <div className="text-red-600 font-black text-xs">{speedKmh} <span className="text-[9px] text-slate-500">KM/H</span></div>
+        <div className="text-emerald-600 font-black text-xs">{speedKmh} <span className="text-[9px] text-slate-500">KM/H</span></div>
         <div className="h-3 w-[1px] bg-slate-300" />
         <div className="flex items-center gap-1 text-[10px] text-cyan-700 font-bold">
           <Flame className={`w-3 h-3 ${isNitroActive ? 'text-cyan-500 animate-bounce' : ''}`} />
@@ -1471,11 +1471,11 @@ export const BrunoCityWorld: React.FC<BrunoCityWorldProps> = ({
             {/* 4 Campuses */}
             <circle cx="-42" cy="-35" r="8" fill="#0284c7" />
             <circle cx="42" cy="-35" r="8" fill="#f59e0b" />
-            <circle cx="42" cy="35" r="8" fill="#e11d48" />
+            <circle cx="42" cy="35" r="8" fill="#8b5cf6" />
             <circle cx="-42" cy="35" r="8" fill="#16a34a" />
             {/* Player Car Marker & Heading Arrow */}
             <g transform={`translate(${carCoords.x}, ${carCoords.z}) rotate(${(-carCoords.angle * 180) / Math.PI})`}>
-              <polygon points="0,-8 5,6 -5,6" fill="#ef4444" stroke="#ffffff" strokeWidth="1.5" />
+              <polygon points="0,-8 5,6 -5,6" fill="#10b981" stroke="#ffffff" strokeWidth="1.5" />
             </g>
           </svg>
         </div>

@@ -79,9 +79,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onScrollTo, onOpenBrun
             <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-stone-950 font-sans flex flex-wrap items-baseline gap-2 sm:gap-3">
               <span>JUBAYER</span>
               <span className="text-amber-800 underline decoration-amber-600/30">AHMAD</span>
-              <span className="text-xl sm:text-2xl md:text-3xl font-bold text-stone-600 font-sans tracking-normal">
-                (জুবায়ের আহমদ)
-              </span>
+              
             </h1>
 
             {/* Dynamic Rotating Role */}
@@ -118,7 +116,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onScrollTo, onOpenBrun
                 if (onOpenBrunoWorld) onOpenBrunoWorld();
               }}
               onMouseEnter={() => sound.playHover()}
-              className="px-6 py-3.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-mono font-black text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-red-600/25 hover:scale-[1.03] active:scale-[0.98] transition-all cursor-pointer"
+              className="px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-mono font-black text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-emerald-600/25 hover:scale-[1.03] active:scale-[0.98] transition-all cursor-pointer"
             >
               <span>🚗 Drive 3D Car (Bruno Simon Mode)</span>
               <Sparkles className="w-4 h-4 fill-white" />

@@ -30,7 +30,7 @@ export const PORTFOLIO_DATA = {
   profile: {
     name: 'Jubayer Ahmad',
     englishSpelling: 'JUBAYER',
-    bengaliName: 'জুবায়ের আহমদ',
+    bengaliName: 'Jubayer Ahmad',
     role: 'Full-Stack Software Developer & AI Systems Architect',
     location: 'Dhaka, Bangladesh',
     bio: 'Software engineer and system architect specializing in enterprise full-stack web applications, SaaS platforms, high-performance edge systems on Cloudflare & Vercel, and interactive 3D WebGL experiences.',
@@ -72,7 +72,7 @@ export const PORTFOLIO_DATA = {
   productionSystems: [
     {
       id: 'rihlah-gadget',
-      title: 'Rihlah Gadget Shop (রিহলাহ গ্যাজেট)',
+      title: 'Rihlah Gadget Shop',
       subtitle: 'Modern PWA E-Commerce Platform on Cloudflare Edge',
       description: 'Production PWA e-commerce platform for tech accessories and modern lifestyle gadgets. Engineered with Next.js 15 and deployed on Cloudflare Pages for ultra-low latency, instant cart state, and seamless mobile checkout.',
       category: 'e-commerce' as const,
@@ -98,7 +98,7 @@ export const PORTFOLIO_DATA = {
     },
     {
       id: 'mesk-prokashon',
-      title: 'Mesk Prokashon (মেশক প্রকাশন)',
+      title: 'Mesk Publications (Mesk Prokashon)',
       subtitle: 'Official Islamic Bookstore & WhatsApp Order Automation',
       description: 'Official digital bookstore and publishing platform of author Maulana Muhammad Zainul Abedin. Features a 100+ book catalogue, dynamic discount offers, automated WhatsApp AI ordering, and responsive reader interface.',
       category: 'publishing' as const,
@@ -111,7 +111,7 @@ export const PORTFOLIO_DATA = {
     },
     {
       id: 'amar-world-map',
-      title: 'Amar World Map (আমার ওয়ার্ল্ড ম্যাপ)',
+      title: 'Amar World Map (Interactive Geo)',
       subtitle: 'Bangladesh 64 Districts & World Visual Travel Tracker',
       description: 'High-performance interactive geo-spatial web tool tracking visits across all 64 districts of Bangladesh and 195+ world nations with custom typography, visit analytics, and instant Facebook export.',
       category: 'interactive' as const,
@@ -137,7 +137,7 @@ export const PORTFOLIO_DATA = {
     },
     {
       id: 'affan-labib',
-      title: 'Affan Labib Literary Studio (আফফান লাবীব)',
+      title: 'Affan Labib Literary Studio',
       subtitle: 'Author Web Magazine & Cloudflare Edge Publishing',
       description: 'High-speed literary journal and editorial magazine powered by Astro v5 and Cloudflare Pages KV with edge SSR and high-contrast typography.',
       category: 'publishing' as const,

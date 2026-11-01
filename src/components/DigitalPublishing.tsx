@@ -28,7 +28,7 @@ export const DigitalPublishing: React.FC = () => {
                 <span className="text-xs font-mono text-stone-500 font-bold">2026</span>
               </div>
               <h3 className="text-2xl sm:text-3xl font-black text-stone-950 font-sans">
-                আফফান লাবীব (Affan Labib Literary Studio)
+                Affan Labib Literary Studio
               </h3>
               <p className="text-stone-700 text-sm leading-relaxed font-medium">
                 Modern, responsive web publishing platform and author magazine designed to showcase curated articles, thought leadership, and client-provided editorial content with high-contrast typography. Deployed on Cloudflare Pages.
@@ -54,7 +54,7 @@ export const DigitalPublishing: React.FC = () => {
                 className="flex-1 py-3 px-4 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-mono text-xs font-bold flex items-center justify-center gap-2 transition-colors shadow-md cursor-pointer"
               >
                 <ArrowUpRight className="w-4 h-4" />
-                <span>ক্লাউডফ্লেয়ার লাইভ (affan-labib.pages.dev)</span>
+                <span>Launch Cloudflare Live</span>
               </a>
               <a
                 href={pub.githubUrl}
@@ -64,7 +64,7 @@ export const DigitalPublishing: React.FC = () => {
                 className="py-3 px-4 rounded-xl bg-stone-900 hover:bg-black text-amber-200 font-mono text-xs font-bold flex items-center justify-center gap-2 transition-colors shadow-md cursor-pointer"
               >
                 <GithubIcon className="w-4 h-4" />
-                <span>কোড</span>
+                <span>Source Code</span>
               </a>
             </div>
           </div>
@@ -79,7 +79,7 @@ export const DigitalPublishing: React.FC = () => {
                 <span className="text-xs font-mono text-stone-500 font-bold">2026</span>
               </div>
               <h3 className="text-2xl sm:text-3xl font-black text-stone-950 font-sans">
-                মেশক প্রকাশন (Mesk Prokashon Digital Bookstore)
+                Mesk Publications (Digital Bookstore)
               </h3>
               <p className="text-stone-700 text-sm leading-relaxed font-medium">
                 Official digital bookstore and publishing house of author Maulana Muhammad Zainul Abedin. Features 100+ book catalogue, real-time book discount offers, automated WhatsApp ordering bot, and responsive reader interface.
@@ -105,7 +105,7 @@ export const DigitalPublishing: React.FC = () => {
                 className="flex-1 py-3 px-4 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-mono text-xs font-bold flex items-center justify-center gap-2 transition-colors shadow-md cursor-pointer"
               >
                 <ExternalLink className="w-4 h-4" />
-                <span>ভার্সেল লাইভ (mesk-nine.vercel.app)</span>
+                <span>Launch Vercel Live</span>
               </a>
               <a
                 href="https://github.com/Jubayer-AI-Studio/mesk"
@@ -115,7 +115,7 @@ export const DigitalPublishing: React.FC = () => {
                 className="py-3 px-4 rounded-xl bg-stone-900 hover:bg-black text-amber-200 font-mono text-xs font-bold flex items-center justify-center gap-2 transition-colors shadow-md cursor-pointer"
               >
                 <GithubIcon className="w-4 h-4" />
-                <span>কোড</span>
+                <span>Source Code</span>
               </a>
             </div>
           </div>

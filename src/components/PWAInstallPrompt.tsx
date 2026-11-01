@@ -82,11 +82,11 @@ export const PWAInstallPrompt: React.FC = () => {
             </div>
             <div className="min-w-0">
               <div className="font-bold text-xs sm:text-sm text-stone-950 truncate flex items-center gap-1.5">
-                <span>অ্যাপ ইনস্টল করুন</span>
+                <span>Install Mobile App</span>
                 <Sparkles className="w-3.5 h-3.5 text-amber-700" />
               </div>
               <div className="text-[10px] sm:text-[11px] text-stone-600 truncate font-medium">
-                হোম স্ক্রিনে সরাসরি ওপেন করতে
+                Add to your home screen
               </div>
             </div>
           </div>
@@ -97,7 +97,7 @@ export const PWAInstallPrompt: React.FC = () => {
               className="px-3.5 py-2 rounded-xl bg-stone-950 hover:bg-black text-amber-200 text-xs font-mono font-bold flex items-center gap-1.5 shadow-md active:scale-95 transition-all cursor-pointer whitespace-nowrap"
             >
               <Download className="w-3.5 h-3.5" />
-              <span>ইনস্টল</span>
+              <span>Install</span>
             </button>
 
             <button
@@ -123,7 +123,7 @@ export const PWAInstallPrompt: React.FC = () => {
             <div className="flex items-center justify-between border-b border-[#c8b59b] pb-3">
               <div className="flex items-center gap-2">
                 <Smartphone className="w-5 h-5 text-amber-800" />
-                <span className="font-black text-base">আইফোনে ইনস্টল করার নিয়ম</span>
+                <span className="font-black text-base">Install on iPhone / iOS</span>
               </div>
               <button
                 onClick={() => setShowIOSGuide(false)}
@@ -136,17 +136,17 @@ export const PWAInstallPrompt: React.FC = () => {
             <div className="space-y-3 text-xs text-stone-700 font-medium">
               <div className="flex items-start gap-2.5">
                 <span className="w-5 h-5 rounded-full bg-stone-950 text-amber-200 font-mono text-xs flex items-center justify-center shrink-0 font-bold">1</span>
-                <span>Safari ব্রাউজারের নিচে থাকা <strong>Share (📤)</strong> বাটনে ট্যাপ করুন।</span>
+                <span>Tap the <strong>Share (📤)</strong> button at the bottom of Safari.</span>
               </div>
 
               <div className="flex items-start gap-2.5">
                 <span className="w-5 h-5 rounded-full bg-stone-950 text-amber-200 font-mono text-xs flex items-center justify-center shrink-0 font-bold">2</span>
-                <span>একটু নিচে স্ক্রল করে <strong>'Add to Home Screen' (হোম স্ক্রিনে যোগ করুন)</strong> অপশনে চাপ দিন।</span>
+                <span>Scroll down and select <strong>'Add to Home Screen'</strong>.</span>
               </div>
 
               <div className="flex items-start gap-2.5">
                 <span className="w-5 h-5 rounded-full bg-stone-950 text-amber-200 font-mono text-xs flex items-center justify-center shrink-0 font-bold">3</span>
-                <span>উপরে ডানপাশে <strong>'Add'</strong> চাপলেই সরাসরি আপনার ফোনে ইনস্টল হয়ে যাবে!</span>
+                <span>Tap <strong>'Add'</strong> in the top-right corner to complete installation!</span>
               </div>
             </div>
 
@@ -159,7 +159,7 @@ export const PWAInstallPrompt: React.FC = () => {
               className="w-full py-2.5 rounded-xl bg-stone-950 text-amber-200 font-mono font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
             >
               <Check className="w-4 h-4" />
-              <span>বুঝেছি (Got It)</span>
+              <span>Got It</span>
             </button>
 
           </div>

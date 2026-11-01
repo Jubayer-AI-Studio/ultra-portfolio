@@ -87,7 +87,7 @@ export const LivingAvatar: React.FC<LivingAvatarProps> = ({ avatarUrl, name }) =
       case 'cyber':
         return 'from-cyan-500/35 via-blue-600/30 to-purple-600/30';
       default: // cinema
-        return 'from-amber-500/30 via-red-600/25 to-orange-500/25';
+        return 'from-amber-500/30 via-emerald-600/25 to-teal-500/25';
     }
   };
 
@@ -100,7 +100,7 @@ export const LivingAvatar: React.FC<LivingAvatarProps> = ({ avatarUrl, name }) =
       case 'cyber':
         return 'from-cyan-400 via-blue-500 to-purple-500';
       default: // cinema
-        return 'from-amber-400 via-rose-500 to-red-600';
+        return 'from-amber-400 via-emerald-500 to-teal-600';
     }
   };
 

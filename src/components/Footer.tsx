@@ -71,7 +71,7 @@ export const Footer: React.FC<FooterProps> = ({ onScrollToTop, onOpenTerminal })
                 onClick={() => sound.playClick()}
                 aria-label="YouTube Channel"
                 title="YouTube"
-                className="p-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-red-400 hover:text-red-300 transition-colors"
+                className="p-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-amber-400 hover:text-amber-300 transition-colors"
               >
                 <YoutubeIcon className="w-4 h-4" />
               </a>

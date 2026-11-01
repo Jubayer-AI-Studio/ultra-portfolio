@@ -273,7 +273,7 @@ export const SoftwareNexus: React.FC = () => {
               <div className="p-5 rounded-2xl bg-black/90 border border-zinc-800 space-y-4 font-mono text-xs shadow-2xl">
                 <div className="flex items-center justify-between pb-3 border-b border-zinc-800 text-zinc-400">
                   <div className="flex items-center gap-2">
-                    <span className="w-3 h-3 rounded-full bg-red-500/80 inline-block" />
+                    <span className="w-3 h-3 rounded-full bg-stone-600 inline-block" />
                     <span className="w-3 h-3 rounded-full bg-yellow-500/80 inline-block" />
                     <span className="w-3 h-3 rounded-full bg-green-500/80 inline-block" />
                     <span className="text-zinc-500 ml-2">noorhub.config.ts</span>

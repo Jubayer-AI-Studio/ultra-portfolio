@@ -64,7 +64,7 @@ export const AICinemaStudio: React.FC = () => {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="space-y-3">
             <div className="inline-flex items-center gap-2 font-mono text-xs text-stone-900 font-bold bg-[#dfcfb8] px-3.5 py-1.5 rounded-full border border-[#c8b59b]">
-              <Film className="w-4 h-4 text-red-600" />
+              <Film className="w-4 h-4 text-amber-500" />
               <span>SECTOR 03 // AI CINEMA STUDIO</span>
             </div>
             <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-stone-950 tracking-tight font-sans">
@@ -87,7 +87,7 @@ export const AICinemaStudio: React.FC = () => {
             rel="noopener noreferrer"
             onClick={() => sound.playClick()}
             data-cursor="WATCH CHANNEL"
-            className="px-5 py-3 rounded-2xl bg-red-600 hover:bg-red-500 text-white font-mono text-xs font-bold flex items-center gap-2 transition-all shadow-xl shadow-red-950/50 self-start md:self-auto cursor-pointer"
+            className="px-5 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-mono text-xs font-bold flex items-center gap-2 transition-all shadow-xl shadow-emerald-950/50 self-start md:self-auto cursor-pointer"
           >
             <YoutubeIcon className="w-4 h-4" />
             <span>Official YouTube Theater</span>
@@ -101,7 +101,7 @@ export const AICinemaStudio: React.FC = () => {
           {/* Top Cinema Letterbox Bar & Chapter Selector */}
           <div className="px-6 py-4 bg-zinc-950/90 border-b border-zinc-800 flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" />
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
               <span className="text-white font-bold tracking-wider">IMAX THEATER PREVIEW</span>
               <span className="text-zinc-600">|</span>
               <span className="text-zinc-400">2.39:1 ANAMORPHIC</span>
@@ -215,7 +215,7 @@ export const AICinemaStudio: React.FC = () => {
               <button
                 onClick={() => handleOpenVideo(activeFilm.youtubeUrl)}
                 data-cursor="PLAY FILM"
-                className="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white font-mono font-bold text-sm flex items-center justify-center gap-2 shadow-2xl shadow-pink-900/60 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                className="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-pink-600 via-purple-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white font-mono font-bold text-sm flex items-center justify-center gap-2 shadow-2xl shadow-pink-900/60 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
               >
                 <Play className="w-4 h-4 fill-white text-white" />
                 <span>Launch in YouTube Cinema</span>

@@ -39,10 +39,10 @@ class GlobalErrorBoundary extends Component<Props, State> {
           textAlign: 'center'
         }}>
           <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '8px' }}>
-            অ্যাপটি পুনরায় লোড করুন
+            Reload Application
           </h2>
           <p style={{ color: '#44403c', fontSize: '14px', marginBottom: '16px' }}>
-            একটি নতুন আপডেট পাওয়া গেছে। নিচে ক্লিক করে ফ্রেশ স্ক্রিনে যান।
+            A new update is available. Click below to load the latest release.
           </p>
           <button
             onClick={() => {
@@ -63,7 +63,7 @@ class GlobalErrorBoundary extends Component<Props, State> {
               cursor: 'pointer'
             }}
           >
-            রিলোড ও আপডেট করুন
+            Reload &amp; Update
           </button>
         </div>
       );
